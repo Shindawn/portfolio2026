@@ -31,7 +31,7 @@ export function Hero() {
 
 export function SneakPeek() {
   return <section className="sneak-peek" aria-labelledby="sneak-peek-title"><div className="sneak-peek__inner shell">
-    <header className="sneak-peek__intro"><p id="sneak-peek-title">Sneak peek of my works</p><span>A compact shelf of selected digital projects and visual systems.</span></header>
+    <header className="sneak-peek__intro"><p id="sneak-peek-title">Sneak peek of my works</p></header>
     <div className="project-shelf" aria-label="Selected project covers">{covers.map(([modifier, name]) => <article key={name} className={`shelf-book shelf-book--${modifier}`} aria-label={`${name} project`}><span>{name}</span></article>)}</div>
   </div></section>;
 }
@@ -68,7 +68,7 @@ export function Brands() {
 }
 
 export function Faq() {
-  const [openItems, setOpenItems] = useState<Set<number>>(() => new Set([3, 4]));
+  const [openItems, setOpenItems] = useState<Set<number>>(() => new Set());
   const toggleItem = (index: number) => setOpenItems((current) => {
     const next = new Set(current);
     if (next.has(index)) next.delete(index); else next.add(index);
@@ -88,7 +88,7 @@ export function Faq() {
 }
 
 export function Footer() {
-  return <footer className="footer" id="contact"><div className="footer__inner shell"><div className="footer__contact"><p className="footer__eyebrow">LET’S CONNECT</p><a className="footer__email" href="mailto:hi@lescygdawn.com">hi@lescygdawn.com</a><p className="footer__message">Whether it’s a full product build, a design partnership,<br />or a quick question — my inbox is always open.</p></div>
-    <div className="footer__meta"><p>©2026 Lescy Gdawn</p><nav className="footer__socials" aria-label="Social links"><a href="#">LinkedIn</a><a href="#">Behance</a><a href="#">Dribbble</a><a href="#">Instagram</a></nav><p className="footer__credit">Designed &amp; developed by Lescy Gdawn</p></div><p className="footer__wordmark" aria-hidden="true"><span>LESCY</span><span>GDAWN</span></p>
+  return <footer className="footer" id="contact"><div className="footer__inner shell"><div className="footer__contact"><p className="footer__eyebrow">LET’S CONNECT</p><a className="footer__email" href="mailto:hi@lescy.tech">hi@lescy.tech</a><p className="footer__message">Whether it’s a full product build, a design partnership,<br />or a quick question — my inbox is always open.</p></div>
+    <div className="footer__meta"><p>©2026 Lescy G. Caadlawon</p><nav className="footer__socials" aria-label="Social links"><a href="https://www.linkedin.com/in/lescycaadlawon" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/Shindawn" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.facebook.com/lescygcaadlawon/" target="_blank" rel="noreferrer">Facebook</a><a href="https://wa.me/639692467870" target="_blank" rel="noreferrer">WhatsApp</a></nav><p className="footer__credit">Designed &amp; developed by Lescy Gdawn</p></div><p className="footer__wordmark" aria-hidden="true"><span>LESCY</span><span>GDAWN</span></p>
   </div></footer>;
 }

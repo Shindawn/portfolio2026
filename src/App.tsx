@@ -11,6 +11,7 @@ export default function App() {
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    const hoverCleanups: Array<() => void> = [];
     const context = gsap.context(() => {
       gsap.from(".hero-title-wrap", {
         yPercent: 65, opacity: 0, duration: 1.15, ease: "power4.out",
@@ -30,12 +31,26 @@ export default function App() {
         },
       });
       peek.fromTo(".project-shelf",
-        { xPercent: 28, yPercent: 25, rotation: -8 },
-        { xPercent: -28, yPercent: -16, rotation: -4, ease: "none" },
+        { xPercent: 34, yPercent: 18 },
+        { xPercent: -34, yPercent: -12, ease: "none" },
       );
       peek.from(".shelf-book", {
-        yPercent: 38, opacity: 0, stagger: 0.035, ease: "power2.out",
+        xPercent: 45, opacity: 0, stagger: 0.06, ease: "power2.out",
       }, 0);
+
+      const shelfBooks = gsap.utils.toArray<HTMLElement>(".shelf-book");
+      shelfBooks.forEach((book) => {
+        const lift = gsap.quickTo(book, "y", { duration: 0.38, ease: "power3.out" });
+        const scale = gsap.quickTo(book, "scale", { duration: 0.38, ease: "power3.out" });
+        const onEnter = () => { lift(-24); scale(1.035); };
+        const onLeave = () => { lift(0); scale(1); };
+        book.addEventListener("pointerenter", onEnter);
+        book.addEventListener("pointerleave", onLeave);
+        hoverCleanups.push(() => {
+          book.removeEventListener("pointerenter", onEnter);
+          book.removeEventListener("pointerleave", onLeave);
+        });
+      });
 
       gsap.utils.toArray<HTMLElement>(".reveal-header").forEach((element) => {
         gsap.from(element.children, {
@@ -49,7 +64,7 @@ export default function App() {
         [".project-row", ".project-list", { y: 30, stagger: 0.09, duration: 0.7 }],
         [".brand-mark", ".brand-strip", { y: 18, stagger: 0.055, duration: 0.5 }],
         [".testimonial", ".testimonials", { y: 90, stagger: 0.08, duration: 0.85 }],
-        [".faq-item", ".faq__list", { x: 45, stagger: 0.08, duration: 0.65 }],
+        [".faq-item", ".faq__list", { y: 18, stagger: 0.06, duration: 0.55 }],
       ] as const;
 
       reveals.forEach(([targets, trigger, vars]) => {
@@ -65,7 +80,10 @@ export default function App() {
       });
     }, appRef);
 
-    return () => context.revert();
+    return () => {
+      hoverCleanups.forEach((cleanup) => cleanup());
+      context.revert();
+    };
   }, []);
 
   return <div ref={appRef}><Hero /><SneakPeek /><Expertise /><LatestWork /><Brands /><Faq /><Footer /></div>;

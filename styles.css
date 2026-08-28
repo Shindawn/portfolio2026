@@ -52,19 +52,25 @@ a {
 }
 
 .nav {
-  position: relative;
-  z-index: 2;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  transform: translateX(-50%);
   top: 1.8rem;
   height: 4.25rem;
   padding: 0.6rem 0.8rem 0.6rem 1.55rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 999px;
-  background: rgba(255, 244, 227, 0.91);
-  box-shadow: 0 12px 30px rgba(150, 86, 17, 0.11);
-  backdrop-filter: blur(12px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.32));
+  box-shadow:
+    0 12px 30px rgba(150, 86, 17, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.25);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
 }
 
 .brand {
@@ -109,7 +115,7 @@ a {
 }
 
 .intro {
-  padding-top: clamp(6.2rem, 10vw, 8.8rem);
+  padding-top: clamp(7.5rem, 11.5vw, 10.2rem);
   padding-bottom: 4.75rem;
 }
 
@@ -195,41 +201,45 @@ h1 {
 }
 
 .project-shelf {
-  width: min(69rem, 95%);
-  min-height: 36rem;
-  margin: auto auto 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  perspective: 90rem;
+  width: min(76rem, 108%);
+  min-height: 38rem;
+  margin: auto auto -2rem;
+  display: grid;
+  place-items: center;
+  perspective: 130rem;
+  perspective-origin: 20% 70%;
   will-change: transform;
-  transform: rotate(-7deg) skewX(-3deg);
 }
 
 .shelf-book {
+  --i: 0;
+  --stepx: clamp(4.6rem, 6.6vw, 8.6rem);
+  --stepy: clamp(3.2rem, 4.8vw, 6.4rem);
+  --stepz: clamp(2.6rem, 3.8vw, 5.2rem);
   position: relative;
-  width: clamp(8.5rem, 15vw, 13rem);
-  height: clamp(23rem, 40vw, 34rem);
-  flex: 0 0 auto;
-  margin-left: clamp(-5.5rem, -6vw, -3rem);
+  grid-area: 1 / 1;
+  width: clamp(10.5rem, 17vw, 15rem);
+  aspect-ratio: 5 / 7;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 0.5rem 0.5rem 0.15rem 0.15rem;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 0.65rem;
   background-image: url("assets/project-covers.png");
   background-repeat: no-repeat;
-  background-size: 600% 100%;
+  background-size: 600% auto;
+  background-position: calc(var(--i) * 20%) center;
   box-shadow: -1rem 1.4rem 2.5rem rgba(16, 16, 15, 0.18);
-  transform-origin: bottom center;
-  transition: box-shadow 220ms ease;
+  z-index: calc(var(--i) + 1);
+  transform-style: preserve-3d;
+  transform: translate3d(calc(var(--i) * var(--stepx)), calc(var(--i) * -1 * var(--stepy)), calc(var(--i) * -1 * var(--stepz))) rotateY(-26deg) rotateZ(calc(var(--i) * 0.7deg)) scale(calc(1 - var(--i) * 0.055));
+  transition: transform 480ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 380ms ease;
+  cursor: pointer;
+  will-change: transform;
 }
 
 .shelf-book:hover {
   z-index: 10;
   box-shadow: -1rem 1.8rem 3.2rem rgba(16, 16, 15, 0.3);
-}
-
-.shelf-book:first-child {
-  margin-left: 0;
+  transform: translate3d(calc(var(--i) * var(--stepx)), calc(var(--i) * -1 * var(--stepy)), calc(var(--i) * -1 * var(--stepz))) rotateY(-8deg) rotateZ(0deg) scale(calc(1 - var(--i) * 0.025));
 }
 
 .shelf-book::after {
@@ -252,15 +262,21 @@ h1 {
   letter-spacing: 0.04em;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.55);
   text-transform: uppercase;
-  writing-mode: vertical-rl;
+  writing-mode: horizontal-tb;
+  opacity: 0;
+  transition: opacity 280ms ease;
 }
 
-.shelf-book--one { background-position: 0% center; rotate: -5deg; translate: 0 1.5rem; }
-.shelf-book--two { background-position: 20% center; rotate: -2deg; translate: 0 -0.5rem; }
-.shelf-book--three { background-position: 40% center; rotate: 1deg; translate: 0 0.75rem; }
-.shelf-book--four { background-position: 60% center; rotate: 3deg; translate: 0 -1rem; }
-.shelf-book--five { background-position: 80% center; rotate: 5deg; translate: 0 0.5rem; }
-.shelf-book--six { background-position: 100% center; rotate: 7deg; translate: 0 -1.5rem; }
+.shelf-book:hover span {
+  opacity: 1;
+}
+
+.shelf-book--one { --i: 0; }
+.shelf-book--two { --i: 1; }
+.shelf-book--three { --i: 2; }
+.shelf-book--four { --i: 3; }
+.shelf-book--five { --i: 4; }
+.shelf-book--six { --i: 5; }
 
 .hero-details {
   margin-top: clamp(3.25rem, 5.5vw, 5.25rem);
@@ -675,6 +691,7 @@ h1 {
 }
 
 .faq-item {
+  width: 100%;
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.75);
@@ -973,16 +990,14 @@ h1 {
   }
 
   .project-shelf {
-    width: 115%;
-    min-height: 29rem;
-    margin-left: -7%;
-    transform: rotate(-6deg) skewX(-2deg);
+    width: 128%;
+    min-height: 27rem;
+    margin-left: -8%;
+    perspective-origin: 10% 65%;
   }
 
   .shelf-book {
-    width: clamp(6rem, 27vw, 8rem);
-    height: clamp(19rem, 82vw, 27rem);
-    margin-left: -3.6rem;
+    width: clamp(7.5rem, 31vw, 10rem);
   }
 
   .hero-details {
@@ -1182,10 +1197,6 @@ h1 {
 
   .sneak-peek {
     min-height: 100svh;
-  }
-
-  .project-shelf {
-    transform: rotate(-5deg) skewX(-3deg);
   }
 
   .brand-track {
