@@ -49,7 +49,7 @@ export default function App() {
         [".project-row", ".project-list", { y: 30, stagger: 0.09, duration: 0.7 }],
         [".brand-mark", ".brand-strip", { y: 18, stagger: 0.055, duration: 0.5 }],
         [".testimonial", ".testimonials", { y: 90, stagger: 0.08, duration: 0.85 }],
-        [".faq details", ".faq__list", { x: 45, stagger: 0.08, duration: 0.65 }],
+        [".faq-item", ".faq__list", { x: 45, stagger: 0.08, duration: 0.65 }],
       ] as const;
 
       reveals.forEach(([targets, trigger, vars]) => {

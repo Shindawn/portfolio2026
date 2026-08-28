@@ -479,11 +479,26 @@ h1 {
 
 .brand-strip {
   margin-top: clamp(3.3rem, 6vw, 5.3rem);
+  overflow: hidden;
+  color: #595957;
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 7%, black 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 7%, black 93%, transparent);
+}
+
+.brand-track {
+  width: max-content;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  color: #595957;
+  gap: clamp(3.5rem, 7vw, 7rem);
+  padding-inline: clamp(1.75rem, 3.5vw, 3.5rem);
+  animation: company-marquee 24s linear infinite;
+  will-change: transform;
+}
+
+@keyframes company-marquee {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .brand-mark {
@@ -617,10 +632,15 @@ h1 {
 .avatar--five { background: #8a5e48; }
 
 .faq {
+  position: relative;
   min-height: 100svh;
   display: grid;
   align-items: center;
-  background: var(--paper);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 78% 26%, rgba(242, 148, 19, 0.2), transparent 18rem),
+    radial-gradient(circle at 58% 78%, rgba(255, 205, 142, 0.24), transparent 22rem),
+    linear-gradient(145deg, #fdfdfd 10%, #fff9f1 52%, #f9f9f9 100%);
 }
 
 .faq__inner {
@@ -654,30 +674,65 @@ h1 {
   gap: 0.65rem;
 }
 
-.faq details {
-  border: 1px solid var(--line);
-  border-radius: 0.8rem;
-  background: rgba(255, 255, 255, 0.32);
+.faq-item {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.24));
+  box-shadow:
+    0 10px 30px rgba(69, 51, 27, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.28);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
+  transition:
+    border-color 250ms ease,
+    background 250ms ease,
+    box-shadow 250ms ease,
+    transform 250ms ease;
 }
 
-.faq summary {
+.faq-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.32), transparent 35%);
+  pointer-events: none;
+}
+
+.faq-item:hover,
+.faq-item.is-open {
+  border-color: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.68), rgba(255, 248, 238, 0.34));
+  box-shadow:
+    0 14px 38px rgba(104, 68, 24, 0.1),
+    inset 0 1px 0 #fff,
+    inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.faq-question {
+  z-index: 1;
+  width: 100%;
   min-height: 3.85rem;
   padding: 1rem 3.5rem 1rem 1.2rem;
   display: flex;
   align-items: center;
   position: relative;
   cursor: pointer;
-  list-style: none;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
   font-size: 0.98rem;
   font-weight: 500;
   letter-spacing: -0.025em;
+  text-align: left;
 }
 
-.faq summary::-webkit-details-marker {
-  display: none;
-}
-
-.faq summary::after {
+.faq-question::after {
   content: "+";
   position: absolute;
   right: 1.25rem;
@@ -685,18 +740,34 @@ h1 {
   translate: 0 -50%;
   font-size: 1.25rem;
   font-weight: 400;
+  transition: rotate 350ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.faq details[open] summary {
-  min-height: auto;
-  padding-bottom: 0.3rem;
+.faq-item.is-open .faq-question::after {
+  rotate: 45deg;
 }
 
-.faq details[open] summary::after {
-  content: "−";
+.faq-answer-wrap {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 480ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 280ms ease;
 }
 
-.faq details p {
+.faq-answer-wrap > div {
+  overflow: hidden;
+}
+
+.faq-item.is-open .faq-answer-wrap {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.faq-answer-wrap p {
   max-width: 34rem;
   margin: 0;
   padding: 0 1.2rem 1.15rem;
@@ -704,6 +775,12 @@ h1 {
   font-size: 0.88rem;
   line-height: 1.35;
   letter-spacing: -0.02em;
+  transform: translateY(-0.45rem);
+  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.faq-item.is-open .faq-answer-wrap p {
+  transform: translateY(0);
 }
 
 .footer {
@@ -810,10 +887,6 @@ h1 {
 
   .brand-strip {
     overflow: hidden;
-  }
-
-  .brand-mark:nth-child(n + 9) {
-    display: none;
   }
 
   .testimonials {
@@ -1012,12 +1085,12 @@ h1 {
   }
 
   .brand-strip {
-    justify-content: flex-start;
-    gap: clamp(1.35rem, 7vw, 2.5rem);
+    margin-inline: -1rem;
   }
 
-  .brand-mark:nth-child(n + 7) {
-    display: none;
+  .brand-track {
+    gap: 3.5rem;
+    animation-duration: 18s;
   }
 
   .testimonials {
@@ -1113,5 +1186,9 @@ h1 {
 
   .project-shelf {
     transform: rotate(-5deg) skewX(-3deg);
+  }
+
+  .brand-track {
+    animation-play-state: paused;
   }
 }

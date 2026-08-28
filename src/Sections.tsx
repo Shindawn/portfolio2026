@@ -1,5 +1,14 @@
 import { covers, faqs, projects, testimonials } from "./data";
 import HeroTitleEffect from "./HeroTitleEffect";
+import { useState } from "react";
+
+const companyMarks = [
+  ["Vercel", "", "brand-mark--triangle"], ["Shopify", "S", ""],
+  ["Webflow", "W", ""], ["Spotify", "≋", "brand-mark--round"],
+  ["Airbnb", "A", "brand-mark--line"], ["Framer", "F", ""],
+  ["Figma", "8", "brand-mark--line"], ["Linear", "╲", "brand-mark--round"],
+  ["Notion", "N", "brand-mark--line"], ["Stripe", "S", ""],
+] as const;
 
 function Navigation() {
   return <nav className="nav shell" aria-label="Main navigation">
@@ -50,16 +59,31 @@ export function LatestWork() {
 
 export function Brands() {
   return <section className="brands" aria-labelledby="brands-title"><div className="brands__inner shell">
-    <header className="brands__intro reveal-header"><h2 id="brands-title">( Brands I work with )</h2><p>Teams and tools I’ve collaborated with,<br />and what they say about working together.</p></header>
-    <div className="brand-strip" aria-label="Selected brands and platforms"><span className="brand-mark brand-mark--triangle" aria-label="Vercel" /><span className="brand-mark">S</span><span className="brand-mark">W</span><span className="brand-mark brand-mark--round">≋</span><span className="brand-mark brand-mark--line">A</span><span className="brand-mark">F</span><span className="brand-mark brand-mark--line">8</span><span className="brand-mark brand-mark--round">╲</span><span className="brand-mark brand-mark--line">N</span><span className="brand-mark">S</span><span className="brand-mark brand-mark--triangle" aria-hidden="true" /></div>
+    <header className="brands__intro reveal-header"><h2 id="brands-title">( Companies I work with )</h2><p>Teams and tools I’ve collaborated with,<br />and what they say about working together.</p></header>
+    <div className="brand-strip" aria-label="Selected companies and platforms"><div className="brand-track">
+      {[...companyMarks, ...companyMarks].map(([label, mark, modifier], index) => <span className={`brand-mark ${modifier}`} aria-label={index < companyMarks.length ? label : undefined} aria-hidden={index >= companyMarks.length} key={`${label}-${index}`}>{mark}</span>)}
+    </div></div>
     <div className="testimonials" aria-label="Client testimonials">{testimonials.map(([modifier, initials, name, role, quote]) => <article className={`testimonial testimonial--${modifier}`} key={name}><blockquote>“{quote}”</blockquote><div className="testimonial__person"><span className={`avatar avatar--${modifier}`} aria-hidden="true">{initials}</span><p><strong>{name}</strong><span>{role}</span></p></div></article>)}</div>
   </div></section>;
 }
 
 export function Faq() {
+  const [openItems, setOpenItems] = useState<Set<number>>(() => new Set([3, 4]));
+  const toggleItem = (index: number) => setOpenItems((current) => {
+    const next = new Set(current);
+    if (next.has(index)) next.delete(index); else next.add(index);
+    return next;
+  });
+
   return <section className="faq" id="faq" aria-labelledby="faq-title"><div className="faq__inner shell">
     <header className="faq__intro reveal-header"><h2 id="faq-title">( FAQs )</h2><p>Got questions? Here’s everything you<br />need to know about working with me.</p></header>
-    <div className="faq__list">{faqs.map(([question, answer], index) => <details key={question} open={index > 2}><summary>{question}</summary><p>{answer}</p></details>)}</div>
+    <div className="faq__list">{faqs.map(([question, answer], index) => {
+      const isOpen = openItems.has(index);
+      return <div className={`faq-item${isOpen ? " is-open" : ""}`} key={question}>
+        <button className="faq-question" type="button" aria-expanded={isOpen} aria-controls={`faq-answer-${index}`} onClick={() => toggleItem(index)}>{question}</button>
+        <div className="faq-answer-wrap" id={`faq-answer-${index}`} aria-hidden={!isOpen}><div><p>{answer}</p></div></div>
+      </div>;
+    })}</div>
   </div></section>;
 }
 
