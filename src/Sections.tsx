@@ -32,7 +32,7 @@ export function Hero() {
 export function SneakPeek() {
   return <section className="sneak-peek" aria-labelledby="sneak-peek-title"><div className="sneak-peek__inner shell">
     <header className="sneak-peek__intro"><p id="sneak-peek-title">Sneak peek of my works</p></header>
-    <div className="project-shelf" aria-label="Selected project covers">{covers.map(([modifier, name]) => <article key={name} className={`shelf-book shelf-book--${modifier}`} aria-label={`${name} project`}><span>{name}</span></article>)}</div>
+    <div className="project-shelf" aria-label="Selected project covers">{covers.map(([modifier, name]) => <div key={name} className={`shelf-slot shelf-slot--${modifier}`}><article className="shelf-book" aria-label={`${name} project`}><span>{name}</span></article></div>)}</div>
   </div></section>;
 }
 

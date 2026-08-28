@@ -30,6 +30,7 @@ body {
   background: var(--paper);
   font-family: "BDO Grotesk Variable", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+  cursor: crosshair;
 }
 
 a {
@@ -206,12 +207,12 @@ h1 {
   margin: auto auto -2rem;
   display: grid;
   place-items: center;
-  perspective: 130rem;
+  perspective: 170rem;
   perspective-origin: 20% 70%;
   will-change: transform;
 }
 
-.shelf-book {
+.shelf-slot {
   --i: 0;
   --stepx: clamp(4.6rem, 6.6vw, 8.6rem);
   --stepy: clamp(3.2rem, 4.8vw, 6.4rem);
@@ -220,6 +221,18 @@ h1 {
   grid-area: 1 / 1;
   width: clamp(10.5rem, 17vw, 15rem);
   aspect-ratio: 5 / 7;
+  z-index: calc(var(--i) + 1);
+  transform-style: preserve-3d;
+  transform: translate3d(calc(var(--i) * var(--stepx)), calc(var(--i) * -1 * var(--stepy)), calc(var(--i) * -1 * var(--stepz))) rotateY(-15deg) rotateZ(calc(var(--i) * 1.1deg)) scale(calc(1 - var(--i) * 0.05));
+}
+
+.shelf-slot:has(.shelf-book:hover) {
+  z-index: 10;
+}
+
+.shelf-book {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 0.65rem;
@@ -228,18 +241,12 @@ h1 {
   background-size: 600% auto;
   background-position: calc(var(--i) * 20%) center;
   box-shadow: -1rem 1.4rem 2.5rem rgba(16, 16, 15, 0.18);
-  z-index: calc(var(--i) + 1);
-  transform-style: preserve-3d;
-  transform: translate3d(calc(var(--i) * var(--stepx)), calc(var(--i) * -1 * var(--stepy)), calc(var(--i) * -1 * var(--stepz))) rotateY(-26deg) rotateZ(calc(var(--i) * 0.7deg)) scale(calc(1 - var(--i) * 0.055));
-  transition: transform 480ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 380ms ease;
   cursor: pointer;
   will-change: transform;
 }
 
 .shelf-book:hover {
-  z-index: 10;
   box-shadow: -1rem 1.8rem 3.2rem rgba(16, 16, 15, 0.3);
-  transform: translate3d(calc(var(--i) * var(--stepx)), calc(var(--i) * -1 * var(--stepy)), calc(var(--i) * -1 * var(--stepz))) rotateY(-8deg) rotateZ(0deg) scale(calc(1 - var(--i) * 0.025));
 }
 
 .shelf-book::after {
@@ -271,12 +278,12 @@ h1 {
   opacity: 1;
 }
 
-.shelf-book--one { --i: 0; }
-.shelf-book--two { --i: 1; }
-.shelf-book--three { --i: 2; }
-.shelf-book--four { --i: 3; }
-.shelf-book--five { --i: 4; }
-.shelf-book--six { --i: 5; }
+.shelf-slot--one { --i: 0; }
+.shelf-slot--two { --i: 1; }
+.shelf-slot--three { --i: 2; }
+.shelf-slot--four { --i: 3; }
+.shelf-slot--five { --i: 4; }
+.shelf-slot--six { --i: 5; }
 
 .hero-details {
   margin-top: clamp(3.25rem, 5.5vw, 5.25rem);
@@ -568,6 +575,20 @@ h1 {
   border: 1px solid var(--line);
   border-radius: 0.65rem;
   background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 10px 24px rgba(16, 16, 15, 0.05);
+  transition:
+    rotate 480ms cubic-bezier(0.19, 1, 0.22, 1),
+    translate 480ms cubic-bezier(0.19, 1, 0.22, 1),
+    scale 480ms cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 380ms ease;
+}
+
+.testimonial:hover {
+  z-index: 10;
+  rotate: 0deg;
+  scale: 1.07;
+  translate: 0 -1.1rem;
+  box-shadow: 0 28px 52px rgba(16, 16, 15, 0.18);
 }
 
 .testimonial--one {
@@ -996,7 +1017,7 @@ h1 {
     perspective-origin: 10% 65%;
   }
 
-  .shelf-book {
+  .shelf-slot {
     width: clamp(7.5rem, 31vw, 10rem);
   }
 
