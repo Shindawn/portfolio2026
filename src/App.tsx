@@ -12,8 +12,8 @@ export default function App() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const context = gsap.context(() => {
-      gsap.from("#hero-title span", {
-        yPercent: 115, opacity: 0, duration: 1.15, stagger: 0.09, ease: "power4.out",
+      gsap.from(".hero-title-wrap", {
+        yPercent: 65, opacity: 0, duration: 1.15, ease: "power4.out",
       });
       gsap.from(".hero-details > *", {
         y: 28, opacity: 0, duration: 0.85, stagger: 0.12, delay: 0.45, ease: "power3.out",

@@ -1,4 +1,5 @@
 import { covers, faqs, projects, testimonials } from "./data";
+import HeroTitleEffect from "./HeroTitleEffect";
 
 function Navigation() {
   return <nav className="nav shell" aria-label="Main navigation">
@@ -9,7 +10,10 @@ function Navigation() {
 
 export function Hero() {
   return <main className="hero" id="home"><Navigation /><section className="intro shell" aria-labelledby="hero-title">
-    <h1 id="hero-title"><span>LESCY</span><span>GDAWN</span></h1>
+    <div className="hero-title-wrap">
+      <h1 id="hero-title"><span>LESCY</span><span>GDAWN</span></h1>
+      <HeroTitleEffect />
+    </div>
     <div className="hero-details" id="about"><div className="summary"><p>I design digital products end to end, combining reliable functionality with high-quality UI aligned to brand strategy. I work with agencies and private clients.</p><a className="button" href="#work">View all projects</a></div>
       <dl className="facts"><div><dt>Role</dt><dd>Independent designer &amp; engineer</dd></div><div><dt>Based</dt><dd>Manila, Philippines</dd></div><div><dt>Working with</dt><dd>Startups &amp; studios worldwide</dd></div></dl>
     </div>
@@ -26,7 +30,12 @@ export function SneakPeek() {
 export function Expertise() {
   return <section className="expertise" id="expertise" aria-labelledby="expertise-title"><div className="expertise__inner shell">
     <header className="expertise__header reveal-header"><h2 id="expertise-title">( Expertise )</h2><p>I design and build strategic digital experiences that combine clarity, performance, and refined aesthetics to support real business growth.</p></header>
-    <p className="expertise__services">Product Design, Web Development,<br />Brand Systems, Creative Direction.</p>
+    <p className="expertise__services">
+      <span className="expertise__service" tabIndex={0}>Product Design,</span>{" "}
+      <span className="expertise__service" tabIndex={0}>Web Development,</span><br />
+      <span className="expertise__service" tabIndex={0}>Brand Systems,</span>{" "}
+      <span className="expertise__service" tabIndex={0}>Creative Direction.</span>
+    </p>
   </div></section>;
 }
 
