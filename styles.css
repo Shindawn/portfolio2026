@@ -128,14 +128,13 @@ h1 {
 }
 
 .sneak-peek {
-  min-height: 155svh;
+  min-height: 100svh;
   overflow: hidden;
   background: var(--paper);
 }
 
 .sneak-peek__inner {
-  position: sticky;
-  top: 0;
+  position: relative;
   min-height: 100svh;
   padding-block: clamp(4rem, 7vw, 6rem);
   display: flex;
@@ -175,8 +174,7 @@ h1 {
   justify-content: center;
   perspective: 90rem;
   will-change: transform;
-  transform: translate3d(var(--shelf-x, 12vw), var(--shelf-y, 10vh), 0)
-    rotate(var(--shelf-tilt, -7deg)) skewX(-3deg);
+  transform: rotate(-7deg) skewX(-3deg);
 }
 
 .shelf-book {
@@ -813,7 +811,7 @@ h1 {
   }
 
   .sneak-peek {
-    min-height: 135svh;
+    min-height: 100svh;
   }
 
   .sneak-peek__inner {
@@ -834,8 +832,7 @@ h1 {
     width: 115%;
     min-height: 29rem;
     margin-left: -7%;
-    transform: translate3d(var(--shelf-x, 12vw), var(--shelf-y, 8vh), 0)
-      rotate(var(--shelf-tilt, -6deg)) skewX(-2deg);
+    transform: rotate(-6deg) skewX(-2deg);
   }
 
   .shelf-book {
