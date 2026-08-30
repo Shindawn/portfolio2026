@@ -34,7 +34,10 @@ function NavClock() {
 function Navigation() {
   return <nav className="nav shell" aria-label="Main navigation">
     <div className="nav-start"><ThemeToggle /><a className="brand" href="#home" aria-label="Lescy Gdawn, home">Lescy Gdawn</a></div>
-    <div className="nav-links"><NavClock /><a href="#home">Home</a><a href="#about">About</a><a href="#work">Work</a><a className="button button--nav" href="mailto:hello@lescygdawn.com">Book a Call</a></div>
+    <div className="nav-links"><details className="file-menu"><summary>File</summary><div className="file-menu__dropdown">
+      <a href="/LescyGCaadlawon_CV.pdf" target="_blank" rel="noreferrer"><span>Preview Resume</span><small aria-hidden="true">↗</small></a>
+      <a href="/LescyGCaadlawon_CV.pdf" download="LescyGCaadlawon_CV.pdf"><span>Download Resume</span><small aria-hidden="true">↓</small></a>
+    </div></details><NavClock /><a href="#home">Home</a><a href="#about">About</a><a href="#work">Work</a><a className="button button--nav" href="mailto:hello@lescygdawn.com">Book a Call</a></div>
   </nav>;
 }
 
