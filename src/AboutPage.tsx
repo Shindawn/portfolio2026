@@ -44,10 +44,68 @@ const techItems: TechItem[] = [
   { name: "Java", icon: "https://cdn.simpleicons.org/openjdk/20a878", category: "Language" },
 ];
 
-// Matrix layout configuration (48 cells)
+interface AcademicTab {
+  id: string;
+  label: string;
+  image: string;
+  description: string;
+  statLabel: string;
+  statValue: string;
+  secondaryStatLabel?: string;
+  secondaryStatValue?: string;
+}
+
+const academicTabs: AcademicTab[] = [
+  {
+    id: "education",
+    label: "Education",
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=700&q=85",
+    description:
+      "Bachelor of Science in Information Technology at Catanduanes State University (2022 – 2026). Comprehensive study of distributed architectures, full-stack systems engineering, database modeling, and human-centered digital products.",
+    statLabel: "Academic Standing",
+    statValue: "1.4 GWA (Cum Laude)",
+    secondaryStatLabel: "Institution",
+    secondaryStatValue: "CatSU • Catanduanes, PH",
+  },
+  {
+    id: "awards",
+    label: "Awards & Certs",
+    image: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=700&q=85",
+    description:
+      "Recognized with consecutive Dean's Honor Roll standing across academic years, complemented by industry credentials in modern full-stack web architectures, API specifications, and cloud computing foundations.",
+    statLabel: "Scholastic Distinction",
+    statValue: "Dean's Lister (2022–2026)",
+    secondaryStatLabel: "Credentials",
+    secondaryStatValue: "Full-Stack & Cloud Certified",
+  },
+  {
+    id: "scholarships",
+    label: "Scholarships",
+    image: "https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0?auto=format&fit=crop&w=700&q=85",
+    description:
+      "Awarded competitive tertiary academic scholarships based on consistent GPA performance and scholastic excellence, receiving full institutional tuition grants and research project funding.",
+    statLabel: "Grant Classification",
+    statValue: "Tertiary Academic Scholar",
+    secondaryStatLabel: "Coverage",
+    secondaryStatValue: "100% Merit-Based Grant",
+  },
+  {
+    id: "affiliations",
+    label: "Affiliations",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=85",
+    description:
+      "Active member and student leader in collegiate computing organizations and developer circles, leading code jams, peer mentoring sessions, and UI/UX design workshops across campus.",
+    statLabel: "Leadership Role",
+    statValue: "Tech Guild & IT Society",
+    secondaryStatLabel: "Involvement",
+    secondaryStatValue: "Lead Developer & Contributor",
+  },
+];
+
 export default function AboutPage() {
   const stackRef = useRef<HTMLDivElement>(null);
   const [hoveredTech, setHoveredTech] = useState<TechItem | null>(null);
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const moveCards = (event: PointerEvent<HTMLDivElement>) => {
     const stack = stackRef.current;
@@ -72,7 +130,6 @@ export default function AboutPage() {
     ["--tilt-x", "--tilt-y"].forEach((property) => stackRef.current?.style.setProperty(property, "0deg"));
   };
 
-  // Build 28 grid cells (4 rows x 7 columns) to match Career column height evenly
   const gridCells = Array.from({ length: 28 }, (_, i) => {
     if (i < techItems.length) {
       const tech = techItems[i];
@@ -152,7 +209,6 @@ export default function AboutPage() {
               )}
             </div>
 
-            {/* Interactive Rounded Matrix Grid (Matching Reference Image) */}
             <div className="about-matrix-grid" role="region" aria-label="Interactive Tech Stack Matrix">
               {gridCells.map((cell, idx) => {
                 if (cell.type === "tech") {
@@ -180,34 +236,63 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="about-education" aria-labelledby="education-title">
-        <header>
-          <h2 id="education-title">( Education )</h2>
-          <p>Academic foundation, scholastic honors, and degree milestones.</p>
-        </header>
-        <div className="about-education__card">
-          <article className="about-education__item">
-            <div className="about-education__main">
-              <span className="about-education__index">01</span>
-              <div className="about-education__info">
-                <div className="about-education__title-row">
-                  <h3 className="about-education__school">Catanduanes State University</h3>
-                  <span className="about-education__period">Aug 2022 – June 2026</span>
-                </div>
-                <p className="about-education__degree">
-                  Bachelor of Science in Information Technology <span className="about-education__divider">|</span>{" "}
-                  <strong className="about-education__gwa">1.4 GWA (Cum Laude)</strong>
-                </p>
-                <div className="about-education__meta">
-                  <span className="about-education__location">📍 Catanduanes, Philippines</span>
-                  <span className="about-education__honor-pill">
-                    <span className="about-education__dot" aria-hidden="true" />
-                    Dean’s Lister (2022–2023 | 2024–2026)
-                  </span>
-                </div>
-              </div>
+      {/* Folder Tabs Academic Section */}
+      <section className="about-education folder-education" aria-labelledby="academic-folder-title">
+        <div className="folder-education__container">
+          {/* Tab Bar with seamlessly connected active tab */}
+          <div className="folder-tabs__bar" role="tablist" aria-label="Academic & Background Tabs">
+            {academicTabs.map((tab, idx) => {
+              const isActive = idx === activeTabIndex;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls={`folder-panel-${tab.id}`}
+                  id={`folder-tab-${tab.id}`}
+                  className={`folder-tab-btn ${isActive ? "folder-tab-btn--active" : ""}`}
+                  onClick={() => setActiveTabIndex(idx)}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Seamless Folder Card Body */}
+          <div
+            className={`folder-card folder-card--active-${activeTabIndex}`}
+            role="tabpanel"
+            id={`folder-panel-${academicTabs[activeTabIndex].id}`}
+            aria-labelledby={`folder-tab-${academicTabs[activeTabIndex].id}`}
+          >
+            <div className="folder-card__media">
+              <img
+                key={academicTabs[activeTabIndex].id}
+                src={academicTabs[activeTabIndex].image}
+                alt={academicTabs[activeTabIndex].label}
+                className="folder-card__img"
+                loading="lazy"
+              />
             </div>
-          </article>
+
+            <div className="folder-card__content" key={`content-${academicTabs[activeTabIndex].id}`}>
+              <p className="folder-card__description">{academicTabs[activeTabIndex].description}</p>
+
+              <div className="folder-card__stat-row">
+                <span className="folder-card__stat-label">{academicTabs[activeTabIndex].statLabel}</span>
+                <strong className="folder-card__stat-value">{academicTabs[activeTabIndex].statValue}</strong>
+              </div>
+
+              {academicTabs[activeTabIndex].secondaryStatLabel && (
+                <div className="folder-card__stat-row folder-card__stat-row--sub">
+                  <span className="folder-card__stat-label">{academicTabs[activeTabIndex].secondaryStatLabel}</span>
+                  <strong className="folder-card__stat-value">{academicTabs[activeTabIndex].secondaryStatValue}</strong>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </section>
       <Footer />
