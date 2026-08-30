@@ -21,7 +21,7 @@ const nodes: IntegrationNode[] = [
     x: 130,
     y: 110,
     path: "M 450 230 C 310 230, 230 110, 130 110",
-    speed: 3.2,
+    speed: 5.5,
     delay: 0,
     status: "Synced • Bi-directional",
     icon: (
@@ -37,8 +37,8 @@ const nodes: IntegrationNode[] = [
     x: 230,
     y: 230,
     path: "M 450 230 L 230 230",
-    speed: 2.5,
-    delay: 0.6,
+    speed: 4.8,
+    delay: 1.2,
     status: "OAuth 2.0 • Live",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
@@ -53,8 +53,8 @@ const nodes: IntegrationNode[] = [
     x: 140,
     y: 350,
     path: "M 450 230 C 310 230, 240 350, 140 350",
-    speed: 3.6,
-    delay: 1.2,
+    speed: 6.2,
+    delay: 2.1,
     status: "Incoming Webhooks Active",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
@@ -69,8 +69,8 @@ const nodes: IntegrationNode[] = [
     x: 360,
     y: 390,
     path: "M 450 230 C 410 310, 380 350, 360 390",
-    speed: 2.8,
-    delay: 1.8,
+    speed: 5.0,
+    delay: 3.2,
     status: "Actions Runner Connected",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
@@ -85,8 +85,8 @@ const nodes: IntegrationNode[] = [
     x: 540,
     y: 390,
     path: "M 450 230 C 490 310, 520 350, 540 390",
-    speed: 3.0,
-    delay: 0.4,
+    speed: 5.6,
+    delay: 0.8,
     status: "Realtime WebSocket Online",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
@@ -101,8 +101,8 @@ const nodes: IntegrationNode[] = [
     x: 770,
     y: 110,
     path: "M 450 230 C 590 230, 670 110, 770 110",
-    speed: 3.4,
-    delay: 0.8,
+    speed: 6.0,
+    delay: 1.6,
     status: "Hydration & Edge SSR Ready",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
@@ -122,8 +122,8 @@ const nodes: IntegrationNode[] = [
     x: 670,
     y: 230,
     path: "M 450 230 L 670 230",
-    speed: 2.6,
-    delay: 1.4,
+    speed: 4.6,
+    delay: 2.8,
     status: "CRUD & Sync Streams Active",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -142,8 +142,8 @@ const nodes: IntegrationNode[] = [
     x: 760,
     y: 350,
     path: "M 450 230 C 590 230, 660 350, 760 350",
-    speed: 3.1,
-    delay: 1.0,
+    speed: 5.8,
+    delay: 2.0,
     status: "Function Calling & Inference",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
@@ -182,62 +182,27 @@ export default function IntegrationNetwork() {
               preserveAspectRatio="xMidYMid meet"
               aria-hidden="true"
             >
-              <defs>
-                {/* Glow Filter for Active Beams */}
-                <filter id="network-glow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="3.5" result="blur" />
-                  <feMerge>
-                    <feMergeNode in="blur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-
-                <linearGradient id="orbit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="var(--accent-bright)" stopOpacity="0.35" />
-                  <stop offset="100%" stopColor="var(--accent)" stopOpacity="0.08" />
-                </linearGradient>
-              </defs>
-
               {/* Concentric Orbit Circles */}
               <circle cx="450" cy="230" r="160" className="network-orbit network-orbit--outer" />
               <circle cx="450" cy="230" r="105" className="network-orbit network-orbit--middle" />
               <circle cx="450" cy="230" r="58" className="network-orbit network-orbit--inner" />
 
-              {/* Connector Bezier Lines and Flowing Particles */}
+              {/* Connector Bezier Lines and Single Calm Floating Particle */}
               {nodes.map((node) => {
                 const isHovered = hoveredNode?.id === node.id;
                 return (
                   <g key={node.id} className={`network-connector ${isHovered ? "is-active" : ""}`}>
-                    {/* Base Static Path */}
+                    {/* Base Static Connector Path */}
                     <path d={node.path} className="network-path-base" />
 
-                    {/* Continuous Animated Pulse Dash */}
-                    <path
-                      d={node.path}
-                      className="network-path-flow"
-                      style={{ animationDuration: `${node.speed}s`, animationDelay: `-${node.delay}s` }}
-                    />
-
-                    {/* Flowing Light Particle Photon */}
-                    <circle r="3" className="network-particle">
+                    {/* Single Gentle Floating Light Particle */}
+                    <circle r="2.2" className="network-particle">
                       <animateMotion
                         dur={`${node.speed}s`}
                         repeatCount="indefinite"
                         path={node.path}
                         begin={`-${node.delay}s`}
                         keyPoints="0;1"
-                        keyTimes="0;1"
-                      />
-                    </circle>
-
-                    {/* Reverse Returning Photon for Bi-directional feel */}
-                    <circle r="2.2" className="network-particle network-particle--reverse">
-                      <animateMotion
-                        dur={`${node.speed * 1.35}s`}
-                        repeatCount="indefinite"
-                        path={node.path}
-                        begin={`-${node.delay + 0.8}s`}
-                        keyPoints="1;0"
                         keyTimes="0;1"
                       />
                     </circle>
