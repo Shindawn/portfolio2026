@@ -56,8 +56,6 @@ export function Navigation() {
     <>
       <nav className={`nav shell${isMenuOpen ? " is-menu-open" : ""}`} aria-label="Main navigation">
         <div className="nav-start">
-          <ThemeToggle />
-          <NavClock />
           <a className="brand" href="/" aria-label="Lescy Gdawn, home" onClick={closeMenu}>
             <span className="brand__logo-box" aria-hidden="true">■</span>
             <span>Lescy Gdawn</span>
@@ -78,14 +76,8 @@ export function Navigation() {
         </div>
 
         <div className="nav-end">
-          <a
-            className="button button--nav"
-            href="https://calendar.app.google/NzRmXYUx3p8Z7g2L8"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Book a Consultation
-          </a>
+          <NavClock />
+          <ThemeToggle />
         </div>
       </nav>
 
@@ -105,23 +97,13 @@ export function Navigation() {
               </a>
             </li>
             <li className="nav-overlay__item">
-              <a href="/#work" className="nav-overlay__link" onClick={closeMenu}>
-                <span>Project</span>
-              </a>
-            </li>
-            <li className="nav-overlay__item">
               <a href="/about" className="nav-overlay__link" onClick={closeMenu}>
                 <span>About</span>
               </a>
             </li>
             <li className="nav-overlay__item">
-              <a href="/#expertise" className="nav-overlay__link" onClick={closeMenu}>
-                <span>Services</span>
-              </a>
-            </li>
-            <li className="nav-overlay__item">
-              <a href="/#contact" className="nav-overlay__link" onClick={closeMenu}>
-                <span>Contact</span>
+              <a href="/#work" className="nav-overlay__link" onClick={closeMenu}>
+                <span>Work</span>
               </a>
             </li>
           </ul>

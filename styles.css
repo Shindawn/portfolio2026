@@ -252,6 +252,7 @@ a {
 .nav-end {
   display: flex;
   align-items: center;
+  gap: 0.85rem;
 }
 
 /* Fullscreen Overlay Menu (Matching Reference Image 2) */
@@ -293,7 +294,8 @@ a {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: clamp(0.35rem, 1.5vh, 0.85rem);
+  gap: 0;
+  width: 100%;
 }
 
 .nav-overlay__item {
@@ -303,22 +305,21 @@ a {
 .nav-overlay__link {
   display: block;
   width: 100%;
-  padding: clamp(0.4rem, 1.2vw, 0.8rem) clamp(1rem, 2.5vw, 1.8rem);
-  border-radius: 0.65rem;
+  padding: clamp(0.45rem, 1.3vw, 0.85rem) clamp(1rem, 2.5vw, 2.2rem);
+  border-radius: 0px;
   font-family: "BDO Grotesk Variable", Arial, sans-serif;
-  font-size: clamp(3.2rem, 7.8vw, 6.5rem);
+  font-size: clamp(3.8rem, 9.2vw, 7.2rem);
   font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
   color: var(--ink);
-  transition: background 220ms ease, color 220ms ease, transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: background 180ms ease, color 180ms ease;
 }
 
 .nav-overlay__link:hover,
 .nav-overlay__link:focus-visible {
   background: var(--ink);
   color: var(--paper);
-  transform: translateX(14px);
   outline: none;
 }
 
@@ -370,17 +371,21 @@ a {
 }
 
 :root[data-theme="dark"] .nav-hamburger.is-active .nav-hamburger__bar {
-  background: #0e1a15;
+  background: #000000;
 }
 
 :root[data-theme="dark"] .nav-overlay {
-  background: #0a1410;
+  background: #000000;
+}
+
+:root[data-theme="dark"] .nav-overlay__link {
+  color: #ffffff;
 }
 
 :root[data-theme="dark"] .nav-overlay__link:hover,
 :root[data-theme="dark"] .nav-overlay__link:focus-visible {
   background: #ffffff;
-  color: #0e1a15;
+  color: #000000;
 }
 
 .button {
@@ -430,9 +435,10 @@ a {
 }
 
 .hero-beams__beam-path {
-  stroke-dasharray: 220 1400;
+  stroke-dasharray: 850 1700;
   stroke-linecap: round;
-  animation: hero-beam-flow 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: hero-beam-flow 3.8s linear infinite;
+  opacity: 1;
 }
 
 .hero-beams__beam-path--left {
@@ -440,23 +446,15 @@ a {
 }
 
 .hero-beams__beam-path--right {
-  animation-delay: 2s;
+  animation-delay: 1.9s;
 }
 
 @keyframes hero-beam-flow {
   0% {
-    stroke-dashoffset: 1620;
-    opacity: 0;
-  }
-  12% {
-    opacity: 1;
-  }
-  85% {
-    opacity: 1;
+    stroke-dashoffset: 2550;
   }
   100% {
     stroke-dashoffset: 0;
-    opacity: 0;
   }
 }
 
@@ -661,6 +659,173 @@ a {
   background: rgba(255, 255, 255, 0.12);
   border-color: rgba(255, 255, 255, 0.28);
   color: #ffffff;
+}
+
+/* 3D Cylindrical Perspective Carousel (Framer 3D Look Configuration) */
+.hero-3d-carousel {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: clamp(2rem, 5vw, 4rem) 0 clamp(3.5rem, 6.5vw, 5.5rem);
+  overflow: hidden;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-3d-carousel__stage {
+  position: relative;
+  width: 100%;
+  height: clamp(340px, 42vw, 480px);
+  perspective: 550px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-3d-carousel__stage:active {
+  cursor: grabbing;
+}
+
+.hero-3d-carousel__track {
+  position: relative;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-3d-card {
+  position: absolute;
+  width: clamp(200px, 21vw, 260px);
+  height: clamp(280px, 30vw, 370px);
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  border-radius: 1.35rem;
+  overflow: hidden;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.26);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  pointer-events: none;
+}
+
+.hero-3d-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #141f1a;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.hero-3d-card__image {
+  position: absolute;
+  inset: 0;
+  background-image: url("assets/project-covers.png");
+  background-repeat: no-repeat;
+  background-size: 600%;
+  filter: saturate(0.95);
+}
+
+.hero-3d-card__shade {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-3d-card__content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.25rem;
+  color: #ffffff;
+  z-index: 2;
+}
+
+.hero-3d-card__tag {
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.22rem 0.65rem;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  letter-spacing: 0.02em;
+}
+
+.hero-3d-card__title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin: 0 0 0.2rem;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.hero-3d-card__category {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+}
+
+.hero-3d-carousel__pill-wrap {
+  margin-top: clamp(2rem, 3.5vw, 3rem);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-3d-carousel__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(0.6rem, 1.6vw, 1.3rem);
+  padding: 0.65rem clamp(1.2rem, 2.5vw, 2.2rem);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--paper) 75%, transparent);
+  border: 1px solid var(--line);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+  font-size: clamp(0.78rem, 1.05vw, 0.9rem);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.hero-3d-pill__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.hero-3d-pill__icon {
+  font-size: 0.95rem;
+}
+
+.hero-3d-pill__dot {
+  color: var(--accent);
+  font-size: 0.55rem;
+  opacity: 0.85;
+}
+
+:root[data-theme="dark"] .hero-3d-card {
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.65);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+:root[data-theme="dark"] .hero-3d-carousel__pill {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 .about-page {
