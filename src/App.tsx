@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CurvedBanner from "./CurvedBanner";
 import Hero3DCarousel from "./Hero3DCarousel";
-import { Brands, Expertise, Faq, Footer, Hero, LatestWork, SneakPeek } from "./Sections";
+import { Brands, Expertise, Faq, Footer, Hero, LatestWork } from "./Sections";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -152,5 +152,5 @@ export default function App() {
     };
   }, []);
 
-  return <div ref={appRef}><Hero /><Hero3DCarousel /><SneakPeek /><Expertise /><LatestWork /><Brands /><Faq /><CurvedBanner /><Footer /></div>;
+  return <div ref={appRef}><Hero /><Hero3DCarousel /><Expertise /><LatestWork /><Brands /><Faq /><CurvedBanner /><Footer /></div>;
 }

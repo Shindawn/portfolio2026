@@ -199,47 +199,6 @@ export function Hero() {
   );
 }
 
-export function SneakPeek() {
-  const [openCover, setOpenCover] = useState<number | null>(null);
-
-  useEffect(() => {
-    if (openCover === null) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpenCover(null);
-    };
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [openCover]);
-
-  return <><section className="sneak-peek" aria-labelledby="sneak-peek-title"><div className="sneak-peek__inner shell">
-    <header className="sneak-peek__intro"><p id="sneak-peek-title">Services Offered</p></header>
-    <div className="project-shelf" aria-label="Selected project covers">{covers.map(([modifier, name, artwork], index) => <div key={name} className={`shelf-slot shelf-slot--${modifier}`} style={{ "--layer": index, "--art": artwork } as CSSProperties}>
-      <button
-        className={`shelf-book${[1, 3].includes(index) ? " shelf-book--glass" : ""}`}
-        type="button"
-        aria-label={`Preview ${name} project`}
-        aria-haspopup="dialog"
-        onClick={() => setOpenCover((current) => current === index ? null : index)}
-      ><span>{name}</span></button>
-    </div>)}</div>
-  </div></section>
-
-  {openCover !== null && <div
-    className="cover-preview is-open"
-    role="dialog"
-    aria-modal="true"
-    aria-label={`${covers[openCover][1]} project preview`}
-    onClick={() => setOpenCover(null)}
-  >
-    <div className="cover-preview__panel" onClick={(event) => event.stopPropagation()}>
-      <div className="cover-preview__image" style={{ "--art": covers[openCover][2] } as CSSProperties} />
-      <p>{covers[openCover][1]}</p>
-      <button type="button" className="cover-preview__close" onClick={() => setOpenCover(null)} aria-label="Close project preview">×</button>
-    </div>
-  </div>}
-  </>;
-}
-
 export function Expertise() {
   return <section className="expertise" id="expertise" aria-labelledby="expertise-title"><div className="expertise__inner shell">
     <header className="expertise__header reveal-header"><h2 id="expertise-title">( Expertise )</h2><p>A degree holder in Information Technology with hands-on experience building backend-driven web applications, REST APIs, and database systems — paired with a design background in UI/UX and visual design.</p></header>
