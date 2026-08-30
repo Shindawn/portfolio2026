@@ -3392,41 +3392,11 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-/* About Page - Introduction */
-.about-introduction {
-  width: var(--shell);
-  margin-inline: auto;
-  padding: clamp(3.5rem, 6vw, 6rem) 0 1rem;
-}
-
-.about-introduction h2 {
-  margin: 0;
-  color: var(--accent);
-  font-family: "Instrument Serif", "Times New Roman", serif;
-  font-size: clamp(3.7rem, 6vw, 6rem);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: -0.055em;
-}
-
-:root[data-theme="dark"] .about-introduction h2 {
-  color: var(--accent-bright);
-}
-
-.about-introduction p {
-  margin: 1.4rem 0 0;
-  color: var(--muted);
-  font-size: clamp(1rem, 1.35vw, 1.25rem);
-  line-height: 1.45;
-  letter-spacing: -0.03em;
-  max-width: 48rem;
-}
-
 /* About Page - Experience & Interactive Tech Matrix Alignment */
 .about-experience {
   width: var(--shell);
   margin-inline: auto;
-  padding: clamp(3.5rem, 6vw, 6rem) 0;
+  padding: clamp(1.5rem, 3.5vw, 3.5rem) 0 clamp(3.5rem, 6vw, 6rem);
 }
 
 .about-experience header {
