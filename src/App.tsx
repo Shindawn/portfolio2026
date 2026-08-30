@@ -152,5 +152,5 @@ export default function App() {
     };
   }, []);
 
-  return <div ref={appRef}><Hero /><Hero3DCarousel /><Expertise /><LatestWork /><Brands /><Faq /><CurvedBanner /><Footer /></div>;
+  return <div ref={appRef}><Hero /><Expertise /><LatestWork /><Brands /><Faq /><Footer /></div>;
 }

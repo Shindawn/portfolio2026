@@ -190,19 +190,7 @@ export default function Hero3DCarousel() {
                     style={{
                       backgroundPosition: `calc(${item.artIndex} * 20%) center`,
                     }}
-                  >
-                    <div
-                      className="hero-3d-card__shade"
-                      style={{
-                        background: `linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.85) 100%)`,
-                      }}
-                    />
-                  </div>
-                  <div className="hero-3d-card__content">
-                    <span className="hero-3d-card__tag">{item.tag}</span>
-                    <h3 className="hero-3d-card__title">{item.title}</h3>
-                    <p className="hero-3d-card__category">{item.category}</p>
-                  </div>
+                  />
                 </div>
               </div>
             );

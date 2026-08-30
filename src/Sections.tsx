@@ -1,4 +1,6 @@
 import { covers, faqs, projects, testimonials } from "./data";
+import CurvedBanner from "./CurvedBanner";
+import Hero3DCarousel from "./Hero3DCarousel";
 import HeroBeamLines from "./HeroBeamLines";
 import ThemeToggle from "./ThemeToggle";
 import { useEffect, useState, type CSSProperties, type PointerEvent } from "react";
@@ -57,7 +59,6 @@ export function Navigation() {
       <nav className={`nav shell${isMenuOpen ? " is-menu-open" : ""}`} aria-label="Main navigation">
         <div className="nav-start">
           <a className="brand" href="/" aria-label="Lescy Gdawn, home" onClick={closeMenu}>
-            <span className="brand__logo-box" aria-hidden="true">■</span>
             <span>Lescy Gdawn</span>
           </a>
         </div>
@@ -160,7 +161,7 @@ export function Hero() {
         <div className="hero-stage">
           <div className="hero-stage__eyebrow-pill">
             <span className="hero-stage__eyebrow-dot" aria-hidden="true" />
-            <span>Web Engineering &amp; UI/UX</span>
+            <span>Available for work</span>
           </div>
 
           <div className="hero-title-wrap hero-stage__title-wrap">
@@ -195,6 +196,7 @@ export function Hero() {
           </div>
         </div>
       </section>
+      <Hero3DCarousel />
     </main>
   );
 }
@@ -293,58 +295,12 @@ export function Brands() {
         >
           {/* Moving Light Beams Grid Overlay */}
           <div className="testimonial-card__grid-overlay" aria-hidden="true">
-            <svg
-              className="testimonial-card__grid-svg"
-              viewBox="0 0 1200 200"
-              preserveAspectRatio="none"
-              fill="none"
-            >
-              <defs>
-                <linearGradient id="t-beam-horiz" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="var(--accent-bright)" stopOpacity="0" />
-                  <stop offset="50%" stopColor="var(--accent-bright)" stopOpacity="1" />
-                  <stop offset="100%" stopColor="var(--accent-bright)" stopOpacity="0" />
-                </linearGradient>
-                <linearGradient id="t-beam-vert" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="var(--accent-bright)" stopOpacity="0" />
-                  <stop offset="50%" stopColor="var(--accent-bright)" stopOpacity="1" />
-                  <stop offset="100%" stopColor="var(--accent-bright)" stopOpacity="0" />
-                </linearGradient>
-                <filter id="t-beam-glow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feMerge>
-                    <feMergeNode in="blur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-
-              {/* Static Crosshair Base Lines */}
-              <line x1="0" y1="140" x2="1200" y2="140" className="testimonial-card__base-line" stroke="var(--line)" strokeWidth="1" />
-              <line x1="140" y1="0" x2="140" y2="200" className="testimonial-card__base-line" stroke="var(--line)" strokeWidth="1" />
-
-              {/* Moving Animated Light Beams */}
-              <line
-                x1="0"
-                y1="140"
-                x2="1200"
-                y2="140"
-                className="testimonial-card__beam testimonial-card__beam--horiz"
-                stroke="url(#t-beam-horiz)"
-                strokeWidth="2.2"
-                filter="url(#t-beam-glow)"
-              />
-              <line
-                x1="140"
-                y1="0"
-                x2="140"
-                y2="200"
-                className="testimonial-card__beam testimonial-card__beam--vert"
-                stroke="url(#t-beam-vert)"
-                strokeWidth="2.2"
-                filter="url(#t-beam-glow)"
-              />
-            </svg>
+            <div className="testimonial-grid-line testimonial-grid-line--horiz">
+              <div className="testimonial-grid-beam testimonial-grid-beam--horiz" />
+            </div>
+            <div className="testimonial-grid-line testimonial-grid-line--vert">
+              <div className="testimonial-grid-beam testimonial-grid-beam--vert" />
+            </div>
           </div>
 
           {/* Testimonial Card Body */}
@@ -446,7 +402,34 @@ export function Faq() {
 }
 
 export function Footer() {
-  return <footer className="footer" id="contact"><div className="footer__inner shell"><div className="footer__contact"><p className="footer__eyebrow">LET'S CONNECT</p><a className="footer__email" href="mailto:lescycaadlawon.dev@gmail.com" aria-label="Email lescycaadlawon dot dev at gmail dot com"><span className="footer__email-local" aria-hidden="true">lescycaadlawon.dev</span><span className="footer__email-at" aria-hidden="true">@</span><span className="footer__email-domain" aria-hidden="true">gmail.com</span></a><p className="footer__message">Have a project in mind or an idea worth exploring?<br />Let’s talk and create something meaningful together.</p></div>
-    <div className="footer__meta"><p>©2026 Lescy G. Caadlawon</p><nav className="footer__socials" aria-label="Social links"><a href="https://www.linkedin.com/in/lescycaadlawon" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/Shindawn" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.facebook.com/lescygcaadlawon/" target="_blank" rel="noreferrer">Facebook</a><a href="https://wa.me/639692467870" target="_blank" rel="noreferrer">WhatsApp</a></nav><p className="footer__credit">Thoughtfully crafted by Lescy Gdawn</p></div>
-  </div></footer>;
+  return (
+    <footer className="footer" id="contact">
+      <CurvedBanner />
+      <div className="footer__inner shell">
+        <div className="footer__contact">
+          <p className="footer__eyebrow">LET'S CONNECT</p>
+          <a className="footer__email" href="mailto:lescycaadlawon.dev@gmail.com" aria-label="Email lescycaadlawon dot dev at gmail dot com">
+            <span className="footer__email-local" aria-hidden="true">lescycaadlawon.dev</span>
+            <span className="footer__email-at" aria-hidden="true">@</span>
+            <span className="footer__email-domain" aria-hidden="true">gmail.com</span>
+          </a>
+          <p className="footer__message">
+            Have a project in mind or an idea worth exploring?
+            <br />
+            Let’s talk and create something meaningful together.
+          </p>
+        </div>
+        <div className="footer__meta">
+          <p>©2026 Lescy G. Caadlawon</p>
+          <nav className="footer__socials" aria-label="Social links">
+            <a href="https://www.linkedin.com/in/lescycaadlawon" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://github.com/Shindawn" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://www.facebook.com/lescygcaadlawon/" target="_blank" rel="noreferrer">Facebook</a>
+            <a href="https://wa.me/639692467870" target="_blank" rel="noreferrer">WhatsApp</a>
+          </nav>
+          <p className="footer__credit">Thoughtfully crafted by Lescy Gdawn</p>
+        </div>
+      </div>
+    </footer>
+  );
 }

@@ -9,7 +9,7 @@ export default function CurvedBanner() {
 
     const animate = () => {
       offset -= 0.85; // smooth gliding velocity
-      if (offset <= -1400) {
+      if (offset <= -1500) {
         offset = 0;
       }
       if (textPathRef.current) {
@@ -22,30 +22,40 @@ export default function CurvedBanner() {
     return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
-  // Repeating only 'Design that moves' without stars, separated by clean rhythmic spacing
+  // Repeating text moving continuously inside the arched ribbon
   const repeatingText =
-    "Design that moves       Design that moves       Design that moves       Design that moves       Design that moves       Design that moves       Design that moves       ";
+    "Design that moves.       Design that moves.       Design that moves.       Design that moves.       Design that moves.       Design that moves.       Design that moves.       ";
 
   return (
     <section className="curved-marquee" aria-hidden="true">
       <div className="curved-marquee__inner">
         <svg
           className="curved-marquee__svg"
-          viewBox="0 0 1440 220"
+          viewBox="0 0 1440 380"
           preserveAspectRatio="none"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <defs>
-            {/* Smooth arch curve across the full width */}
+            {/* Dramatic convex arched curve matching reference image */}
             <path
               id="arch-text-path"
-              d="M -400,220 C 180,20 1260,20 1840,220"
+              d="M -250,390 C 200,50 1240,50 1690,390"
             />
           </defs>
 
-          {/* Moving text path directly without ribbon background */}
-          <text className="curved-marquee__text">
+          {/* Arched Ribbon Strip Background */}
+          <path
+            d="M -250,390 C 200,50 1240,50 1690,390"
+            className="curved-marquee__ribbon"
+            stroke="currentColor"
+            strokeWidth="130"
+            strokeLinecap="square"
+            fill="none"
+          />
+
+          {/* Moving Text riding inside the arch ribbon */}
+          <text className="curved-marquee__text" dy="4">
             <textPath
               ref={textPathRef}
               href="#arch-text-path"
