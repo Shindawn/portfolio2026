@@ -4112,7 +4112,7 @@ a {
   position: absolute;
   inset: -8px;
   border-radius: 50%;
-  border: 1px solid #007acc;
+  border: 1px solid rgba(0, 122, 204, 0.4);
   opacity: 0.6;
   animation: hub-pulse-ring 3s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
 }
@@ -4127,20 +4127,33 @@ a {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: #0b1219;
-  border: 1.5px solid rgba(0, 122, 204, 0.35);
+  background: #ffffff;
+  border: 1.5px solid var(--line);
   color: #007acc;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
-  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease, background 220ms ease;
+}
+
+:root[data-theme="dark"] .network-hub__core {
+  background: #121c17;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
 }
 
 .network-hub:hover .network-hub__core {
-  transform: scale(1.06);
+  transform: scale(1.08);
   border-color: #007acc;
-  box-shadow: 0 10px 28px rgba(0, 122, 204, 0.35);
+  background: color-mix(in srgb, var(--cream) 92%, var(--paper));
+  box-shadow: 0 10px 28px rgba(0, 122, 204, 0.3);
+}
+
+:root[data-theme="dark"] .network-hub:hover .network-hub__core {
+  background: #112638;
+  border-color: #007acc;
+  box-shadow: 0 12px 32px rgba(0, 122, 204, 0.55);
 }
 
 .network-hub__icon {
