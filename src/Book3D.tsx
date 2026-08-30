@@ -181,11 +181,6 @@ export default function Book3D() {
                   className="book3d-cover__art"
                 />
               </div>
-
-              <div className="book3d-cover__prompt">
-                <span className="book3d-cover__prompt-dot" />
-                Click anywhere to open book
-              </div>
             </div>
 
             {/* Layered 3D Page Edge Stack (Right Edge) */}
