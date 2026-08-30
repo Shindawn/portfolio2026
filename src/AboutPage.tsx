@@ -105,6 +105,36 @@ export default function AboutPage() {
         </div>
       </div>
     </section>
+
+    <section className="about-education" aria-labelledby="education-title">
+      <header>
+        <h2 id="education-title">( Education )</h2>
+        <p>Academic foundation, scholastic honors, and degree milestones.</p>
+      </header>
+      <div className="about-education__card">
+        <article className="about-education__item">
+          <div className="about-education__main">
+            <span className="about-education__index">01</span>
+            <div className="about-education__info">
+              <div className="about-education__title-row">
+                <h3 className="about-education__school">Catanduanes State University</h3>
+                <span className="about-education__period">Aug 2022 – June 2026</span>
+              </div>
+              <p className="about-education__degree">
+                Bachelor of Science in Information Technology <span className="about-education__divider">|</span> <strong className="about-education__gwa">1.4 GWA (Cum Laude)</strong>
+              </p>
+              <div className="about-education__meta">
+                <span className="about-education__location">📍 Catanduanes, Philippines</span>
+                <span className="about-education__honor-pill">
+                  <span className="about-education__dot" aria-hidden="true" />
+                  Dean’s Lister (2022–2023 | 2024–2026)
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
     <Footer />
   </main>;
 }
