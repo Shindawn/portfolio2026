@@ -3913,7 +3913,7 @@ a {
 .integration-network {
   position: relative;
   width: 100%;
-  padding: 0 0 clamp(4rem, 6vw, 6rem);
+  padding: clamp(3.5rem, 6vh, 5.5rem) 0 clamp(5rem, 8vw, 8rem);
   background: var(--paper);
   overflow: hidden;
 }
@@ -3934,7 +3934,7 @@ a {
 }
 
 .integration-network__status-bar {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
   min-height: 2.2rem;
   display: flex;
   align-items: center;
@@ -4112,7 +4112,7 @@ a {
   position: absolute;
   inset: -8px;
   border-radius: 50%;
-  border: 1px solid var(--accent-bright);
+  border: 1px solid #007acc;
   opacity: 0.6;
   animation: hub-pulse-ring 3s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
 }
@@ -4127,26 +4127,27 @@ a {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: #0c1410;
-  border: 2px solid rgba(255, 255, 255, 0.16);
-  color: #ffffff;
+  background: #0b1219;
+  border: 1.5px solid rgba(0, 122, 204, 0.35);
+  color: #007acc;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28), 0 0 24px rgba(34, 150, 110, 0.35);
-  transition: transform 250ms ease, box-shadow 250ms ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
 }
 
 .network-hub:hover .network-hub__core {
-  transform: scale(1.08);
-  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.35), 0 0 32px rgba(34, 150, 110, 0.6);
+  transform: scale(1.06);
+  border-color: #007acc;
+  box-shadow: 0 10px 28px rgba(0, 122, 204, 0.35);
 }
 
 .network-hub__icon {
-  width: 48%;
-  height: 48%;
-  color: #22c55e;
-  filter: drop-shadow(0 0 6px rgba(34, 197, 94, 0.6));
+  width: 52%;
+  height: 52%;
+  color: #007acc;
+  filter: none;
 }
 
 /* Satellite Nodes */
