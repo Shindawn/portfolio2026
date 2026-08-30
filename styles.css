@@ -3165,15 +3165,17 @@ a {
   }
 }
 
-/* About Page - Folder Tabs Education & Background Section */
+/* About Page - Folder Tabs Education & Background Section (System Palette & Full Width) */
 :root {
-  --folder-bg: #ffffff;
+  --folder-surface: #edf5f0;
   --folder-border: var(--line);
+  --folder-shadow: 0 14px 38px rgba(14, 90, 60, 0.05);
 }
 
 :root[data-theme="dark"] {
-  --folder-bg: #0e1411;
-  --folder-border: rgba(255, 255, 255, 0.08);
+  --folder-surface: #0f1a14;
+  --folder-border: rgba(255, 255, 255, 0.09);
+  --folder-shadow: 0 18px 45px rgba(0, 0, 0, 0.4);
 }
 
 .about-education {
@@ -3183,9 +3185,31 @@ a {
   border-top: 1px solid var(--line);
 }
 
+.about-education header {
+  margin-bottom: 2.2rem;
+}
+
+.about-education header h2 {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.about-education header p {
+  margin: 0.45rem 0 0;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
 .folder-education__container {
-  max-width: 960px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
   position: relative;
 }
 
@@ -3195,7 +3219,7 @@ a {
   align-items: flex-end;
   position: relative;
   z-index: 3;
-  gap: 0.35rem;
+  gap: clamp(1rem, 2vw, 2rem);
   margin-bottom: -1px;
   overflow-x: auto;
   scrollbar-width: none;
@@ -3209,7 +3233,7 @@ a {
 /* Individual Tab Button */
 .folder-tab-btn {
   position: relative;
-  padding: 0.75rem 1.7rem;
+  padding: 0.75rem 1.8rem;
   font-family: inherit;
   font-size: clamp(0.92rem, 1.2vw, 1.05rem);
   font-weight: 500;
@@ -3217,7 +3241,7 @@ a {
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: color 180ms ease, background 180ms ease;
+  transition: color 180ms ease;
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
   white-space: nowrap;
@@ -3229,10 +3253,11 @@ a {
   color: var(--ink);
 }
 
+/* Active Tab seamlessly blending into folder surface */
 .folder-tab-btn--active {
-  color: var(--ink);
+  color: var(--ink) !important;
   font-weight: 600;
-  background: var(--folder-bg);
+  background: var(--folder-surface);
   z-index: 5;
 }
 
@@ -3246,7 +3271,7 @@ a {
   height: 16px;
   background: transparent;
   border-bottom-left-radius: 14px;
-  box-shadow: -5px 5px 0 0 var(--folder-bg);
+  box-shadow: -5px 5px 0 0 var(--folder-surface);
   pointer-events: none;
 }
 
@@ -3260,45 +3285,44 @@ a {
   height: 16px;
   background: transparent;
   border-bottom-right-radius: 14px;
-  box-shadow: 5px 5px 0 0 var(--folder-bg);
+  box-shadow: 5px 5px 0 0 var(--folder-surface);
   pointer-events: none;
 }
 
 /* Main Seamless Folder Card Body */
 .folder-card {
-  background: var(--folder-bg);
-  border-radius: 1.5rem;
+  width: 100%;
+  background: var(--folder-surface);
+  border-radius: 1.25rem;
   border: 1px solid var(--folder-border);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--folder-shadow);
   display: grid;
-  grid-template-columns: clamp(200px, 28%, 280px) 1fr;
-  gap: clamp(1.6rem, 3.2vw, 2.8rem);
-  padding: clamp(1.4rem, 2.8vw, 2.2rem);
+  grid-template-columns: clamp(240px, 30%, 360px) 1fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  padding: clamp(1.8rem, 3.2vw, 2.8rem);
   align-items: center;
   position: relative;
   z-index: 2;
-  min-height: 260px;
+  min-height: 280px;
   transition: border-radius 200ms ease;
 }
 
-:root[data-theme="dark"] .folder-card {
-  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45);
-}
-
-/* When the first tab is active, seamlessly flatten top-left corner */
+/* When the first tab is active, seamlessly connect top-left edge */
 .folder-card--active-0 {
   border-top-left-radius: 0;
 }
 
-/* Media Thumbnail */
+/* Media Thumbnail (Left Column) */
 .folder-card__media {
   width: 100%;
   height: 100%;
-  min-height: 200px;
+  min-height: 240px;
   border-radius: 1.1rem;
   overflow: hidden;
-  background: #0d1210;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+  background: var(--cream);
+  border: 1px solid var(--folder-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
   position: relative;
 }
 
@@ -3307,61 +3331,58 @@ a {
   height: 100%;
   object-fit: cover;
   display: block;
-  animation: folder-fade 240ms ease;
+  animation: folder-fade 220ms ease;
 }
 
-/* Content Column */
+/* Content Column (Right Column) */
 .folder-card__content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1.2rem;
-  animation: folder-fade 240ms ease;
+  gap: 1.4rem;
+  animation: folder-fade 220ms ease;
 }
 
 .folder-card__description {
   margin: 0;
-  font-size: clamp(0.95rem, 1.25vw, 1.08rem);
-  line-height: 1.62;
+  font-size: clamp(1.02rem, 1.3vw, 1.15rem);
+  line-height: 1.65;
   color: var(--ink);
-  opacity: 0.92;
   font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 .folder-card__stat-row {
   display: flex;
   align-items: baseline;
-  gap: 0.85rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
 .folder-card__stat-label {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: var(--muted);
   font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .folder-card__stat-value {
   font-family: "BDO Grotesk Variable", Arial, sans-serif;
-  font-size: clamp(1.02rem, 1.35vw, 1.2rem);
+  font-size: clamp(1.1rem, 1.4vw, 1.25rem);
   font-weight: 600;
-  color: var(--ink);
+  color: var(--accent);
   letter-spacing: -0.01em;
 }
 
-.folder-card__stat-row--sub .folder-card__stat-value {
-  font-weight: 500;
-  color: var(--accent);
-}
-
-:root[data-theme="dark"] .folder-card__stat-row--sub .folder-card__stat-value {
+:root[data-theme="dark"] .folder-card__stat-value {
   color: var(--accent-bright);
 }
 
 @keyframes folder-fade {
   from {
     opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(3px);
   }
   to {
     opacity: 1;
@@ -3369,21 +3390,26 @@ a {
   }
 }
 
-/* Responsive adjustment for Folder Card */
-@media (max-width: 768px) {
+/* Responsive adjustment for Mobile / Tablet */
+@media (max-width: 860px) {
   .folder-card {
     grid-template-columns: 1fr;
-    gap: 1.4rem;
-    padding: 1.4rem;
+    gap: 1.6rem;
+    padding: 1.5rem;
   }
 
   .folder-card__media {
-    height: 200px;
+    width: 100%;
+    height: 210px;
     min-height: auto;
+  }
+
+  .folder-tabs__bar {
+    gap: 0.85rem;
   }
 
   .folder-tab-btn {
     padding: 0.65rem 1.2rem;
-    font-size: 0.88rem;
+    font-size: 0.92rem;
   }
 }

@@ -59,46 +59,38 @@ const academicTabs: AcademicTab[] = [
   {
     id: "education",
     label: "Education",
-    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=700&q=85",
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80",
     description:
       "Bachelor of Science in Information Technology at Catanduanes State University (2022 – 2026). Comprehensive study of distributed architectures, full-stack systems engineering, database modeling, and human-centered digital products.",
-    statLabel: "Academic Standing",
+    statLabel: "Standing",
     statValue: "1.4 GWA (Cum Laude)",
-    secondaryStatLabel: "Institution",
-    secondaryStatValue: "CatSU • Catanduanes, PH",
   },
   {
     id: "awards",
     label: "Awards & Certs",
-    image: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=700&q=85",
+    image: "https://images.unsplash.com/photo-1579389083078-4e7018379f7e?auto=format&fit=crop&w=600&q=80",
     description:
       "Recognized with consecutive Dean's Honor Roll standing across academic years, complemented by industry credentials in modern full-stack web architectures, API specifications, and cloud computing foundations.",
-    statLabel: "Scholastic Distinction",
+    statLabel: "Honors",
     statValue: "Dean's Lister (2022–2026)",
-    secondaryStatLabel: "Credentials",
-    secondaryStatValue: "Full-Stack & Cloud Certified",
   },
   {
     id: "scholarships",
     label: "Scholarships",
-    image: "https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0?auto=format&fit=crop&w=700&q=85",
+    image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=600&q=80",
     description:
       "Awarded competitive tertiary academic scholarships based on consistent GPA performance and scholastic excellence, receiving full institutional tuition grants and research project funding.",
-    statLabel: "Grant Classification",
+    statLabel: "Grant",
     statValue: "Tertiary Academic Scholar",
-    secondaryStatLabel: "Coverage",
-    secondaryStatValue: "100% Merit-Based Grant",
   },
   {
     id: "affiliations",
     label: "Affiliations",
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=700&q=85",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
     description:
       "Active member and student leader in collegiate computing organizations and developer circles, leading code jams, peer mentoring sessions, and UI/UX design workshops across campus.",
-    statLabel: "Leadership Role",
-    statValue: "Tech Guild & IT Society",
-    secondaryStatLabel: "Involvement",
-    secondaryStatValue: "Lead Developer & Contributor",
+    statLabel: "Leadership",
+    statValue: "IT Society & Tech Guild",
   },
 ];
 
@@ -238,6 +230,11 @@ export default function AboutPage() {
 
       {/* Folder Tabs Academic Section */}
       <section className="about-education folder-education" aria-labelledby="academic-folder-title">
+        <header>
+          <h2 id="academic-folder-title">( Academic Background &amp; Honors )</h2>
+          <p>University foundation, scholastic honors, scholarship grants, and collegiate leadership.</p>
+        </header>
+
         <div className="folder-education__container">
           {/* Tab Bar with seamlessly connected active tab */}
           <div className="folder-tabs__bar" role="tablist" aria-label="Academic & Background Tabs">
