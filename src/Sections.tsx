@@ -1,6 +1,5 @@
 import { covers, faqs, projects, testimonials } from "./data";
 import HeroBeamLines from "./HeroBeamLines";
-import HeroTitleEffect from "./HeroTitleEffect";
 import ThemeToggle from "./ThemeToggle";
 import { useEffect, useState, type CSSProperties, type PointerEvent } from "react";
 
@@ -81,7 +80,6 @@ export function Hero() {
                 <span className="hero-stage__main-accent">Web Systems</span>
               </span>
             </h1>
-            <HeroTitleEffect />
           </div>
 
           <p className="hero-stage__subtitle">
@@ -151,7 +149,7 @@ export function SneakPeek() {
 
 export function Expertise() {
   return <section className="expertise" id="expertise" aria-labelledby="expertise-title"><div className="expertise__inner shell">
-    <header className="expertise__header reveal-header"><div className="pixel-heading"><h2 id="expertise-title">( Expertise )</h2><HeroTitleEffect selector="h2" canvasClassName="pixel-heading-canvas" /></div><p>A degree holder in Information Technology with hands-on experience building backend-driven web applications, REST APIs, and database systems — paired with a design background in UI/UX and visual design.</p></header>
+    <header className="expertise__header reveal-header"><h2 id="expertise-title">( Expertise )</h2><p>A degree holder in Information Technology with hands-on experience building backend-driven web applications, REST APIs, and database systems — paired with a design background in UI/UX and visual design.</p></header>
     <p className="expertise__services">
       <span className="expertise__service" tabIndex={0}>Web-Software Development,</span><br />
       <span className="expertise__service" tabIndex={0}>UI/UX Designer,</span>{" "}
@@ -169,7 +167,7 @@ export function LatestWork() {
   };
 
   return <section className="latest-work" id="work" aria-labelledby="work-title"><div className="latest-work__inner shell">
-    <header className="latest-work__intro reveal-header"><div className="pixel-heading"><h2 id="work-title">( Latest Work )</h2><HeroTitleEffect selector="h2" canvasClassName="pixel-heading-canvas" /></div><p>A selection of systems I’ve shipped end to end — from a full-stack<br />LGU management platform to an AI-powered portfolio and AR UI design.</p></header>
+    <header className="latest-work__intro reveal-header"><h2 id="work-title">( Latest Work )</h2><p>A selection of systems I’ve shipped end to end — from a full-stack<br />LGU management platform to an AI-powered portfolio and AR UI design.</p></header>
     <div className="project-list" onPointerMove={movePreview} onPointerLeave={() => setActiveProject(null)}><div className="project-list__head" aria-hidden="true"><span>Index</span><span>Project</span><span>Category</span><span /></div>
       {projects.map(([index, name, category, tag], projectIndex) => <a className="project-row" href="#contact" key={index} onPointerEnter={() => setActiveProject(projectIndex)} onFocus={() => setActiveProject(projectIndex)} onBlur={() => setActiveProject(null)}>
         <span className="project-row__index">{index}</span><span className="project-row__name">{name}</span><span className="project-row__category">{category} <small>{tag}</small></span><span className="project-row__arrow" aria-hidden="true">↗</span>
@@ -181,7 +179,7 @@ export function LatestWork() {
 
 export function Brands() {
   return <section className="brands" aria-labelledby="brands-title"><div className="brands__inner shell">
-    <header className="brands__intro reveal-header"><div className="pixel-heading"><h2 id="brands-title">( Companies I work with )</h2><HeroTitleEffect selector="h2" canvasClassName="pixel-heading-canvas" /></div><p>Teams and tools I’ve collaborated with,<br />and what they say about working together.</p></header>
+    <header className="brands__intro reveal-header"><h2 id="brands-title">( Companies I work with )</h2><p>Teams and tools I’ve collaborated with,<br />and what they say about working together.</p></header>
     <div className="brand-strip" aria-label="Selected companies and platforms"><div className="brand-track">
       {[...companyMarks, ...companyMarks].map(([label, mark, modifier], index) => <span className={`brand-mark ${modifier}`} aria-label={index < companyMarks.length ? label : undefined} aria-hidden={index >= companyMarks.length} key={`${label}-${index}`}>{mark}</span>)}
     </div></div>
@@ -198,7 +196,7 @@ export function Faq() {
   });
 
   return <section className="faq" id="faq" aria-labelledby="faq-title"><div className="faq__inner shell">
-    <header className="faq__intro reveal-header"><div className="pixel-heading"><h2 id="faq-title">( FAQs )</h2><HeroTitleEffect selector="h2" canvasClassName="pixel-heading-canvas" /></div><p>Got questions? Here’s everything you<br />need to know about working with me.</p></header>
+    <header className="faq__intro reveal-header"><h2 id="faq-title">( FAQs )</h2><p>Got questions? Here’s everything you<br />need to know about working with me.</p></header>
     <div className="faq__list">{faqs.map(([question, answer], index) => {
       const isOpen = openItems.has(index);
       return <div className={`faq-item${isOpen ? " is-open" : ""}`} key={question}>

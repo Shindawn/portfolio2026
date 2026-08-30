@@ -1656,6 +1656,58 @@ a {
   transform: translateY(0);
 }
 
+/* Curved Marquee - Design that moves */
+:root {
+  --marquee-bg: #edd5f7;
+  --marquee-color: #3b0e45;
+}
+
+:root[data-theme="dark"] {
+  --marquee-bg: #edd5f7;
+  --marquee-color: #3b0e45;
+}
+
+.curved-marquee {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: clamp(2rem, 4.5vw, 3.8rem);
+  margin-bottom: -1.5rem;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+  z-index: 5;
+}
+
+.curved-marquee__inner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.curved-marquee__svg {
+  width: 100%;
+  height: clamp(130px, 18vw, 240px);
+  display: block;
+  overflow: visible;
+}
+
+.curved-marquee__ribbon-bg {
+  opacity: 0.98;
+  filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.22));
+}
+
+.curved-marquee__text {
+  font-family: "BDO Grotesk Variable", Arial, sans-serif;
+  font-size: 50px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  fill: var(--marquee-color);
+  dominant-baseline: central;
+}
+
 .footer {
   overflow: hidden;
   background:
