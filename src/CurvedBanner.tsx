@@ -24,7 +24,7 @@ export default function CurvedBanner() {
 
   // Repeating text moving continuously inside the arched ribbon
   const repeatingText =
-    "Design that moves.       Design that moves.       Design that moves.       Design that moves.       Design that moves.       Design that moves.       Design that moves.       ";
+    "Design that moves.       System that works.       Design that moves.       System that works.       Design that moves.       System that works.       Design that moves.       System that works.       ";
 
   return (
     <section className="curved-marquee" aria-hidden="true">
