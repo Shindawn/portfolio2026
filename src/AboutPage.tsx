@@ -1,5 +1,4 @@
 import { useRef, type PointerEvent } from "react";
-import HeroTitleEffect from "./HeroTitleEffect";
 import { Footer, Navigation } from "./Sections";
 
 const experience = [
@@ -86,13 +85,13 @@ export default function AboutPage() {
     </section>
 
     <section className="about-introduction" aria-labelledby="introduction-title">
-      <div className="pixel-heading"><h2 id="introduction-title">( Introduction )</h2><HeroTitleEffect selector="h2" canvasClassName="pixel-heading-canvas" /></div>
+      <h2 id="introduction-title">( Introduction )</h2>
       <p>Lescy is a full-stack developer and UI/UX designer who builds clear, reliable digital experiences from concept to deployment.</p>
     </section>
 
     <section className="about-experience" aria-labelledby="experience-title">
       <header>
-        <div className="pixel-heading"><h2 id="experience-title">( Experience )</h2><HeroTitleEffect selector="h2" canvasClassName="pixel-heading-canvas" /></div>
+        <h2 id="experience-title">( Experience )</h2>
         <p>A look at my professional journey and the tools I work with.</p>
       </header>
       <div className="about-experience__grid">

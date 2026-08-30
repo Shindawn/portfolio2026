@@ -32,13 +32,124 @@ function NavClock() {
 }
 
 export function Navigation() {
-  return <nav className="nav shell" aria-label="Main navigation">
-    <div className="nav-start"><ThemeToggle /><a className="brand" href="/" aria-label="Lescy Gdawn, home">Lescy Gdawn</a><NavClock /></div>
-    <div className="nav-links"><details className="file-menu"><summary>File</summary><div className="file-menu__dropdown">
-      <a href="/LescyGCaadlawon_CV.pdf" target="_blank" rel="noreferrer"><span>Preview Resume</span><small aria-hidden="true">↗</small></a>
-      <a href="/LescyGCaadlawon_CV.pdf" download="LescyGCaadlawon_CV.pdf"><span>Download Resume</span><small aria-hidden="true">↓</small></a>
-    </div></details><a href="/">Home</a><a href="/about">About</a><a href="/#work">Work</a></div>
-  </nav>;
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMenuOpen(false);
+    };
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", onKeyDown);
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isMenuOpen]);
+
+  const closeMenu = () => setIsMenuOpen(false);
+
+  return (
+    <>
+      <nav className={`nav shell${isMenuOpen ? " is-menu-open" : ""}`} aria-label="Main navigation">
+        <div className="nav-start">
+          <ThemeToggle />
+          <NavClock />
+          <a className="brand" href="/" aria-label="Lescy Gdawn, home" onClick={closeMenu}>
+            <span className="brand__logo-box" aria-hidden="true">■</span>
+            <span>Lescy Gdawn</span>
+          </a>
+        </div>
+
+        <div className="nav-center">
+          <button
+            type="button"
+            className={`nav-hamburger${isMenuOpen ? " is-active" : ""}`}
+            aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+          >
+            <span className="nav-hamburger__bar nav-hamburger__bar--top" />
+            <span className="nav-hamburger__bar nav-hamburger__bar--bottom" />
+          </button>
+        </div>
+
+        <div className="nav-end">
+          <a
+            className="button button--nav"
+            href="https://calendar.app.google/NzRmXYUx3p8Z7g2L8"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Book a Consultation
+          </a>
+        </div>
+      </nav>
+
+      {/* Fullscreen Navigation Overlay (Matching Reference Image 2) */}
+      <div
+        className={`nav-overlay${isMenuOpen ? " is-open" : ""}`}
+        aria-hidden={!isMenuOpen}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation menu"
+      >
+        <div className="nav-overlay__inner shell">
+          <ul className="nav-overlay__list">
+            <li className="nav-overlay__item">
+              <a href="/" className="nav-overlay__link" onClick={closeMenu}>
+                <span>Home</span>
+              </a>
+            </li>
+            <li className="nav-overlay__item">
+              <a href="/#work" className="nav-overlay__link" onClick={closeMenu}>
+                <span>Project</span>
+              </a>
+            </li>
+            <li className="nav-overlay__item">
+              <a href="/about" className="nav-overlay__link" onClick={closeMenu}>
+                <span>About</span>
+              </a>
+            </li>
+            <li className="nav-overlay__item">
+              <a href="/#expertise" className="nav-overlay__link" onClick={closeMenu}>
+                <span>Services</span>
+              </a>
+            </li>
+            <li className="nav-overlay__item">
+              <a href="/#contact" className="nav-overlay__link" onClick={closeMenu}>
+                <span>Contact</span>
+              </a>
+            </li>
+          </ul>
+
+          <div className="nav-overlay__footer">
+            <div className="nav-overlay__resume-group">
+              <a
+                href="/LescyGCaadlawon_CV.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="nav-overlay__sublink"
+              >
+                <span>Preview Resume ↗</span>
+              </a>
+              <a
+                href="/LescyGCaadlawon_CV.pdf"
+                download="LescyGCaadlawon_CV.pdf"
+                className="nav-overlay__sublink"
+              >
+                <span>Download Resume ↓</span>
+              </a>
+            </div>
+            <p className="nav-overlay__copyright">©2026 Lescy Gdawn · Mandaluyong, Philippines</p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
 
 const rotatingWords = ["Cheaper", "Faster", "Great"] as const;
@@ -119,7 +230,7 @@ export function SneakPeek() {
   }, [openCover]);
 
   return <><section className="sneak-peek" aria-labelledby="sneak-peek-title"><div className="sneak-peek__inner shell">
-    <header className="sneak-peek__intro"><p id="sneak-peek-title">Sneak peek of my works</p></header>
+    <header className="sneak-peek__intro"><p id="sneak-peek-title">Services Offered</p></header>
     <div className="project-shelf" aria-label="Selected project covers">{covers.map(([modifier, name, artwork], index) => <div key={name} className={`shelf-slot shelf-slot--${modifier}`} style={{ "--layer": index, "--art": artwork } as CSSProperties}>
       <button
         className={`shelf-book${[1, 3].includes(index) ? " shelf-book--glass" : ""}`}

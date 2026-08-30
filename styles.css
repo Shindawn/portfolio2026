@@ -91,15 +91,24 @@ a {
 .nav-start {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.85rem;
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   font-family: "Instrument Serif", Georgia, serif;
   font-size: 1.28rem;
   font-style: italic;
   font-weight: 500;
   letter-spacing: -0.055em;
+}
+
+.brand__logo-box {
+  font-style: normal;
+  font-size: 0.95rem;
+  color: var(--accent);
 }
 
 .theme-toggle {
@@ -174,96 +183,204 @@ a {
   z-index: 9999;
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 1.8rem;
-  color: var(--muted);
-  font-size: 0.92rem;
-  font-weight: 500;
-}
-
-.nav-links > a:not(.button) {
-  padding-block: 0.7rem;
-}
-
 .nav-clock {
   color: var(--muted);
   font-family: "BDO Grotesk Variable", Arial, sans-serif;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-variant-numeric: tabular-nums;
   font-weight: 500;
   letter-spacing: normal;
   white-space: nowrap;
 }
 
-.file-menu {
-  position: relative;
-}
-
-.file-menu + a {
-  margin-left: -0.75rem;
-}
-
-.file-menu summary {
-  padding: 0.55rem 0.8rem;
-  border-radius: 0.55rem;
-  color: var(--muted);
-  cursor: pointer;
-  list-style: none;
-  transition: color 180ms ease, background 180ms ease;
-}
-
-.file-menu summary::-webkit-details-marker { display: none; }
-
-.file-menu summary:hover,
-.file-menu[open] summary {
-  background: rgba(16, 16, 15, 0.08);
-  color: var(--ink);
-}
-
-.file-menu__dropdown {
+.nav-center {
   position: absolute;
-  top: calc(100% + 0.85rem);
-  left: 0;
-  width: 14rem;
-  overflow: hidden;
-  padding: 0.35rem;
-  border: 1px solid var(--line);
-  border-radius: 0.8rem;
-  background: color-mix(in srgb, var(--paper) 90%, transparent);
-  box-shadow: 0 1.2rem 3rem rgba(16, 16, 15, 0.18);
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
-  backdrop-filter: blur(18px) saturate(150%);
-  animation: file-menu-in 180ms ease both;
-}
-
-.file-menu__dropdown a {
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  min-height: 2.75rem;
-  padding: 0.7rem 0.75rem;
-  border-radius: 0.55rem;
-  color: var(--ink);
-  font-size: 0.82rem;
-  transition: background 180ms ease, color 180ms ease;
+  justify-content: center;
 }
 
-.file-menu__dropdown a + a { border-top: 1px solid var(--line); }
+.nav-hamburger {
+  width: 2.35rem;
+  height: 2.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  transition: background 250ms ease, transform 250ms ease, border-color 250ms ease;
+}
 
-.file-menu__dropdown a:hover,
-.file-menu__dropdown a:focus-visible {
-  background: var(--accent);
-  color: var(--on-accent);
+.nav-hamburger:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.08);
+}
+
+.nav-hamburger__bar {
+  width: 17px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease;
+  transform-origin: center;
+}
+
+.nav-hamburger.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.nav-hamburger.is-active .nav-hamburger__bar {
+  background: var(--paper);
+}
+
+.nav-hamburger.is-active .nav-hamburger__bar--top {
+  transform: translateY(3.5px) rotate(45deg);
+}
+
+.nav-hamburger.is-active .nav-hamburger__bar--bottom {
+  transform: translateY(-3.5px) rotate(-45deg);
+}
+
+.nav-end {
+  display: flex;
+  align-items: center;
+}
+
+/* Fullscreen Overlay Menu (Matching Reference Image 2) */
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 990;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 7rem 0 3.5rem;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 320ms cubic-bezier(0.22, 1, 0.36, 1), visibility 320ms ease;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+
+.nav-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.nav-overlay__inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+}
+
+.nav-overlay__list {
+  list-style: none;
+  margin: auto 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.35rem, 1.5vh, 0.85rem);
+}
+
+.nav-overlay__item {
+  width: 100%;
+}
+
+.nav-overlay__link {
+  display: block;
+  width: 100%;
+  padding: clamp(0.4rem, 1.2vw, 0.8rem) clamp(1rem, 2.5vw, 1.8rem);
+  border-radius: 0.65rem;
+  font-family: "BDO Grotesk Variable", Arial, sans-serif;
+  font-size: clamp(3.2rem, 7.8vw, 6.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  transition: background 220ms ease, color 220ms ease, transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-overlay__link:hover,
+.nav-overlay__link:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  transform: translateX(14px);
   outline: none;
 }
 
-.file-menu__dropdown small { font-size: 0.9rem; }
+.nav-overlay__footer {
+  border-top: 1px solid var(--line);
+  padding-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
 
-@keyframes file-menu-in {
-  from { opacity: 0; transform: translateY(-0.4rem) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+.nav-overlay__resume-group {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.nav-overlay__sublink {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--muted);
+  transition: color 180ms ease;
+}
+
+.nav-overlay__sublink:hover {
+  color: var(--accent);
+}
+
+.nav-overlay__copyright {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+:root[data-theme="dark"] .nav-hamburger {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+:root[data-theme="dark"] .nav-hamburger:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+:root[data-theme="dark"] .nav-hamburger.is-active {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+:root[data-theme="dark"] .nav-hamburger.is-active .nav-hamburger__bar {
+  background: #0e1a15;
+}
+
+:root[data-theme="dark"] .nav-overlay {
+  background: #0a1410;
+}
+
+:root[data-theme="dark"] .nav-overlay__link:hover,
+:root[data-theme="dark"] .nav-overlay__link:focus-visible {
+  background: #ffffff;
+  color: #0e1a15;
 }
 
 .button {
@@ -450,26 +567,6 @@ a {
 .hero-stage__main-accent {
   font-family: "BDO Grotesk Variable", Arial, sans-serif;
   color: var(--ink);
-}
-
-.hero-title-canvas {
-  position: absolute;
-  z-index: 2;
-  inset: -1rem 0;
-  width: 100%;
-  height: calc(100% + 2rem);
-  cursor: crosshair;
-  touch-action: pan-y;
-  opacity: 0;
-  transition: opacity 180ms ease;
-}
-
-.hero-stage__title-wrap.is-particle-ready.is-hovering .hero-title-canvas {
-  opacity: 1;
-}
-
-.hero-stage__title-wrap.is-particle-ready.is-hovering .hero-stage__title {
-  color: transparent;
 }
 
 .hero-stage__subtitle {
@@ -869,31 +966,6 @@ a {
 
 .about-experience__item--stack:hover .about-experience__logo {
   transform: scale(1.12) rotate(3deg);
-}
-
-.pixel-heading {
-  --particle-ink: var(--accent);
-  position: relative;
-  display: inline-block;
-  width: fit-content;
-}
-
-.pixel-heading-canvas {
-  position: absolute;
-  z-index: 2;
-  inset: -0.6rem;
-  cursor: crosshair;
-  touch-action: pan-y;
-  opacity: 0;
-  transition: opacity 180ms ease;
-}
-
-.pixel-heading.is-particle-ready.is-hovering .pixel-heading-canvas {
-  opacity: 1;
-}
-
-.pixel-heading.is-particle-ready.is-hovering h2 {
-  color: transparent;
 }
 
 .sneak-peek {
@@ -1657,21 +1729,11 @@ a {
 }
 
 /* Curved Marquee - Design that moves */
-:root {
-  --marquee-bg: #edd5f7;
-  --marquee-color: #3b0e45;
-}
-
-:root[data-theme="dark"] {
-  --marquee-bg: #edd5f7;
-  --marquee-color: #3b0e45;
-}
-
 .curved-marquee {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  margin-top: clamp(2rem, 4.5vw, 3.8rem);
-  margin-bottom: -1.5rem;
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: clamp(1rem, 2.5vw, 2rem);
   overflow: hidden;
   position: relative;
   display: flex;
@@ -1689,23 +1751,24 @@ a {
 
 .curved-marquee__svg {
   width: 100%;
-  height: clamp(130px, 18vw, 240px);
+  height: clamp(120px, 16vw, 210px);
   display: block;
   overflow: visible;
 }
 
-.curved-marquee__ribbon-bg {
-  opacity: 0.98;
-  filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.22));
-}
-
 .curved-marquee__text {
   font-family: "BDO Grotesk Variable", Arial, sans-serif;
-  font-size: 50px;
+  font-size: 68px;
   font-weight: 700;
   letter-spacing: -0.035em;
-  fill: var(--marquee-color);
+  fill: var(--ink);
+  opacity: 0.92;
   dominant-baseline: central;
+}
+
+:root[data-theme="dark"] .curved-marquee__text {
+  fill: #ffffff;
+  opacity: 0.95;
 }
 
 .footer {
@@ -2166,21 +2229,17 @@ a {
   .nav {
     top: 1rem;
     height: 3.6rem;
-    padding-left: 1.1rem;
+    padding-inline: 0.85rem;
   }
 
-  .nav-links {
-    gap: 0.55rem;
-  }
-
-  .nav-links > a:not(.button) {
+  .nav-clock {
     display: none;
   }
 
   .button--nav {
-    min-height: 2.55rem;
-    padding-inline: 1.15rem;
-    font-size: 0.8rem;
+    min-height: 2.35rem;
+    padding-inline: 0.9rem;
+    font-size: 0.76rem;
   }
 
   .intro {
@@ -2213,14 +2272,6 @@ a {
 
   .hero-beams {
     opacity: 0.4;
-  }
-
-  .hero-title-canvas {
-    display: none;
-  }
-
-  .hero-stage__title-wrap.is-particle-ready.is-hovering .hero-stage__title {
-    color: inherit;
   }
 
   .sneak-peek {
