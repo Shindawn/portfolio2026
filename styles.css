@@ -523,6 +523,25 @@ a {
   50% { opacity: 1; transform: scale(1.25); }
 }
 
+.hero-stage__typing-text {
+  display: inline-flex;
+  align-items: center;
+  min-width: 9.8rem;
+}
+
+.hero-stage__typing-cursor {
+  display: inline-block;
+  margin-left: 1px;
+  font-weight: 300;
+  color: var(--accent);
+  animation: typing-blink 0.85s infinite;
+}
+
+@keyframes typing-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .hero-stage__title-wrap {
   --particle-ink: var(--ink);
   position: relative;

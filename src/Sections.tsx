@@ -140,6 +140,41 @@ const rotatingWords = ["Cheaper", "Faster", "Great"] as const;
 export function Hero() {
   const [wordIndex, setWordIndex] = useState(0);
   const [isFlipping, setIsFlipping] = useState(false);
+  const [typedText, setTypedText] = useState("");
+  const fullText = "Available for work";
+
+  useEffect(() => {
+    let index = 0;
+    let isDeleting = false;
+    let timeoutId: number;
+
+    const typeLoop = () => {
+      if (!isDeleting) {
+        index++;
+        setTypedText(fullText.slice(0, index));
+        if (index === fullText.length) {
+          timeoutId = window.setTimeout(() => {
+            isDeleting = true;
+            typeLoop();
+          }, 3400);
+          return;
+        }
+        timeoutId = window.setTimeout(typeLoop, 85);
+      } else {
+        index--;
+        setTypedText(fullText.slice(0, index));
+        if (index === 0) {
+          isDeleting = false;
+          timeoutId = window.setTimeout(typeLoop, 600);
+          return;
+        }
+        timeoutId = window.setTimeout(typeLoop, 45);
+      }
+    };
+
+    timeoutId = window.setTimeout(typeLoop, 300);
+    return () => window.clearTimeout(timeoutId);
+  }, []);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -161,7 +196,10 @@ export function Hero() {
         <div className="hero-stage">
           <div className="hero-stage__eyebrow-pill">
             <span className="hero-stage__eyebrow-dot" aria-hidden="true" />
-            <span>Available for work</span>
+            <span className="hero-stage__typing-text">
+              {typedText}
+              <span className="hero-stage__typing-cursor" aria-hidden="true">|</span>
+            </span>
           </div>
 
           <div className="hero-title-wrap hero-stage__title-wrap">
@@ -427,7 +465,7 @@ export function Footer() {
             <a href="https://www.facebook.com/lescygcaadlawon/" target="_blank" rel="noreferrer">Facebook</a>
             <a href="https://wa.me/639692467870" target="_blank" rel="noreferrer">WhatsApp</a>
           </nav>
-          <p className="footer__credit">Thoughtfully crafted by Lescy Gdawn</p>
+          <p className="footer__credit">portfolio is currently being actively updated</p>
         </div>
       </div>
     </footer>
