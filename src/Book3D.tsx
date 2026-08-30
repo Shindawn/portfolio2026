@@ -40,7 +40,6 @@ const spreads: BookSpread[] = [
         { label: "Standing", value: "1.4 GWA (Cum Laude)" },
         { label: "Timeline", value: "Aug 2022 – June 2026" },
       ],
-      pills: ["📍 Catanduanes, Philippines", "Dean’s Lister", "IT Systems Major"],
     },
   },
   {
@@ -169,7 +168,6 @@ export default function Book3D() {
             
             {/* Front Cover Artwork */}
             <div className="book3d-cover__content">
-              <div className="book3d-cover__badge">Academic Dossier</div>
               <h3 className="book3d-cover__title">
                 My Journey <span>education &amp; honors</span>
               </h3>

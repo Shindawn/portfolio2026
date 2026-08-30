@@ -51,22 +51,28 @@ export default function AboutPage() {
 
   const [hoveredTech, setHoveredTech] = useState<TechItem | null>(null);
 
-  // Stack Blitz Game State
+  // Retro Arcade Snake Game State
   const [gameState, setGameState] = useState<"idle" | "playing" | "gameover">("idle");
+  const [snake, setSnake] = useState<Array<{ x: number; y: number }>>([
+    { x: 3, y: 1 },
+    { x: 2, y: 1 },
+    { x: 1, y: 1 },
+  ]);
+  const dirRef = useRef<{ x: number; y: number }>({ x: 1, y: 0 });
+  const nextDirRef = useRef<{ x: number; y: number }>({ x: 1, y: 0 });
+  const [food, setFood] = useState<{ x: number; y: number; tech: TechItem } | null>(null);
   const [score, setScore] = useState<number>(0);
-  const [timeLeft, setTimeLeft] = useState<number>(20);
-  const [combo, setCombo] = useState<number>(1);
-  const [maxCombo, setMaxCombo] = useState<number>(1);
-  const [targetIdx, setTargetIdx] = useState<number | null>(null);
-  const [isBonus, setIsBonus] = useState<boolean>(false);
-  const [hitFeedback, setHitFeedback] = useState<{ idx: number; text: string } | null>(null);
+  const [eatenCount, setEatenCount] = useState<number>(0);
+  const [eatenFeedback, setEatenFeedback] = useState<string | null>(null);
 
   const gridCells = Array.from({ length: 28 }, (_, i) => {
+    const x = i % 7;
+    const y = Math.floor(i / 7);
     if (i < techItems.length) {
       const tech = techItems[i];
-      return { type: "tech", tech, id: `tech-${tech.name}` } as const;
+      return { type: "tech", tech, id: `tech-${tech.name}`, x, y } as const;
     }
-    return { type: "empty", id: `empty-${i}` } as const;
+    return { type: "empty", id: `empty-${i}`, x, y } as const;
   });
 
   const playSynthSound = (frequency: number, type: OscillatorType = "sine", duration = 0.08) => {
@@ -90,71 +96,142 @@ export default function AboutPage() {
     }
   };
 
-  const pickNextTarget = (prevIdx?: number | null) => {
-    const techIndices = gridCells
-      .map((c, i) => (c.type === "tech" ? i : -1))
-      .filter((i) => i !== -1 && i !== prevIdx);
-    const next = techIndices[Math.floor(Math.random() * techIndices.length)];
-    setTargetIdx(next);
-    setIsBonus(Math.random() < 0.22); // 22% chance of golden bonus star
-  };
-
-  const startBlitzGame = () => {
-    setScore(0);
-    setTimeLeft(20);
-    setCombo(1);
-    setMaxCombo(1);
-    setHitFeedback(null);
-    setGameState("playing");
-    playSynthSound(440, "triangle", 0.12);
-    pickNextTarget(null);
-  };
-
-  const exitBlitzGame = () => {
-    setGameState("idle");
-    setTargetIdx(null);
-    setHitFeedback(null);
-  };
-
-  useEffect(() => {
-    if (gameState !== "playing") return;
-    const interval = window.setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          setGameState("gameover");
-          playSynthSound(587.33, "triangle", 0.25);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [gameState]);
-
-  const handleCellClick = (idx: number, isTech: boolean) => {
-    if (gameState !== "playing" || !isTech) return;
-
-    if (idx === targetIdx) {
-      const addedScore = (isBonus ? 250 : 100) * combo;
-      setScore((prev) => prev + addedScore);
-      setCombo((prev) => Math.min(prev + 1, 5));
-      setMaxCombo((prev) => Math.max(prev, combo));
-      setHitFeedback({ idx, text: `+${addedScore}` });
-      playSynthSound(520 + combo * 60, "sine", 0.09);
-      setTimeout(() => setHitFeedback(null), 400);
-      pickNextTarget(idx);
-    } else {
-      setCombo(1);
-      playSynthSound(180, "sawtooth", 0.12);
+  const spawnFood = (currentSnake: Array<{ x: number; y: number }>) => {
+    const availableCells = gridCells.filter(
+      (cell) => cell.type === "tech" && !currentSnake.some((seg) => seg.x === cell.x && seg.y === cell.y)
+    );
+    if (availableCells.length === 0) return;
+    const chosen = availableCells[Math.floor(Math.random() * availableCells.length)];
+    if (chosen.type === "tech") {
+      setFood({ x: chosen.x, y: chosen.y, tech: chosen.tech });
     }
   };
 
+  const startSnakeGame = () => {
+    const initialSnake = [
+      { x: 3, y: 1 },
+      { x: 2, y: 1 },
+      { x: 1, y: 1 },
+    ];
+    dirRef.current = { x: 1, y: 0 };
+    nextDirRef.current = { x: 1, y: 0 };
+    setSnake(initialSnake);
+    setScore(0);
+    setEatenCount(0);
+    setEatenFeedback(null);
+    setGameState("playing");
+    playSynthSound(440, "triangle", 0.12);
+    spawnFood(initialSnake);
+  };
+
+  const exitSnakeGame = () => {
+    setGameState("idle");
+    setFood(null);
+    setEatenFeedback(null);
+  };
+
+  const changeDirection = (dx: number, dy: number) => {
+    if (gameState !== "playing") return;
+    const cur = dirRef.current;
+    // Prevent 180-degree reverse suicide
+    if (dx !== 0 && cur.x === -dx) return;
+    if (dy !== 0 && cur.y === -dy) return;
+    nextDirRef.current = { x: dx, y: dy };
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (gameState !== "playing") return;
+
+    const handleKey = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case "ArrowUp":
+        case "w":
+        case "W":
+          e.preventDefault();
+          changeDirection(0, -1);
+          break;
+        case "ArrowDown":
+        case "s":
+        case "S":
+          e.preventDefault();
+          changeDirection(0, 1);
+          break;
+        case "ArrowLeft":
+        case "a":
+        case "A":
+          e.preventDefault();
+          changeDirection(-1, 0);
+          break;
+        case "ArrowRight":
+        case "d":
+        case "D":
+          e.preventDefault();
+          changeDirection(1, 0);
+          break;
+        case "Escape":
+          exitSnakeGame();
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [gameState]);
+
+  // Snake movement tick
+  useEffect(() => {
+    if (gameState !== "playing") return;
+
+    const currentSpeed = Math.max(160, 260 - eatenCount * 6);
+    const interval = window.setInterval(() => {
+      dirRef.current = nextDirRef.current;
+      const curDir = dirRef.current;
+
+      setSnake((prevSnake) => {
+        const head = prevSnake[0];
+        const newHead = { x: head.x + curDir.x, y: head.y + curDir.y };
+
+        // Wall collision check
+        if (newHead.x < 0 || newHead.x >= 7 || newHead.y < 0 || newHead.y >= 4) {
+          setGameState("gameover");
+          playSynthSound(160, "sawtooth", 0.22);
+          return prevSnake;
+        }
+
+        // Self collision check
+        if (prevSnake.some((seg) => seg.x === newHead.x && seg.y === newHead.y)) {
+          setGameState("gameover");
+          playSynthSound(160, "sawtooth", 0.22);
+          return prevSnake;
+        }
+
+        // Food consumption check
+        if (food && newHead.x === food.x && newHead.y === food.y) {
+          setScore((s) => s + 100);
+          setEatenCount((c) => c + 1);
+          setEatenFeedback(`+ ${food.tech.name}`);
+          playSynthSound(580 + (eatenCount % 8) * 40, "triangle", 0.09);
+          setTimeout(() => setEatenFeedback(null), 700);
+
+          const grownSnake = [newHead, ...prevSnake];
+          spawnFood(grownSnake);
+          return grownSnake;
+        }
+
+        // Standard movement: move forward, pop tail
+        return [newHead, ...prevSnake.slice(0, -1)];
+      });
+    }, currentSpeed);
+
+    return () => clearInterval(interval);
+  }, [gameState, food, eatenCount]);
+
   const getRankTitle = (finalScore: number) => {
-    if (finalScore >= 3500) return { title: "10x Engineering Legend ⚡", color: "#22c55e" };
-    if (finalScore >= 2200) return { title: "Senior Staff Architect 🚀", color: "#38bdf8" };
-    if (finalScore >= 1200) return { title: "Full-Stack Specialist 💻", color: "#a855f7" };
-    return { title: "Junior Code Tinkerer 🛠️", color: "#eab308" };
+    if (finalScore >= 1600) return { title: "10x Engineering Lead", color: "var(--accent-bright)" };
+    if (finalScore >= 1000) return { title: "Senior Staff Architect", color: "var(--accent-bright)" };
+    if (finalScore >= 500) return { title: "Full-Stack Specialist", color: "var(--accent-bright)" };
+    return { title: "Junior Developer", color: "#94a3b8" };
   };
 
   const moveCards = (event: PointerEvent<HTMLDivElement>) => {
@@ -240,7 +317,7 @@ export default function AboutPage() {
           </div>
 
           <div className="about-experience__column about-experience__column--stack">
-            {/* Tech Stack Matrix Topbar with Game Controls */}
+            {/* Tech Stack Matrix Topbar with Retro Snake Controls */}
             <div className="about-matrix__topbar">
               {gameState === "idle" ? (
                 <>
@@ -255,72 +332,74 @@ export default function AboutPage() {
                   <button
                     type="button"
                     className="blitz-start-btn"
-                    onClick={startBlitzGame}
-                    title="Play Stack Blitz Mini-Game"
+                    onClick={startSnakeGame}
+                    title="Play Retro Snake on the Matrix"
                   >
-                    🎮 Play Blitz
+                    🕹️ Play Snake
                   </button>
                 </>
               ) : gameState === "playing" ? (
                 <>
                   <div className="blitz-stats">
-                    <span className="blitz-timer">⏱️ {timeLeft}s</span>
-                    <span className="blitz-score">⚡ {score} pts</span>
-                    <span className={`blitz-combo blitz-combo--${combo}`}>🔥 {combo}x</span>
+                    <span className="blitz-score">{score} pts</span>
+                    <span className="snake-length-badge">Stack: {snake.length}</span>
+                    {eatenFeedback && <span className="snake-toast-pill">{eatenFeedback}</span>}
                   </div>
                   <button
                     type="button"
                     className="blitz-exit-btn"
-                    onClick={exitBlitzGame}
-                    title="Exit mini-game"
+                    onClick={exitSnakeGame}
+                    title="Exit Snake"
                   >
                     ✕ Stop
                   </button>
                 </>
               ) : (
                 <>
-                  <p className="about-experience__label">Game Complete</p>
+                  <p className="about-experience__label">Game Over</p>
                   <button
                     type="button"
                     className="blitz-start-btn"
-                    onClick={startBlitzGame}
+                    onClick={startSnakeGame}
                   >
-                    ↻ Play Again
+                    Play Again ↺
                   </button>
                 </>
               )}
             </div>
 
             <div
-              className={`about-matrix-grid ${gameState === "playing" ? "about-matrix-grid--game" : ""}`}
+              className={`about-matrix-grid ${gameState === "playing" ? "about-matrix-grid--snake" : ""}`}
               role="region"
               aria-label="Interactive Tech Stack Matrix"
             >
               {/* Active Playing Grid */}
               {gridCells.map((cell, idx) => {
-                const isTarget = gameState === "playing" && targetIdx === idx;
-                const isHit = hitFeedback?.idx === idx;
+                const isHead = gameState === "playing" && snake[0]?.x === cell.x && snake[0]?.y === cell.y;
+                const isBody =
+                  gameState === "playing" &&
+                  !isHead &&
+                  snake.some((seg) => seg.x === cell.x && seg.y === cell.y);
+                const isFood = gameState === "playing" && food?.x === cell.x && food?.y === cell.y;
 
                 if (cell.type === "tech") {
                   return (
                     <div
                       key={cell.id}
                       className={`about-matrix-cell about-matrix-cell--tech ${
-                        isTarget ? `about-matrix-cell--target ${isBonus ? "about-matrix-cell--bonus" : ""}` : ""
-                      } ${isHit ? "about-matrix-cell--hit" : ""}`}
-                      onClick={() => handleCellClick(idx, true)}
+                        isHead
+                          ? "about-matrix-cell--snake-head"
+                          : isBody
+                          ? "about-matrix-cell--snake-body"
+                          : isFood
+                          ? "about-matrix-cell--snake-food"
+                          : ""
+                      }`}
                       onMouseEnter={() => gameState === "idle" && setHoveredTech(cell.tech)}
                       onMouseLeave={() => gameState === "idle" && setHoveredTech(null)}
                       title={gameState === "idle" ? `${cell.tech.name} (${cell.tech.category})` : undefined}
                     >
-                      {isTarget && (
-                        <span className="blitz-target-badge">
-                          {isBonus ? "⭐ +250" : "🎯 TAP"}
-                        </span>
-                      )}
-                      {isHit && (
-                        <span className="blitz-hit-float">{hitFeedback.text}</span>
-                      )}
+                      {isFood && <span className="snake-food-dot" />}
                       <img
                         className="about-matrix-cell__icon"
                         src={cell.tech.icon}
@@ -333,8 +412,13 @@ export default function AboutPage() {
                 return (
                   <div
                     key={`empty-${idx}`}
-                    className="about-matrix-cell about-matrix-cell--empty"
-                    onClick={() => handleCellClick(idx, false)}
+                    className={`about-matrix-cell about-matrix-cell--empty ${
+                      isHead
+                        ? "about-matrix-cell--snake-head"
+                        : isBody
+                        ? "about-matrix-cell--snake-body"
+                        : ""
+                    }`}
                   />
                 );
               })}
@@ -343,38 +427,80 @@ export default function AboutPage() {
               {gameState === "gameover" && (
                 <div className="blitz-overlay" role="dialog" aria-modal="true" aria-label="Game Over Scorecard">
                   <div className="blitz-card">
-                    <span className="blitz-badge-trophy">🏆</span>
-                    <h3 className="blitz-result-title">Stack Blitz Complete</h3>
+                    <span className="blitz-eyebrow">Game Over</span>
                     
-                    <div className="blitz-score-big">{score.toLocaleString()} <small>pts</small></div>
+                    <div className="blitz-score-big">
+                      {score.toLocaleString()} <small>pts</small>
+                    </div>
                     
                     <div className="blitz-rank" style={{ color: getRankTitle(score).color }}>
                       {getRankTitle(score).title}
                     </div>
 
                     <div className="blitz-breakdown">
-                      <div className="blitz-stat-pill">
-                        <span>Max Combo</span>
-                        <strong>{maxCombo}x 🔥</strong>
+                      <div className="blitz-stat-item">
+                        <span className="blitz-stat-label">Stack Size</span>
+                        <strong className="blitz-stat-value">{snake.length} items</strong>
                       </div>
-                      <div className="blitz-stat-pill">
-                        <span>Time Limit</span>
-                        <strong>20s ⏱️</strong>
+                      <div className="blitz-stat-divider" aria-hidden="true" />
+                      <div className="blitz-stat-item">
+                        <span className="blitz-stat-label">Tech Eaten</span>
+                        <strong className="blitz-stat-value">{eatenCount}</strong>
                       </div>
                     </div>
 
                     <div className="blitz-actions">
-                      <button type="button" className="blitz-btn-replay" onClick={startBlitzGame}>
-                        Play Again ↻
+                      <button type="button" className="blitz-btn-replay" onClick={startSnakeGame}>
+                        Play Again ↺
                       </button>
-                      <button type="button" className="blitz-btn-close" onClick={exitBlitzGame}>
-                        View Matrix ✕
+                      <button type="button" className="blitz-btn-close" onClick={exitSnakeGame}>
+                        Back to Matrix
                       </button>
                     </div>
                   </div>
                 </div>
               )}
             </div>
+
+            {/* Mobile / Clickable Directional D-Pad when Snake is Active */}
+            {gameState === "playing" && (
+              <div className="snake-controls" aria-label="Snake Controls">
+                <button
+                  type="button"
+                  className="snake-btn snake-btn--up"
+                  onClick={() => changeDirection(0, -1)}
+                  aria-label="Up"
+                >
+                  ▲
+                </button>
+                <div className="snake-controls__middle">
+                  <button
+                    type="button"
+                    className="snake-btn snake-btn--left"
+                    onClick={() => changeDirection(-1, 0)}
+                    aria-label="Left"
+                  >
+                    ◀
+                  </button>
+                  <button
+                    type="button"
+                    className="snake-btn snake-btn--down"
+                    onClick={() => changeDirection(0, 1)}
+                    aria-label="Down"
+                  >
+                    ▼
+                  </button>
+                  <button
+                    type="button"
+                    className="snake-btn snake-btn--right"
+                    onClick={() => changeDirection(1, 0)}
+                    aria-label="Right"
+                  >
+                    ▶
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
