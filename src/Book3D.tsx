@@ -174,8 +174,8 @@ export default function Book3D() {
               
               <div className="book3d-cover__art-wrap">
                 <img
-                  src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80"
-                  alt="Monolith & Horizon Art"
+                  src="/academic-cover-portrait.jpg"
+                  alt="Lescy Graduation Portrait"
                   className="book3d-cover__art"
                 />
               </div>
