@@ -142,11 +142,6 @@ export default function App() {
           scrollTrigger: { trigger, start: "top 82%" },
         });
       });
-
-      gsap.from(".footer__wordmark span", {
-        scrollTrigger: { trigger: ".footer__wordmark", start: "top 92%" },
-        yPercent: 100, opacity: 0, stagger: 0.08, duration: 1, ease: "power4.out",
-      });
     }, appRef);
 
     return () => {

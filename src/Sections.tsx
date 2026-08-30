@@ -1,4 +1,5 @@
 import { covers, faqs, projects, testimonials } from "./data";
+import HeroBeamLines from "./HeroBeamLines";
 import HeroTitleEffect from "./HeroTitleEffect";
 import ThemeToggle from "./ThemeToggle";
 import { useEffect, useState, type CSSProperties, type PointerEvent } from "react";
@@ -37,20 +38,74 @@ export function Navigation() {
     <div className="nav-links"><details className="file-menu"><summary>File</summary><div className="file-menu__dropdown">
       <a href="/LescyGCaadlawon_CV.pdf" target="_blank" rel="noreferrer"><span>Preview Resume</span><small aria-hidden="true">↗</small></a>
       <a href="/LescyGCaadlawon_CV.pdf" download="LescyGCaadlawon_CV.pdf"><span>Download Resume</span><small aria-hidden="true">↓</small></a>
-    </div></details><a href="/">Home</a><a href="/about">About</a><a href="/#work">Work</a><a className="button button--nav" href="mailto:hello@lescygdawn.com">Book a Call</a></div>
+    </div></details><a href="/">Home</a><a href="/about">About</a><a href="/#work">Work</a></div>
   </nav>;
 }
 
+const rotatingWords = ["Cheaper", "Faster", "Great"] as const;
+
 export function Hero() {
-  return <main className="hero" id="home"><Navigation /><section className="intro shell" aria-labelledby="hero-title">
-    <div className="hero-title-wrap">
-      <h1 id="hero-title"><span>LESCY</span><span>GDAWN</span></h1>
-      <HeroTitleEffect />
-    </div>
-    <div className="hero-details" id="about"><div className="summary"><p>I build full-stack web systems end to end — from database schema and REST APIs to cloud deployment — backed by a UI/UX design background that keeps every interface clear and intentional.</p><a className="button" href="#work">View all projects</a></div>
-      <dl className="facts"><div><dt>Role</dt><dd>Full-Stack Developer &amp; UI/UX Designer</dd></div><div><dt>Based</dt><dd>Mandaluyong, Philippines</dd></div><div><dt>Working with</dt><dd>Startups, LGUs &amp; freelance clients</dd></div></dl>
-    </div>
-  </section></main>;
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isFlipping, setIsFlipping] = useState(false);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setIsFlipping(true);
+      window.setTimeout(() => {
+        setWordIndex((prev) => (prev + 1) % rotatingWords.length);
+        setIsFlipping(false);
+      }, 220);
+    }, 2400);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  return (
+    <main className="hero" id="home">
+      <Navigation />
+      <HeroBeamLines />
+      <section className="intro shell" id="about" aria-labelledby="hero-title">
+        <div className="hero-stage">
+          <div className="hero-stage__eyebrow-pill">
+            <span className="hero-stage__eyebrow-dot" aria-hidden="true" />
+            <span>Web Engineering &amp; UI/UX</span>
+          </div>
+
+          <div className="hero-title-wrap hero-stage__title-wrap">
+            <h1 id="hero-title" className="hero-stage__title">
+              <span className="hero-stage__title-line1">Delivering</span>
+              <span className="hero-stage__title-line2">
+                <em className={`hero-stage__italic-accent${isFlipping ? " is-flipping" : ""}`}>
+                  {rotatingWords[wordIndex]}
+                </em>
+                <span className="hero-stage__main-accent">Web Systems</span>
+              </span>
+            </h1>
+            <HeroTitleEffect />
+          </div>
+
+          <p className="hero-stage__subtitle">
+            Optimized architectures and intentional UI/UX that help startups, LGUs, and brands launch high-impact digital systems.
+          </p>
+
+          <div className="hero-stage__actions">
+            <a className="button button--hero-primary" href="#work">
+              <span>View all projects</span>
+              <span className="button__arrow" aria-hidden="true">→</span>
+            </a>
+            <a
+              className="button button--hero-secondary"
+              href="https://calendar.app.google/NzRmXYUx3p8Z7g2L8"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>Book a Call</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
 }
 
 export function SneakPeek() {
@@ -155,7 +210,7 @@ export function Faq() {
 }
 
 export function Footer() {
-  return <footer className="footer" id="contact"><div className="footer__inner shell"><div className="footer__contact"><p className="footer__eyebrow">LET’S CONNECT</p><a className="footer__email" href="mailto:hi@lescy.tech" aria-label="Email hi at lescy dot tech"><span className="footer__email-local" aria-hidden="true">hi</span><span className="footer__email-at" aria-hidden="true">@</span><span className="footer__email-domain" aria-hidden="true">lescy.tech</span></a><p className="footer__message">Have a project in mind or an idea worth exploring?<br />Let’s talk and create something meaningful together.</p></div>
-    <div className="footer__meta"><p>©2026 Lescy G. Caadlawon</p><nav className="footer__socials" aria-label="Social links"><a href="https://www.linkedin.com/in/lescycaadlawon" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/Shindawn" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.facebook.com/lescygcaadlawon/" target="_blank" rel="noreferrer">Facebook</a><a href="https://wa.me/639692467870" target="_blank" rel="noreferrer">WhatsApp</a></nav><p className="footer__credit">Thoughtfully crafted by Lescy Gdawn</p></div><p className="footer__wordmark" aria-hidden="true"><span>LESCY</span><span>GDAWN</span></p>
+  return <footer className="footer" id="contact"><div className="footer__inner shell"><div className="footer__contact"><p className="footer__eyebrow">LET'S CONNECT</p><a className="footer__email" href="mailto:lescycaadlawon.dev@gmail.com" aria-label="Email lescycaadlawon dot dev at gmail dot com"><span className="footer__email-local" aria-hidden="true">lescycaadlawon.dev</span><span className="footer__email-at" aria-hidden="true">@</span><span className="footer__email-domain" aria-hidden="true">gmail.com</span></a><p className="footer__message">Have a project in mind or an idea worth exploring?<br />Let’s talk and create something meaningful together.</p></div>
+    <div className="footer__meta"><p>©2026 Lescy G. Caadlawon</p><nav className="footer__socials" aria-label="Social links"><a href="https://www.linkedin.com/in/lescycaadlawon" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/Shindawn" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.facebook.com/lescygcaadlawon/" target="_blank" rel="noreferrer">Facebook</a><a href="https://wa.me/639692467870" target="_blank" rel="noreferrer">WhatsApp</a></nav><p className="footer__credit">Thoughtfully crafted by Lescy Gdawn</p></div>
   </div></footer>;
 }
