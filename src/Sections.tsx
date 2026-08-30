@@ -229,14 +229,200 @@ export function LatestWork() {
   </div></section>;
 }
 
+const testimonialPhotos = [
+  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&auto=format&fit=crop&q=80",
+  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=80",
+];
+
 export function Brands() {
-  return <section className="brands" aria-labelledby="brands-title"><div className="brands__inner shell">
-    <header className="brands__intro reveal-header"><h2 id="brands-title">( Companies I work with )</h2><p>Teams and tools I’ve collaborated with,<br />and what they say about working together.</p></header>
-    <div className="brand-strip" aria-label="Selected companies and platforms"><div className="brand-track">
-      {[...companyMarks, ...companyMarks].map(([label, mark, modifier], index) => <span className={`brand-mark ${modifier}`} aria-label={index < companyMarks.length ? label : undefined} aria-hidden={index >= companyMarks.length} key={`${label}-${index}`}>{mark}</span>)}
-    </div></div>
-    <div className="testimonials" aria-label="Client testimonials">{testimonials.map(([modifier, initials, name, role, quote]) => <article className={`testimonial testimonial--${modifier}`} key={name}><blockquote>“{quote}”</blockquote><div className="testimonial__person"><span className={`avatar avatar--${modifier}`} aria-hidden="true">{initials}</span><p><strong>{name}</strong><span>{role}</span></p></div></article>)}</div>
-  </div></section>;
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const prevTestimonial = () => {
+    setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  const nextTestimonial = () => {
+    setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+  };
+
+  useEffect(() => {
+    if (isHovered) return;
+    const timer = window.setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 6000);
+    return () => window.clearInterval(timer);
+  }, [isHovered]);
+
+  const current = testimonials[activeTestimonial];
+  const roleParts = current[3].split(", ");
+  const roleTitle = roleParts[0] || "";
+  const companyName = roleParts[1] || "";
+
+  return (
+    <section className="brands" aria-labelledby="brands-title">
+      <div className="brands__inner shell">
+        <header className="brands__intro reveal-header">
+          <h2 id="brands-title">Working with Teams That Value Design</h2>
+        </header>
+
+        <div className="brand-strip" aria-label="Selected companies and platforms">
+          <div className="brand-track">
+            {[...companyMarks, ...companyMarks].map(([label, mark, modifier], index) => (
+              <span
+                className={`brand-mark ${modifier}`}
+                aria-label={index < companyMarks.length ? label : undefined}
+                aria-hidden={index >= companyMarks.length}
+                key={`${label}-${index}`}
+              >
+                {mark}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Full-width Compact Testimonial Banner with Grid Crosshair & Moving Light Beams */}
+        <div
+          className="testimonial-card-stage"
+          aria-label="Client testimonials"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Moving Light Beams Grid Overlay */}
+          <div className="testimonial-card__grid-overlay" aria-hidden="true">
+            <svg
+              className="testimonial-card__grid-svg"
+              viewBox="0 0 1200 200"
+              preserveAspectRatio="none"
+              fill="none"
+            >
+              <defs>
+                <linearGradient id="t-beam-horiz" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="var(--accent-bright)" stopOpacity="0" />
+                  <stop offset="50%" stopColor="var(--accent-bright)" stopOpacity="1" />
+                  <stop offset="100%" stopColor="var(--accent-bright)" stopOpacity="0" />
+                </linearGradient>
+                <linearGradient id="t-beam-vert" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="var(--accent-bright)" stopOpacity="0" />
+                  <stop offset="50%" stopColor="var(--accent-bright)" stopOpacity="1" />
+                  <stop offset="100%" stopColor="var(--accent-bright)" stopOpacity="0" />
+                </linearGradient>
+                <filter id="t-beam-glow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              {/* Static Crosshair Base Lines */}
+              <line x1="0" y1="140" x2="1200" y2="140" className="testimonial-card__base-line" stroke="var(--line)" strokeWidth="1" />
+              <line x1="140" y1="0" x2="140" y2="200" className="testimonial-card__base-line" stroke="var(--line)" strokeWidth="1" />
+
+              {/* Moving Animated Light Beams */}
+              <line
+                x1="0"
+                y1="140"
+                x2="1200"
+                y2="140"
+                className="testimonial-card__beam testimonial-card__beam--horiz"
+                stroke="url(#t-beam-horiz)"
+                strokeWidth="2.2"
+                filter="url(#t-beam-glow)"
+              />
+              <line
+                x1="140"
+                y1="0"
+                x2="140"
+                y2="200"
+                className="testimonial-card__beam testimonial-card__beam--vert"
+                stroke="url(#t-beam-vert)"
+                strokeWidth="2.2"
+                filter="url(#t-beam-glow)"
+              />
+            </svg>
+          </div>
+
+          {/* Testimonial Card Body */}
+          <div className="testimonial-card__body">
+            {/* Left: Client Portrait Photo */}
+            <div className="testimonial-card__photo-frame">
+              <img
+                key={activeTestimonial}
+                className="testimonial-card__photo"
+                src={testimonialPhotos[activeTestimonial]}
+                alt={current[2]}
+                loading="lazy"
+              />
+            </div>
+
+            {/* Middle: Client Quote & Info */}
+            <div className="testimonial-card__content">
+              <blockquote className="testimonial-card__quote" key={current[4]}>
+                “{current[4]}”
+              </blockquote>
+
+              <div className="testimonial-card__author-info">
+                <div className="testimonial-card__name-row">
+                  <strong className="testimonial-card__name">{current[2]}</strong>
+                  <svg
+                    className="testimonial-card__badge"
+                    viewBox="0 0 24 24"
+                    width="16"
+                    height="16"
+                    aria-label="Verified client"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                      fill="var(--accent-bright)"
+                    />
+                  </svg>
+                </div>
+                <p className="testimonial-card__role">
+                  <span>{roleTitle}</span>
+                  {companyName && (
+                    <>
+                      <span className="testimonial-card__dot"> • </span>
+                      <span>{companyName}</span>
+                    </>
+                  )}
+                </p>
+              </div>
+            </div>
+
+            {/* Right: Controls & Slide Counter */}
+            <div className="testimonial-card__controls">
+              <span className="testimonial-card__counter">
+                0{activeTestimonial + 1} / 0{testimonials.length}
+              </span>
+              <div className="testimonial-card__arrows">
+                <button
+                  type="button"
+                  className="testimonial-arrow-btn testimonial-arrow-btn--prev"
+                  onClick={prevTestimonial}
+                  aria-label="Previous testimonial"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  className="testimonial-arrow-btn testimonial-arrow-btn--next"
+                  onClick={nextTestimonial}
+                  aria-label="Next testimonial"
+                >
+                  →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export function Faq() {

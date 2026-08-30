@@ -13,11 +13,11 @@ export const covers = [
 ] as const;
 
 export const testimonials = [
-  ["one", "P", "Pao", "Founder, IslaTech", "Lescy turned a complex water district workflow into one clear system for both office staff and field teams. She understood the operational challenges and built an experience that feels practical, reliable, and easy to use."],
-  ["two", "C", "Charles", "CEO, Kurakog", "Our payroll process had many moving parts, but Lescy brought them together in a simple and dependable platform. She paid close attention to accuracy while making everyday HR tasks much easier for the team."],
-  ["three", "M", "Macon", "Dean, Thesis Adviser", "ARIBA BATO demonstrated Lescy’s ability to combine research, technology, and thoughtful design. She transformed a strong concept into an engaging mobile AR experience with clear cultural and educational value."],
-  ["four", "C", "Chris", "Engineer, IGEL", "Lescy gave IGEL a professional digital presence that clearly communicates our engineering capabilities. She organized the technical content carefully and delivered a website that represents our work with confidence."],
-  ["five", "C", "Chilzia", "Bride", "Lescy made our wedding website feel genuinely personal. She captured the style we wanted, made every detail easy for our guests to find, and created something we were excited to share with everyone."],
+  ["one", "P", "Pao", "Founder, IslaTech", "Lescy turned our complex water district workflow into a clear, unified system for both office staff and field teams. She understood the operational challenges and delivered a practical, reliable interface. The attention to accuracy and usability made a huge impact on our daily operations."],
+  ["two", "C", "Charles", "CEO, Kurakog", "Our payroll process had many moving parts, but Lescy brought them together into a dependable and intuitive platform. She paid close attention to precision while streamlining everyday HR tasks for the team. Working with her significantly accelerated our shipping timeline."],
+  ["three", "M", "Macon", "Dean, Thesis Adviser", "ARIBA BATO demonstrated Lescy’s exceptional ability to combine deep research, modern technology, and thoughtful design. She transformed an ambitious concept into an engaging mobile AR experience with rich cultural value. Her technical execution and dedication stood out from start to finish."],
+  ["four", "C", "Chris", "Engineer, IGEL", "Lescy gave IGEL a modern digital presence that clearly communicates our industrial engineering capabilities. She organized complex technical documentation into a clean, confidence-inspiring website. Our clients and partners immediately noticed the upgrade in our digital brand."],
+  ["five", "C", "Chilzia", "Bride", "Lescy made our wedding website feel genuinely personal and beautifully crafted. She captured the exact aesthetic we envisioned and made every schedule detail effortless for our guests to explore. Everyone raved about how smooth and elegant the experience was."],
 ] as const;
 
 export const faqs = [
