@@ -1,5 +1,6 @@
 import { useRef, useState, type PointerEvent } from "react";
 import { Footer, Navigation } from "./Sections";
+import Book3D from "./Book3D";
 
 const experience = [
   ["01", "Full-Stack Developer", "Jun – Aug 2026"],
@@ -44,60 +45,9 @@ const techItems: TechItem[] = [
   { name: "Java", icon: "https://cdn.simpleicons.org/openjdk/20a878", category: "Language" },
 ];
 
-interface AcademicTab {
-  id: string;
-  label: string;
-  image: string;
-  description: string;
-  statLabel: string;
-  statValue: string;
-  secondaryStatLabel?: string;
-  secondaryStatValue?: string;
-}
-
-const academicTabs: AcademicTab[] = [
-  {
-    id: "education",
-    label: "Education",
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80",
-    description:
-      "Bachelor of Science in Information Technology at Catanduanes State University (2022 – 2026). Comprehensive study of distributed architectures, full-stack systems engineering, database modeling, and human-centered digital products.",
-    statLabel: "Standing",
-    statValue: "1.4 GWA (Cum Laude)",
-  },
-  {
-    id: "awards",
-    label: "Awards & Certs",
-    image: "https://images.unsplash.com/photo-1579389083078-4e7018379f7e?auto=format&fit=crop&w=600&q=80",
-    description:
-      "Recognized with consecutive Dean's Honor Roll standing across academic years, complemented by industry credentials in modern full-stack web architectures, API specifications, and cloud computing foundations.",
-    statLabel: "Honors",
-    statValue: "Dean's Lister (2022–2026)",
-  },
-  {
-    id: "scholarships",
-    label: "Scholarships",
-    image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=600&q=80",
-    description:
-      "Awarded competitive tertiary academic scholarships based on consistent GPA performance and scholastic excellence, receiving full institutional tuition grants and research project funding.",
-    statLabel: "Grant",
-    statValue: "Tertiary Academic Scholar",
-  },
-  {
-    id: "affiliations",
-    label: "Affiliations",
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
-    description:
-      "Active member and student leader in collegiate computing organizations and developer circles, leading code jams, peer mentoring sessions, and UI/UX design workshops across campus.",
-    statLabel: "Leadership",
-    statValue: "IT Society & Tech Guild",
-  },
-];
-
 export default function AboutPage() {
   const stackRef = useRef<HTMLDivElement>(null);
   const [hoveredTech, setHoveredTech] = useState<TechItem | null>(null);
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const moveCards = (event: PointerEvent<HTMLDivElement>) => {
     const stack = stackRef.current;
@@ -228,69 +178,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Folder Tabs Academic Section */}
-      <section className="about-education folder-education" aria-labelledby="academic-folder-title">
+      {/* 3D Flipping Book Education Section */}
+      <section className="about-education book-education" aria-labelledby="academic-book-title">
         <header>
-          <h2 id="academic-folder-title">( Education )</h2>
-          <p>University foundation, scholastic honors, scholarship grants, and collegiate leadership.</p>
+          <h2 id="academic-book-title">( Education )</h2>
+          <p>An interactive 3D chronicle of university milestones, scholastic honors, merit grants, and leadership.</p>
         </header>
 
-        <div className="folder-education__container">
-          {/* Tab Bar with seamlessly connected active tab */}
-          <div className="folder-tabs__bar" role="tablist" aria-label="Academic & Background Tabs">
-            {academicTabs.map((tab, idx) => {
-              const isActive = idx === activeTabIndex;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-controls={`folder-panel-${tab.id}`}
-                  id={`folder-tab-${tab.id}`}
-                  className={`folder-tab-btn ${isActive ? "folder-tab-btn--active" : ""}`}
-                  onClick={() => setActiveTabIndex(idx)}
-                >
-                  {tab.label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Seamless Folder Card Body */}
-          <div
-            className={`folder-card folder-card--active-${activeTabIndex}`}
-            role="tabpanel"
-            id={`folder-panel-${academicTabs[activeTabIndex].id}`}
-            aria-labelledby={`folder-tab-${academicTabs[activeTabIndex].id}`}
-          >
-            <div className="folder-card__media">
-              <img
-                key={academicTabs[activeTabIndex].id}
-                src={academicTabs[activeTabIndex].image}
-                alt={academicTabs[activeTabIndex].label}
-                className="folder-card__img"
-                loading="lazy"
-              />
-            </div>
-
-            <div className="folder-card__content" key={`content-${academicTabs[activeTabIndex].id}`}>
-              <p className="folder-card__description">{academicTabs[activeTabIndex].description}</p>
-
-              <div className="folder-card__stat-row">
-                <span className="folder-card__stat-label">{academicTabs[activeTabIndex].statLabel}</span>
-                <strong className="folder-card__stat-value">{academicTabs[activeTabIndex].statValue}</strong>
-              </div>
-
-              {academicTabs[activeTabIndex].secondaryStatLabel && (
-                <div className="folder-card__stat-row folder-card__stat-row--sub">
-                  <span className="folder-card__stat-label">{academicTabs[activeTabIndex].secondaryStatLabel}</span>
-                  <strong className="folder-card__stat-value">{academicTabs[activeTabIndex].secondaryStatValue}</strong>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        <Book3D />
       </section>
       <Footer />
     </main>

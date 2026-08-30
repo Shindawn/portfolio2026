@@ -3251,209 +3251,606 @@ a {
   max-width: 48rem;
 }
 
-.folder-education__container {
-  width: 100%;
-  max-width: 100%;
-  position: relative;
+/* About Page - 3D Flipping Book Education Section */
+.book-education {
+  width: var(--shell);
+  margin-inline: auto;
+  padding: clamp(3.5rem, 6vw, 6rem) 0;
+  border-top: 1px solid var(--line);
 }
 
-/* Tabs Bar Header */
-.folder-tabs__bar {
+.book3d-wrapper {
+  perspective: 1800px;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
   position: relative;
-  z-index: 3;
-  gap: clamp(1rem, 2vw, 2rem);
-  margin-bottom: -1px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-
-.folder-tabs__bar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Individual Tab Button */
-.folder-tab-btn {
-  position: relative;
-  padding: 0.75rem 1.8rem;
-  font-family: inherit;
-  font-size: clamp(0.92rem, 1.2vw, 1.05rem);
-  font-weight: 500;
-  color: var(--muted);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: color 180ms ease;
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
-  white-space: nowrap;
   outline: none;
   user-select: none;
+  padding: 1.5rem 0;
 }
 
-.folder-tab-btn:hover {
-  color: var(--ink);
-}
-
-/* Active Tab seamlessly blending into folder surface */
-.folder-tab-btn--active {
-  color: var(--ink) !important;
-  font-weight: 600;
-  background: var(--folder-surface);
-  z-index: 5;
-}
-
-/* Inverted Concave Curve on the right of the active tab */
-.folder-tab-btn--active::after {
-  content: "";
+/* Floor 3D Shadow underneath the book */
+.book3d-shadow {
   position: absolute;
-  bottom: 0;
-  right: -16px;
-  width: 16px;
-  height: 16px;
-  background: transparent;
-  border-bottom-left-radius: 14px;
-  box-shadow: -5px 5px 0 0 var(--folder-surface);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(clamp(215px, 24vw, 275px) - 20px));
+  width: 320px;
+  height: 38px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.16) 45%, transparent 75%);
+  filter: blur(12px);
+  transition: width 550ms cubic-bezier(0.25, 1, 0.5, 1), transform 550ms cubic-bezier(0.25, 1, 0.5, 1), opacity 300ms ease;
   pointer-events: none;
+  z-index: 0;
 }
 
-/* Inverted Concave Curve on the left of the active tab (if not the first tab) */
-.folder-tab-btn--active:not(:first-child)::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: -16px;
-  width: 16px;
-  height: 16px;
-  background: transparent;
-  border-bottom-right-radius: 14px;
-  box-shadow: 5px 5px 0 0 var(--folder-surface);
-  pointer-events: none;
+.book3d-wrapper--open .book3d-shadow {
+  width: clamp(580px, 64vw, 760px);
+  height: 46px;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.12) 50%, transparent 80%);
+  filter: blur(15px);
 }
 
-/* Main Seamless Folder Card Body */
-.folder-card {
-  width: 100%;
-  background: var(--folder-surface);
-  border-radius: 1.25rem;
-  border: 1px solid var(--folder-border);
-  box-shadow: var(--folder-shadow);
-  display: grid;
-  grid-template-columns: clamp(240px, 30%, 360px) 1fr;
-  gap: clamp(2rem, 4vw, 3.5rem);
-  padding: clamp(1.8rem, 3.2vw, 2.8rem);
-  align-items: center;
+.book3d-shadow--turning {
+  opacity: 0.2;
+}
+
+/* Main 3D Book Stage */
+.book3d-stage {
   position: relative;
   z-index: 2;
-  min-height: 280px;
-  transition: border-radius 200ms ease;
+  width: clamp(300px, 32vw, 380px);
+  height: clamp(430px, 48vw, 540px);
+  transition: width 550ms cubic-bezier(0.25, 1, 0.5, 1), transform 550ms cubic-bezier(0.25, 1, 0.5, 1);
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* When the first tab is active, seamlessly connect top-left edge */
-.folder-card--active-0 {
-  border-top-left-radius: 0;
+.book3d-wrapper--open .book3d-stage {
+  width: clamp(620px, 66vw, 800px);
 }
 
-/* Media Thumbnail (Left Column) */
-.folder-card__media {
+/* Front & Back Cover */
+.book3d-cover {
   width: 100%;
   height: 100%;
-  min-height: 240px;
-  border-radius: 1.1rem;
-  overflow: hidden;
-  background: var(--cream);
-  border: 1px solid var(--folder-border);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  flex-shrink: 0;
+  background: #111513;
+  border-radius: 8px 18px 18px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
   position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 320ms cubic-bezier(0.25, 1, 0.5, 1), box-shadow 320ms ease;
 }
 
-.folder-card__img {
+.book3d-cover:hover {
+  transform: rotateY(-7deg) rotateX(2deg) translateY(-4px);
+  box-shadow: 0 26px 58px rgba(0, 0, 0, 0.6);
+}
+
+/* Realistic Spine Edge Highlight */
+.book3d-spine-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 22px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(255, 255, 255, 0.12) 40%,
+    rgba(0, 0, 0, 0.55) 75%,
+    transparent 100%
+  );
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* Layered Paper Edge Stack on the Right */
+.book3d-page-edges {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  right: 0;
+  width: 10px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #d8d6ce 0px,
+    #d8d6ce 2px,
+    #a8a69e 2px,
+    #a8a69e 4px
+  );
+  border-radius: 0 4px 4px 0;
+  box-shadow: inset 2px 0 4px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+/* Cover Content */
+.book3d-cover__content {
+  padding: 2.2rem 2.2rem 2rem 2.8rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #ffffff;
+  position: relative;
+  z-index: 3;
+}
+
+.book3d-cover__badge {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(34, 150, 110, 0.22);
+  border: 1px solid rgba(34, 150, 110, 0.45);
+  color: var(--accent-bright);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.book3d-cover__title {
+  margin: 0.8rem 0 0.3rem;
+  font-family: "Instrument Serif", "Times New Roman", serif;
+  font-size: clamp(2.3rem, 3.4vw, 3rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: #f3f5f3;
+}
+
+.book3d-cover__title span {
+  display: block;
+  font-family: "BDO Grotesk Variable", Arial, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #d1b46a;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  margin-top: 0.3rem;
+}
+
+.book3d-cover__author {
+  margin: 0;
+  font-size: 0.84rem;
+  color: #949a96;
+  font-weight: 400;
+}
+
+.book3d-cover__art-wrap {
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0.8rem 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  background: #000;
+}
+
+.book3d-cover__art {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  animation: folder-fade 220ms ease;
 }
 
-/* Content Column (Right Column) */
-.folder-card__content {
+.book3d-cover__prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.82rem;
+  color: #b8c0ba;
+  letter-spacing: 0.01em;
+}
+
+.book3d-cover__prompt-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-bright);
+  box-shadow: 0 0 8px var(--accent-bright);
+  animation: pulse-dot 1.6s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Open 2-Page Spread */
+.book3d-spread {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Pages in Open Spread */
+.book3d-page {
+  background: #fafaf7;
+  padding: clamp(1.6rem, 2.5vw, 2.5rem);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 1.4rem;
-  animation: folder-fade 220ms ease;
+  justify-content: space-between;
+  position: relative;
+  cursor: pointer;
+  transition: background 220ms ease;
+  overflow: hidden;
 }
 
-.folder-card__description {
-  margin: 0;
-  font-size: clamp(1.02rem, 1.3vw, 1.15rem);
-  line-height: 1.65;
-  color: var(--ink);
-  font-weight: 400;
-  letter-spacing: -0.01em;
+:root[data-theme="dark"] .book3d-page {
+  background: #111a15;
+  color: #e8f0eb;
 }
 
-.folder-card__stat-row {
+.book3d-page--left {
+  border-radius: 16px 0 0 16px;
+  border: 1px solid var(--line);
+  border-right: none;
+}
+
+.book3d-page--right {
+  border-radius: 0 16px 16px 0;
+  border: 1px solid var(--line);
+  border-left: none;
+}
+
+:root[data-theme="dark"] .book3d-page--left,
+:root[data-theme="dark"] .book3d-page--right {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.book3d-page:hover {
+  background: #f4f5ef;
+}
+
+:root[data-theme="dark"] .book3d-page:hover {
+  background: #14221b;
+}
+
+/* Center Binding Crease */
+.book3d-center-binding {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  z-index: 8;
+  pointer-events: none;
+}
+
+/* Spine Shadow on Inner Page Edges */
+.book3d-page__spine-gutter {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.book3d-page__spine-gutter--left {
+  right: 0;
+  background: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.14) 100%);
+}
+
+.book3d-page__spine-gutter--right {
+  left: 0;
+  background: linear-gradient(to left, transparent 0%, rgba(0, 0, 0, 0.14) 100%);
+}
+
+.book3d-page__inner {
+  height: 100%;
   display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.folder-card__stat-label {
-  font-size: 0.95rem;
+.book3d-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.book3d-page__tag {
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+:root[data-theme="dark"] .book3d-page__tag {
+  color: var(--accent-bright);
+}
+
+.book3d-page__number {
+  font-size: 0.78rem;
+  font-weight: 500;
   color: var(--muted);
-  font-weight: 400;
+}
+
+.book3d-page__quote {
+  margin: 0.8rem 0;
+  font-family: "Instrument Serif", "Times New Roman", serif;
+  font-size: clamp(1.35rem, 1.8vw, 1.7rem);
+  line-height: 1.35;
+  color: var(--ink);
+  font-style: italic;
+}
+
+.book3d-page__image-wrap {
+  width: 100%;
+  height: 160px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: auto;
+  position: relative;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.book3d-page__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.book3d-page__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.4rem 0.65rem;
+  background: rgba(0, 0, 0, 0.65);
+  color: #ffffff;
+  font-size: 0.72rem;
+  backdrop-filter: blur(4px);
+}
+
+.book3d-page__main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.book3d-page__title {
+  margin: 0;
+  font-family: "BDO Grotesk Variable", Arial, sans-serif;
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1.18;
+}
+
+.book3d-page__subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+:root[data-theme="dark"] .book3d-page__subtitle {
+  color: var(--accent-bright);
+}
+
+.book3d-page__desc {
+  margin: 0.2rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.58;
+  color: var(--ink);
+  opacity: 0.88;
+}
+
+.book3d-page__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-top: 0.4rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--line);
+}
+
+.book3d-page__stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.book3d-page__stat-label {
+  font-size: 0.72rem;
+  color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
-.folder-card__stat-value {
+.book3d-page__stat-value {
   font-family: "BDO Grotesk Variable", Arial, sans-serif;
-  font-size: clamp(1.1rem, 1.4vw, 1.25rem);
+  font-size: 0.95rem;
   font-weight: 600;
-  color: var(--accent);
-  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
-:root[data-theme="dark"] .folder-card__stat-value {
-  color: var(--accent-bright);
+.book3d-page__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
 }
 
-@keyframes folder-fade {
-  from {
-    opacity: 0;
-    transform: translateY(3px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.book3d-page__pill {
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--cream) 60%, var(--paper));
+  color: var(--ink);
+  border: 1px solid var(--line);
 }
 
-/* Responsive adjustment for Mobile / Tablet */
-@media (max-width: 860px) {
-  .folder-card {
+:root[data-theme="dark"] .book3d-page__pill {
+  background: rgba(34, 150, 110, 0.12);
+  border-color: rgba(34, 150, 110, 0.25);
+}
+
+/* Back Cover */
+.book3d-cover--back {
+  border-radius: 18px 8px 8px 18px;
+  text-align: center;
+}
+
+.book3d-spine-edge--back {
+  left: auto;
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(255, 255, 255, 0.12) 40%,
+    rgba(0, 0, 0, 0.55) 75%,
+    transparent 100%
+  );
+}
+
+.book3d-cover__content--back {
+  padding: 3rem 2rem;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.book3d-cover__seal {
+  font-size: 3rem;
+}
+
+.book3d-cover__title--back {
+  font-size: 2.2rem;
+}
+
+/* Navigation Controls below the Book */
+.book3d-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 2.2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.book3d-btn {
+  padding: 0.55rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 180ms ease;
+  backdrop-filter: blur(8px);
+}
+
+.book3d-btn:hover:not(:disabled) {
+  border-color: var(--accent-bright);
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.book3d-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.book3d-indicators {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.book3d-dot {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.book3d-dot:hover {
+  color: var(--ink);
+}
+
+.book3d-dot--active {
+  background: var(--ink);
+  color: var(--paper) !important;
+  border-color: var(--ink);
+  font-weight: 600;
+}
+
+:root[data-theme="dark"] .book3d-dot--active {
+  background: var(--accent-bright);
+  color: #0c1410 !important;
+  border-color: var(--accent-bright);
+}
+
+/* Responsive Handling for Mobile */
+@media (max-width: 720px) {
+  .book3d-spread {
     grid-template-columns: 1fr;
-    gap: 1.6rem;
-    padding: 1.5rem;
+    height: auto;
   }
 
-  .folder-card__media {
+  .book3d-wrapper--open .book3d-stage {
     width: 100%;
-    height: 210px;
-    min-height: auto;
+    height: auto;
   }
 
-  .folder-tabs__bar {
-    gap: 0.85rem;
+  .book3d-page--left {
+    border-radius: 14px 14px 0 0;
+    border-right: 1px solid var(--line);
+    border-bottom: none;
   }
 
-  .folder-tab-btn {
-    padding: 0.65rem 1.2rem;
-    font-size: 0.92rem;
+  .book3d-page--right {
+    border-radius: 0 0 14px 14px;
+    border-left: 1px solid var(--line);
+  }
+
+  .book3d-center-binding {
+    display: none;
+  }
+
+  .book3d-shadow {
+    display: none;
   }
 }
+
