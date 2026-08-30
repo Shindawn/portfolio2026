@@ -144,36 +144,36 @@ export function Hero() {
   const fullText = "Available for work";
 
   useEffect(() => {
-    let index = 0;
+    let currentIdx = 0;
     let isDeleting = false;
-    let timeoutId: number;
+    let timer: number;
 
-    const typeLoop = () => {
+    const tick = () => {
       if (!isDeleting) {
-        index++;
-        setTypedText(fullText.slice(0, index));
-        if (index === fullText.length) {
-          timeoutId = window.setTimeout(() => {
-            isDeleting = true;
-            typeLoop();
-          }, 3400);
-          return;
+        currentIdx++;
+        setTypedText(fullText.substring(0, currentIdx));
+
+        if (currentIdx === fullText.length) {
+          isDeleting = true;
+          timer = window.setTimeout(tick, 2000);
+        } else {
+          timer = window.setTimeout(tick, 75);
         }
-        timeoutId = window.setTimeout(typeLoop, 85);
       } else {
-        index--;
-        setTypedText(fullText.slice(0, index));
-        if (index === 0) {
+        currentIdx--;
+        setTypedText(fullText.substring(0, currentIdx));
+
+        if (currentIdx === 0) {
           isDeleting = false;
-          timeoutId = window.setTimeout(typeLoop, 600);
-          return;
+          timer = window.setTimeout(tick, 400);
+        } else {
+          timer = window.setTimeout(tick, 35);
         }
-        timeoutId = window.setTimeout(typeLoop, 45);
       }
     };
 
-    timeoutId = window.setTimeout(typeLoop, 300);
-    return () => window.clearTimeout(timeoutId);
+    timer = window.setTimeout(tick, 100);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {

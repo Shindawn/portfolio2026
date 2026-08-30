@@ -526,15 +526,15 @@ a {
 .hero-stage__typing-text {
   display: inline-flex;
   align-items: center;
-  min-width: 9.8rem;
+  white-space: nowrap;
 }
 
 .hero-stage__typing-cursor {
   display: inline-block;
-  margin-left: 1px;
-  font-weight: 300;
-  color: var(--accent);
-  animation: typing-blink 0.85s infinite;
+  margin-left: 2px;
+  font-weight: 700;
+  color: var(--accent-bright);
+  animation: typing-blink 0.75s infinite;
 }
 
 @keyframes typing-blink {
