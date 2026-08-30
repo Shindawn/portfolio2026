@@ -10,12 +10,17 @@ type Particle = {
   size: number;
 };
 
-export default function HeroTitleEffect() {
+type Props = {
+  selector?: string;
+  canvasClassName?: string;
+};
+
+export default function HeroTitleEffect({ selector = "h1", canvasClassName = "hero-title-canvas" }: Props = {}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const title = canvas?.parentElement?.querySelector<HTMLHeadingElement>("h1");
+    const title = canvas?.parentElement?.querySelector<HTMLElement>(selector);
     if (!canvas || !title || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const context = canvas.getContext("2d");
@@ -26,6 +31,14 @@ export default function HeroTitleEffect() {
     let frame = 0;
     let disposed = false;
     let leaveTimer = 0;
+    let inkColor = "#10100f";
+
+    const updateInkColor = () => {
+      const configuredColor = getComputedStyle(canvas.parentElement ?? title)
+        .getPropertyValue("--particle-ink")
+        .trim();
+      inkColor = configuredColor || getComputedStyle(title).color;
+    };
 
     const buildParticles = async () => {
       await document.fonts.ready;
@@ -44,6 +57,7 @@ export default function HeroTitleEffect() {
       if (!bufferContext) return;
 
       const titleStyle = getComputedStyle(title);
+      updateInkColor();
       const titleBounds = title.getBoundingClientRect();
       const spans = [...title.querySelectorAll<HTMLSpanElement>("span")];
       bufferContext.fillStyle = "#10100f";
@@ -51,14 +65,18 @@ export default function HeroTitleEffect() {
       bufferContext.font = `${titleStyle.fontWeight} ${titleStyle.fontSize} ${titleStyle.fontFamily}`;
       if ("letterSpacing" in bufferContext) bufferContext.letterSpacing = titleStyle.letterSpacing;
 
-      spans.forEach((span) => {
-        const spanBounds = span.getBoundingClientRect();
-        bufferContext.fillText(
-          span.textContent ?? "",
-          spanBounds.left - bounds.left,
-          titleBounds.top - bounds.top + (spanBounds.top - titleBounds.top),
-        );
-      });
+      if (spans.length) {
+        spans.forEach((span) => {
+          const spanBounds = span.getBoundingClientRect();
+          bufferContext.fillText(
+            span.textContent ?? "",
+            spanBounds.left - bounds.left,
+            titleBounds.top - bounds.top + (spanBounds.top - titleBounds.top),
+          );
+        });
+      } else {
+        bufferContext.fillText(title.textContent ?? "", titleBounds.left - bounds.left, titleBounds.top - bounds.top);
+      }
 
       const pixels = bufferContext.getImageData(0, 0, buffer.width, buffer.height).data;
       const gap = window.innerWidth < 700 ? 5 : 4;
@@ -107,7 +125,7 @@ export default function HeroTitleEffect() {
           context.fillStyle = `rgba(245, 58, 42, ${Math.min(0.68, speed / 5)})`;
           context.fillRect(particle.x + 2.2, particle.y, particle.size, particle.size);
         }
-        context.fillStyle = "#10100f";
+        context.fillStyle = inkColor;
         context.fillRect(particle.x, particle.y, particle.size, particle.size);
       }
       frame = requestAnimationFrame(draw);
@@ -128,6 +146,8 @@ export default function HeroTitleEffect() {
       }, 650);
     };
     const resize = () => { window.clearTimeout(Number(canvas.dataset.resizeTimer)); canvas.dataset.resizeTimer = String(window.setTimeout(buildParticles, 150)); };
+    const themeObserver = new MutationObserver(updateInkColor);
+    themeObserver.observe(document.documentElement, { attributeFilter: ["data-theme"] });
 
     buildParticles().then(draw);
     canvas.addEventListener("pointermove", movePointer);
@@ -138,11 +158,12 @@ export default function HeroTitleEffect() {
       disposed = true;
       window.clearTimeout(leaveTimer);
       cancelAnimationFrame(frame);
+      themeObserver.disconnect();
       canvas.removeEventListener("pointermove", movePointer);
       canvas.removeEventListener("pointerleave", leavePointer);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [selector]);
 
-  return <canvas ref={canvasRef} className="hero-title-canvas" aria-hidden="true" />;
+  return <canvas ref={canvasRef} className={canvasClassName} aria-hidden="true" />;
 }

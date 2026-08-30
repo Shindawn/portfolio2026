@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Brands, Expertise, Faq, Footer, Hero, LatestWork, SneakPeek } from "./Sections";
@@ -7,6 +7,75 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
   const appRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let audioContext: AudioContext | null = null;
+
+    const playKeyClick = () => {
+      audioContext ??= new AudioContext();
+      if (audioContext.state === "suspended") void audioContext.resume();
+
+      const now = audioContext.currentTime;
+      const output = audioContext.createGain();
+      const pitchVariation = 0.94 + Math.random() * 0.12;
+      output.gain.setValueAtTime(0.065, now);
+      output.gain.exponentialRampToValueAtTime(0.001, now + 0.085);
+      output.connect(audioContext.destination);
+
+      const switchTone = audioContext.createOscillator();
+      switchTone.type = "sine";
+      switchTone.frequency.setValueAtTime(118 * pitchVariation, now);
+      switchTone.frequency.exponentialRampToValueAtTime(54 * pitchVariation, now + 0.055);
+      switchTone.connect(output);
+      switchTone.start(now);
+      switchTone.stop(now + 0.075);
+
+      const noiseLength = Math.ceil(audioContext.sampleRate * 0.045);
+      const noiseBuffer = audioContext.createBuffer(1, noiseLength, audioContext.sampleRate);
+      const noise = noiseBuffer.getChannelData(0);
+      for (let index = 0; index < noise.length; index += 1) {
+        noise[index] = (Math.random() * 2 - 1) * (1 - index / noise.length);
+      }
+      const noiseSource = audioContext.createBufferSource();
+      const noiseFilter = audioContext.createBiquadFilter();
+      noiseFilter.type = "lowpass";
+      noiseFilter.frequency.value = 1150 * pitchVariation;
+      noiseFilter.Q.value = 1.4;
+      noiseSource.buffer = noiseBuffer;
+      noiseSource.connect(noiseFilter);
+      noiseFilter.connect(output);
+      noiseSource.start(now);
+
+      const clickTone = audioContext.createOscillator();
+      const clickGain = audioContext.createGain();
+      clickTone.type = "square";
+      clickTone.frequency.value = 2800 * pitchVariation;
+      clickGain.gain.setValueAtTime(0.012, now);
+      clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.012);
+      clickTone.connect(clickGain);
+      clickGain.connect(audioContext.destination);
+      clickTone.start(now);
+      clickTone.stop(now + 0.014);
+    };
+
+    const isSoundButton = (target: EventTarget | null) =>
+      target instanceof Element && Boolean(target.closest("button, a.button"));
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (event.button === 0 && isSoundButton(event.target)) playKeyClick();
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (!event.repeat && (event.key === "Enter" || event.key === " ") && isSoundButton(event.target)) playKeyClick();
+    };
+
+    document.addEventListener("pointerdown", onPointerDown, true);
+    document.addEventListener("keydown", onKeyDown, true);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown, true);
+      document.removeEventListener("keydown", onKeyDown, true);
+      if (audioContext) void audioContext.close();
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -32,7 +101,7 @@ export default function App() {
       });
       peek.fromTo(".project-shelf",
         { xPercent: 34, yPercent: 18 },
-        { xPercent: -34, yPercent: -12, ease: "none" },
+        { xPercent: 0, yPercent: 0, ease: "none" },
       );
       peek.from(".shelf-book", {
         xPercent: 45, opacity: 0, stagger: 0.06, ease: "power2.out",
