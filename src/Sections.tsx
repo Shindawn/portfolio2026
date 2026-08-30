@@ -31,13 +31,13 @@ function NavClock() {
   return <time className="nav-clock" title="Philippine Standard Time">{time}</time>;
 }
 
-function Navigation() {
+export function Navigation() {
   return <nav className="nav shell" aria-label="Main navigation">
-    <div className="nav-start"><ThemeToggle /><a className="brand" href="#home" aria-label="Lescy Gdawn, home">Lescy Gdawn</a></div>
+    <div className="nav-start"><ThemeToggle /><a className="brand" href="/" aria-label="Lescy Gdawn, home">Lescy Gdawn</a><NavClock /></div>
     <div className="nav-links"><details className="file-menu"><summary>File</summary><div className="file-menu__dropdown">
       <a href="/LescyGCaadlawon_CV.pdf" target="_blank" rel="noreferrer"><span>Preview Resume</span><small aria-hidden="true">↗</small></a>
       <a href="/LescyGCaadlawon_CV.pdf" download="LescyGCaadlawon_CV.pdf"><span>Download Resume</span><small aria-hidden="true">↓</small></a>
-    </div></details><NavClock /><a href="#home">Home</a><a href="#about">About</a><a href="#work">Work</a><a className="button button--nav" href="mailto:hello@lescygdawn.com">Book a Call</a></div>
+    </div></details><a href="/">Home</a><a href="/about">About</a><a href="/#work">Work</a><a className="button button--nav" href="mailto:hello@lescygdawn.com">Book a Call</a></div>
   </nav>;
 }
 
@@ -155,7 +155,7 @@ export function Faq() {
 }
 
 export function Footer() {
-  return <footer className="footer" id="contact"><div className="footer__inner shell"><div className="footer__contact"><p className="footer__eyebrow">LET’S CONNECT</p><a className="footer__email" href="mailto:hi@lescy.tech">hi@lescy.tech</a><p className="footer__message">Have a project in mind or an idea worth exploring?<br />Let’s talk and create something meaningful together.</p></div>
+  return <footer className="footer" id="contact"><div className="footer__inner shell"><div className="footer__contact"><p className="footer__eyebrow">LET’S CONNECT</p><a className="footer__email" href="mailto:hi@lescy.tech" aria-label="Email hi at lescy dot tech"><span className="footer__email-local" aria-hidden="true">hi</span><span className="footer__email-at" aria-hidden="true">@</span><span className="footer__email-domain" aria-hidden="true">lescy.tech</span></a><p className="footer__message">Have a project in mind or an idea worth exploring?<br />Let’s talk and create something meaningful together.</p></div>
     <div className="footer__meta"><p>©2026 Lescy G. Caadlawon</p><nav className="footer__socials" aria-label="Social links"><a href="https://www.linkedin.com/in/lescycaadlawon" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/Shindawn" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.facebook.com/lescygcaadlawon/" target="_blank" rel="noreferrer">Facebook</a><a href="https://wa.me/639692467870" target="_blank" rel="noreferrer">WhatsApp</a></nav><p className="footer__credit">Thoughtfully crafted by Lescy Gdawn</p></div><p className="footer__wordmark" aria-hidden="true"><span>LESCY</span><span>GDAWN</span></p>
   </div></footer>;
 }
