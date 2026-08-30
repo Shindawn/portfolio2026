@@ -49,7 +49,7 @@ export default function HangingIdCard() {
 
   const handleCopyEmail = (e: React.MouseEvent) => {
     e.stopPropagation();
-    navigator.clipboard.writeText("contact@easyspark.io");
+    navigator.clipboard.writeText("lescycaadlawon.dev@gmail.com");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -67,7 +67,7 @@ export default function HangingIdCard() {
       {/* Hanging Webbing Ribbon Strap */}
       <div className="aurum-ribbon-strap">
         <div className="aurum-ribbon-pattern">
-          <span>EASYSPARK ✕ COZY STUDIO ✕ PASS 2026</span>
+          <span>LESCY GDAWN ✕ FULL-STACK DEVELOPER ✕ PASS 2026</span>
         </div>
       </div>
 
@@ -96,25 +96,25 @@ export default function HangingIdCard() {
 
         {/* Header Badges */}
         <div className="aurum-card-header">
-          <span className="aurum-card-tag">CREATIVE PASS</span>
-          <span className="aurum-card-badge">MEMBER CARD</span>
+          <span className="aurum-card-tag">DEV PASS</span>
+          <span className="aurum-card-badge">CREATIVE TECH</span>
         </div>
 
         {/* Hero Identity */}
         <div className="aurum-card-hero">
-          <h2 className="aurum-card-name">EasySpark</h2>
-          <span className="aurum-card-sub">COZY STUDIO</span>
+          <h2 className="aurum-card-name">Lescy Gdawn</h2>
+          <span className="aurum-card-sub">FULL-STACK DEVELOPER &amp; UI/UX</span>
         </div>
 
         {/* Metadata Grid */}
         <div className="aurum-card-meta-grid">
           <div className="aurum-meta-cell">
             <span className="aurum-meta-label">REFERENCE ID</span>
-            <strong className="aurum-meta-val">#2026–05–31</strong>
+            <strong className="aurum-meta-val">#LG-2026-08</strong>
           </div>
           <div className="aurum-meta-cell">
-            <span className="aurum-meta-label">DEPARTEMENT</span>
-            <strong className="aurum-meta-val">Brand Experience</strong>
+            <span className="aurum-meta-label">DEPARTMENT</span>
+            <strong className="aurum-meta-val">Software &amp; Cloud</strong>
           </div>
         </div>
 
@@ -128,7 +128,7 @@ export default function HangingIdCard() {
         >
           <span className="aurum-meta-label">EMAIL</span>
           <div className="aurum-email-val-wrap">
-            <span className="aurum-email-val">contact@easyspark.io</span>
+            <span className="aurum-email-val">lescycaadlawon.dev@gmail.com</span>
             <svg
               className="aurum-copy-icon"
               viewBox="0 0 24 24"
@@ -164,8 +164,8 @@ export default function HangingIdCard() {
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
             </svg>
             <div className="aurum-footer-text">
-              <strong>EasySpark</strong>
-              <small>COZY</small>
+              <strong>Lescy Gdawn</strong>
+              <small>MANILA, PH</small>
             </div>
           </div>
           <div className="aurum-card-chip" aria-hidden="true" />

@@ -5,6 +5,7 @@ import CurvedBanner from "./CurvedBanner";
 import Hero3DCarousel from "./Hero3DCarousel";
 import { Brands, Expertise, Faq, Footer, Hero, LatestWork } from "./Sections";
 import IntegrationNetwork from "./IntegrationNetwork";
+import Preloader from "./Preloader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -156,6 +157,7 @@ export default function App() {
 
   return (
     <div ref={appRef}>
+      <Preloader />
       <Hero />
       <Expertise />
       <IntegrationNetwork />

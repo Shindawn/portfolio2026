@@ -266,23 +266,8 @@ export default function AboutPage() {
           MEET LEC
         </h1>
 
-        <div className="about-badges" aria-hidden="true">
-          <span className="about-badge about-badge--one">Full-Stack Developer</span>
-          <span className="about-badge about-badge--two">UI/UX Designer</span>
-          <span className="about-badge about-badge--three">Web &amp; Mobile Apps</span>
-          <span className="about-badge about-badge--four">Based in Manila</span>
-          <span className="about-badge about-badge--five">Ideas to Production</span>
-        </div>
-
         {/* Interactive 3D Hanging Lanyard ID Card with Gravitational Motion Physics */}
         <HangingIdCard />
-      </section>
-
-      <section className="about-introduction" aria-labelledby="introduction-title">
-        <h2 id="introduction-title">( Introduction )</h2>
-        <p>
-          Lescy is a full-stack developer and UI/UX designer who builds clear, reliable digital experiences from concept to deployment.
-        </p>
       </section>
 
       <section className="about-experience" aria-labelledby="experience-title">
