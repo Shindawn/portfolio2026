@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent } from "react";
+import { useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import { Footer, Navigation } from "./Sections";
 import Book3D from "./Book3D";
 
@@ -48,6 +48,48 @@ const techItems: TechItem[] = [
 export default function AboutPage() {
   const stackRef = useRef<HTMLDivElement>(null);
   const [hoveredTech, setHoveredTech] = useState<TechItem | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const getExplodeStyle = (idx: number): CSSProperties => {
+    if (hoveredIndex === null) {
+      return {};
+    }
+
+    if (idx === hoveredIndex) {
+      return {
+        transform: "translate3d(0, -6px, 30px) scale(1.32)",
+        zIndex: 40,
+      };
+    }
+
+    const COLS = 7;
+    const col0 = hoveredIndex % COLS;
+    const row0 = Math.floor(hoveredIndex / COLS);
+    const col = idx % COLS;
+    const row = Math.floor(idx / COLS);
+
+    const dx = col - col0;
+    const dy = row - row0;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist === 0) return {};
+
+    const angle = Math.atan2(dy, dx);
+    // Shockwave explosion intensity with distance falloff
+    const intensity = Math.max(0.1, 1 - (dist - 1) * 0.28);
+    const blastDistance = 22 + intensity * 46; // Up to 68px radial explosion push
+    const blastX = Math.cos(angle) * blastDistance;
+    const blastY = Math.sin(angle) * blastDistance;
+    const blastRot = (dx * 15 - dy * 12) * intensity;
+    const blastScale = Math.max(0.6, 1 - intensity * 0.3);
+    const opacity = Math.max(0.35, 0.9 - intensity * 0.45);
+
+    return {
+      transform: `translate3d(${blastX.toFixed(1)}px, ${blastY.toFixed(1)}px, 0) rotate(${blastRot.toFixed(1)}deg) scale(${blastScale.toFixed(2)})`,
+      opacity,
+      zIndex: Math.round(15 - dist),
+    };
+  };
 
   const moveCards = (event: PointerEvent<HTMLDivElement>) => {
     const stack = stackRef.current;
@@ -151,17 +193,40 @@ export default function AboutPage() {
               )}
             </div>
 
-            <div className="about-matrix-grid" role="region" aria-label="Interactive Tech Stack Matrix">
+            <div
+              className="about-matrix-grid"
+              role="region"
+              aria-label="Interactive Tech Stack Matrix"
+              onMouseLeave={() => {
+                setHoveredTech(null);
+                setHoveredIndex(null);
+              }}
+            >
               {gridCells.map((cell, idx) => {
+                const isActive = hoveredIndex === idx;
+                const cellStyle = getExplodeStyle(idx);
+
                 if (cell.type === "tech") {
                   return (
                     <div
                       key={cell.id}
-                      className="about-matrix-cell about-matrix-cell--tech"
-                      onMouseEnter={() => setHoveredTech(cell.tech)}
-                      onMouseLeave={() => setHoveredTech(null)}
+                      className={`about-matrix-cell about-matrix-cell--tech ${
+                        isActive ? "about-matrix-cell--active" : ""
+                      }`}
+                      style={cellStyle}
+                      onMouseEnter={() => {
+                        setHoveredTech(cell.tech);
+                        setHoveredIndex(idx);
+                      }}
                       title={`${cell.tech.name} (${cell.tech.category})`}
                     >
+                      {isActive && (
+                        <div className="matrix-spark-burst" aria-hidden="true">
+                          {Array.from({ length: 8 }).map((_, sIdx) => (
+                            <span key={sIdx} className={`matrix-spark matrix-spark--${sIdx}`} />
+                          ))}
+                        </div>
+                      )}
                       <img
                         className="about-matrix-cell__icon"
                         src={cell.tech.icon}
@@ -171,7 +236,13 @@ export default function AboutPage() {
                     </div>
                   );
                 }
-                return <div key={`empty-${idx}`} className="about-matrix-cell about-matrix-cell--empty" />;
+                return (
+                  <div
+                    key={`empty-${idx}`}
+                    className="about-matrix-cell about-matrix-cell--empty"
+                    style={cellStyle}
+                  />
+                );
               })}
             </div>
           </div>

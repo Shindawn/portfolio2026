@@ -93,8 +93,6 @@ export default function Book3D() {
   const [isTurning, setIsTurning] = useState<boolean>(false);
   const bookRef = useRef<HTMLDivElement>(null);
 
-  const totalSteps = spreads.length + 1; // 0 = front cover, 1..N = spreads, N+1 = back cover
-
   const handleNext = () => {
     if (isTurning) return;
     if (currentStep <= spreads.length) {
@@ -175,7 +173,6 @@ export default function Book3D() {
               <h3 className="book3d-cover__title">
                 My Journey <span>education &amp; honors</span>
               </h3>
-              <p className="book3d-cover__author">Lescy Caadlawon • 2022 — 2026</p>
               
               <div className="book3d-cover__art-wrap">
                 <img
@@ -299,69 +296,9 @@ export default function Book3D() {
               <h3 className="book3d-cover__title book3d-cover__title--back">
                 The Academic Chronicles
               </h3>
-              <p className="book3d-cover__author">Catanduanes State University • BSIT 2026</p>
-              <div className="book3d-cover__prompt">
-                <span className="book3d-cover__prompt-dot" />
-                Click to restart from cover
-              </div>
             </div>
           </div>
         )}
-      </div>
-
-      {/* Book Navigation Bar Controls */}
-      <div className="book3d-controls">
-        <button
-          type="button"
-          className="book3d-btn"
-          onClick={handlePrev}
-          disabled={currentStep === 0}
-          aria-label="Previous page"
-        >
-          ← Prev
-        </button>
-
-        <div className="book3d-indicators" role="tablist" aria-label="Book page navigation">
-          <button
-            type="button"
-            className={`book3d-dot ${currentStep === 0 ? "book3d-dot--active" : ""}`}
-            onClick={() => setCurrentStep(0)}
-            title="Front Cover"
-          >
-            Cover
-          </button>
-          {spreads.map((_, idx) => {
-            const stepIndex = idx + 1;
-            return (
-              <button
-                key={idx}
-                type="button"
-                className={`book3d-dot ${currentStep === stepIndex ? "book3d-dot--active" : ""}`}
-                onClick={() => setCurrentStep(stepIndex)}
-                title={`Spread ${idx + 1}`}
-              >
-                {`${idx * 2 + 1}-${idx * 2 + 2}`}
-              </button>
-            );
-          })}
-          <button
-            type="button"
-            className={`book3d-dot ${isBackCover ? "book3d-dot--active" : ""}`}
-            onClick={() => setCurrentStep(totalSteps)}
-            title="Back Cover"
-          >
-            Back
-          </button>
-        </div>
-
-        <button
-          type="button"
-          className="book3d-btn"
-          onClick={handleNext}
-          aria-label={isBackCover ? "Restart book" : "Next page"}
-        >
-          {isBackCover ? "Restart ↻" : "Next →"}
-        </button>
       </div>
     </div>
   );

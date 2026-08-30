@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CurvedBanner from "./CurvedBanner";
 import Hero3DCarousel from "./Hero3DCarousel";
 import { Brands, Expertise, Faq, Footer, Hero, LatestWork } from "./Sections";
+import IntegrationNetwork from "./IntegrationNetwork";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -132,6 +133,7 @@ export default function App() {
 
       const reveals = [
         [".expertise__services", ".expertise__services", { y: 45, filter: "blur(12px)", duration: 1.1 }],
+        [".integration-network__stage-wrap", ".integration-network", { y: 40, filter: "blur(10px)", duration: 1.0 }],
         [".project-row", ".project-list", { y: 30, stagger: 0.09, duration: 0.7 }],
         [".brand-mark", ".brand-strip", { y: 18, stagger: 0.055, duration: 0.5 }],
         [".testimonial", ".testimonials", { y: 90, stagger: 0.08, duration: 0.85 }],
@@ -152,5 +154,15 @@ export default function App() {
     };
   }, []);
 
-  return <div ref={appRef}><Hero /><Expertise /><LatestWork /><Brands /><Faq /><Footer /></div>;
+  return (
+    <div ref={appRef}>
+      <Hero />
+      <Expertise />
+      <IntegrationNetwork />
+      <LatestWork />
+      <Brands />
+      <Faq />
+      <Footer />
+    </div>
+  );
 }
