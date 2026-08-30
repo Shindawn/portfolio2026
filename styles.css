@@ -23,6 +23,10 @@
 :root[data-theme="dark"] {
   --ink: #e8f0eb;
   --muted: #8fa899;
+  --accent: #22966e;
+  --accent-bright: #22966e;
+  --accent-pale: #a3d9c0;
+  --on-accent: #0e1a15;
   --cream: #142e22;
   --paper: #0c1410;
   --line: rgba(255, 255, 255, 0.1);
@@ -2933,33 +2937,68 @@ a {
   }
 }
 
+/* About Page - Introduction */
+.about-introduction {
+  width: var(--shell);
+  margin-inline: auto;
+  padding: clamp(3.5rem, 6vw, 6rem) 0 1rem;
+}
+
+.about-introduction h2 {
+  margin: 0;
+  color: var(--accent);
+  font-family: "Instrument Serif", "Times New Roman", serif;
+  font-size: clamp(3.7rem, 6vw, 6rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+:root[data-theme="dark"] .about-introduction h2 {
+  color: var(--accent-bright);
+}
+
+.about-introduction p {
+  margin: 1.4rem 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  line-height: 1.45;
+  letter-spacing: -0.03em;
+  max-width: 48rem;
+}
+
 /* About Page - Experience & Interactive Tech Matrix Alignment */
 .about-experience {
   width: var(--shell);
   margin-inline: auto;
-  padding: clamp(3rem, 5vw, 5rem) 0;
+  padding: clamp(3.5rem, 6vw, 6rem) 0;
 }
 
 .about-experience header {
-  margin-bottom: 2.2rem;
+  margin-bottom: 2.8rem;
 }
 
 .about-experience header h2 {
   margin: 0;
-  font-size: 0.88rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--muted);
+  color: var(--accent);
+  font-family: "Instrument Serif", "Times New Roman", serif;
+  font-size: clamp(3.7rem, 6vw, 6rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+:root[data-theme="dark"] .about-experience header h2 {
+  color: var(--accent-bright);
 }
 
 .about-experience header p {
-  margin: 0.45rem 0 0;
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 400;
-  line-height: 1.45;
+  margin: 1.4rem 0 0;
   color: var(--muted);
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  line-height: 1.45;
+  letter-spacing: -0.03em;
+  max-width: 48rem;
 }
 
 .about-experience__grid {
@@ -3186,25 +3225,30 @@ a {
 }
 
 .about-education header {
-  margin-bottom: 2.2rem;
+  margin-bottom: 2.8rem;
 }
 
 .about-education header h2 {
   margin: 0;
-  font-size: 0.88rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: var(--muted);
+  color: var(--accent);
+  font-family: "Instrument Serif", "Times New Roman", serif;
+  font-size: clamp(3.7rem, 6vw, 6rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.055em;
+}
+
+:root[data-theme="dark"] .about-education header h2 {
+  color: var(--accent-bright);
 }
 
 .about-education header p {
-  margin: 0.45rem 0 0;
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 400;
-  line-height: 1.45;
+  margin: 1.4rem 0 0;
   color: var(--muted);
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  line-height: 1.45;
+  letter-spacing: -0.03em;
+  max-width: 48rem;
 }
 
 .folder-education__container {

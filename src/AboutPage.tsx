@@ -231,7 +231,7 @@ export default function AboutPage() {
       {/* Folder Tabs Academic Section */}
       <section className="about-education folder-education" aria-labelledby="academic-folder-title">
         <header>
-          <h2 id="academic-folder-title">( Academic Background &amp; Honors )</h2>
+          <h2 id="academic-folder-title">( Education )</h2>
           <p>University foundation, scholastic honors, scholarship grants, and collegiate leadership.</p>
         </header>
 
