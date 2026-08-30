@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import { Footer, Navigation } from "./Sections";
 import Book3D from "./Book3D";
+import HangingIdCard from "./HangingIdCard";
 
 const experience = [
   ["01", "Full-Stack Developer", "Jun – Aug 2026"],
@@ -273,21 +274,8 @@ export default function AboutPage() {
           <span className="about-badge about-badge--five">Ideas to Production</span>
         </div>
 
-        <div className="about-card-stack" ref={stackRef} onPointerMove={moveCards} onPointerLeave={resetCards}>
-          <article className="about-polaroid about-polaroid--left">
-            <div className="about-polaroid__art about-polaroid__art--left" />
-          </article>
-          <article className="about-polaroid about-polaroid--right">
-            <div className="about-polaroid__art about-polaroid__art--right" />
-          </article>
-          <article className="about-polaroid about-polaroid--main">
-            <div className="about-polaroid__art about-polaroid__art--main" />
-            <footer>
-              <span>Fig. 01 — Portrait</span>
-              <span>Lescy Gdawn, 2026</span>
-            </footer>
-          </article>
-        </div>
+        {/* Interactive 3D Hanging Lanyard ID Card with Gravitational Motion Physics */}
+        <HangingIdCard />
       </section>
 
       <section className="about-introduction" aria-labelledby="introduction-title">

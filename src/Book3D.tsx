@@ -9,6 +9,7 @@ export interface BookSpread {
     image?: string;
     caption?: string;
     text?: string;
+    certList?: { category: string; items: string[] }[];
   };
   rightPage: {
     tag: string;
@@ -27,8 +28,8 @@ const spreads: BookSpread[] = [
     leftPage: {
       tag: "Vol. 01 • Academic Roots",
       quote: "“In engineering and design, true craft is born at the intersection of mathematical rigor and aesthetic intuition.”",
-      image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=700&q=85",
-      caption: "University campus & late-night code lab.",
+      image: "/catsu-campus.jpg",
+      caption: "Catanduanes State University Main Campus.",
     },
     rightPage: {
       tag: "Chapter 01 • Degree",
@@ -45,22 +46,51 @@ const spreads: BookSpread[] = [
   {
     id: "spread-2",
     leftPage: {
-      tag: "Chapter 02 • Distinction",
-      quote: "“Scholastic excellence is not a single achievement, but a disciplined habit of shipping clarity every single day.”",
-      image: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=700&q=85",
-      caption: "Consecutive Academic Honor Roll recognition.",
+      tag: "Chapter 02 • Certifications",
+      certList: [
+        {
+          category: "Backend & Cloud",
+          items: [
+            "Web Development (Laravel)",
+            "Oracle Cloud AI Associate",
+            "GitHub Foundations",
+          ],
+        },
+        {
+          category: "Security",
+          items: [
+            "Junior Cybersecurity Analyst Career Path (CISCO)",
+          ],
+        },
+        {
+          category: "AI & Product",
+          items: [
+            "Prompt Engineering (IBM)",
+            "GenAI (Google)",
+            "UX Design (IBM)",
+            "Technical Support (Google)",
+          ],
+        },
+      ],
     },
     rightPage: {
       tag: "Awards & Accreditations",
       title: "Scholastic Honors & Certs",
       subtitle: "Multi-Year Dean’s List Distinction",
       description:
-        "Awarded continuous Dean’s Honor Roll recognition throughout 2022–2026, complemented by hands-on industry credentials in Full-Stack Web Development, RESTful API Design, and Cloud Foundations.",
+        "Awarded continuous Dean’s Honor Roll recognition throughout 2022–2026, complemented by verified industry credentials across Cloud, Security, Backend, and AI systems.",
       stats: [
         { label: "Honors", value: "Dean’s Lister (2022–2026)" },
-        { label: "Credentials", value: "Full-Stack & Cloud Certified" },
+        { label: "Accreditations", value: "8+ Industry Certifications" },
       ],
-      pills: ["Academic Honor Roll", "Cloud Architecture", "System Design"],
+      pills: [
+        "Oracle Cloud AI",
+        "GitHub Foundations",
+        "CISCO Cyber",
+        "IBM AI & UX",
+        "Google GenAI",
+        "Laravel Web Dev",
+      ],
     },
   },
   {
@@ -81,7 +111,14 @@ const spreads: BookSpread[] = [
         { label: "Grant", value: "100% Tertiary Merit Scholar" },
         { label: "Leadership", value: "Tech Guild & IT Society" },
       ],
-      pills: ["Full Academic Scholar", "Student Tech Leader", "Peer Mentor"],
+      pills: [
+        "DTI-Albay Coursera",
+        "Google",
+        "DataCamp",
+        "GitHub Education",
+        "DTI-CAR",
+        "ASEAN",
+      ],
     },
   },
 ];
@@ -202,6 +239,24 @@ export default function Book3D() {
                   <span className="book3d-page__tag">{activeSpread.leftPage.tag}</span>
                   <span className="book3d-page__number">{currentStep * 2 - 1}</span>
                 </div>
+
+                {activeSpread.leftPage.certList && (
+                  <div className="book3d-page__certs">
+                    {activeSpread.leftPage.certList.map((group, idx) => (
+                      <div key={idx} className="book3d-cert-group">
+                        <span className="book3d-cert-group__category">{group.category}</span>
+                        <ul className="book3d-cert-group__list">
+                          {group.items.map((item, itemIdx) => (
+                            <li key={itemIdx} className="book3d-cert-item">
+                              <span className="book3d-cert-dot" aria-hidden="true" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 {activeSpread.leftPage.quote && (
                   <blockquote className="book3d-page__quote">

@@ -2937,6 +2937,466 @@ a {
   }
 }
 
+/* ==========================================================================
+   Aurum 3D Hanging ID Card & Lanyard Physics Component
+   ========================================================================== */
+.about-hero {
+  position: relative;
+  width: var(--shell);
+  margin-inline: auto;
+  padding-top: clamp(2rem, 5vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+}
+
+.about-hero__title {
+  font-family: "Instrument Serif", "Times New Roman", serif;
+  font-size: clamp(4.5rem, 11vw, 9.5rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  text-align: center;
+  color: var(--ink);
+  margin: 0 0 1.5rem;
+}
+
+.about-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+  max-width: 46rem;
+}
+
+.about-badge {
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
+  color: var(--muted);
+  backdrop-filter: blur(8px);
+}
+
+:root[data-theme="dark"] .about-badge {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Lanyard Hanging Stage */
+.aurum-lanyard-stage {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 1200px;
+  perspective-origin: 50% 0%;
+  z-index: 10;
+  cursor: grab;
+  padding-bottom: 2rem;
+}
+
+.aurum-lanyard-stage:active {
+  cursor: grabbing;
+}
+
+/* Hanging Webbing Ribbon Strap */
+.aurum-ribbon-strap {
+  width: 34px;
+  height: 95px;
+  background: repeating-linear-gradient(
+    45deg,
+    #be123c 0px,
+    #be123c 4px,
+    #9f1239 4px,
+    #9f1239 8px
+  );
+  border-radius: 3px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.45), 0 8px 18px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  transform-origin: top center;
+  animation: ribbon-hang-sway 2.4s cubic-bezier(0.25, 1.25, 0.4, 1) forwards;
+  z-index: 1;
+}
+
+.aurum-ribbon-pattern {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.58rem;
+  font-weight: 750;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+  padding: 0.4rem 0;
+  user-select: none;
+}
+
+@keyframes ribbon-hang-sway {
+  0% { transform: scaleY(0.6) rotateZ(8deg); opacity: 0; }
+  25% { transform: scaleY(1.08) rotateZ(-5deg); opacity: 1; }
+  45% { transform: scaleY(0.96) rotateZ(3.5deg); }
+  65% { transform: scaleY(1.02) rotateZ(-2deg); }
+  80% { transform: scaleY(0.99) rotateZ(1deg); }
+  100% { transform: scaleY(1) rotateZ(0deg); opacity: 1; }
+}
+
+/* Metallic Clasp & Ring Mechanism */
+.aurum-clasp-assembly {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  margin-top: -2px;
+}
+
+.aurum-clasp-metal-band {
+  width: 38px;
+  height: 9px;
+  border-radius: 3px;
+  background: linear-gradient(to right, #94a3b8 0%, #f8fafc 45%, #64748b 100%);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.aurum-clasp-swivel {
+  width: 14px;
+  height: 18px;
+  background: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 50%, #475569 100%);
+  border-radius: 3px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+  margin-top: -1px;
+}
+
+.aurum-clasp-ring {
+  width: 18px;
+  height: 28px;
+  border: 3px solid #cbd5e1;
+  border-radius: 50%;
+  margin-top: -6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  background: transparent;
+}
+
+/* 3D Interactive Hanging ID Card */
+.aurum-id-card {
+  width: clamp(280px, 28vw, 330px);
+  min-height: clamp(440px, 42vw, 500px);
+  border-radius: 24px;
+  margin-top: -12px;
+  background: radial-gradient(circle at 50% 15%, #b91c3c 0%, #7d122b 45%, #300611 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 28px 65px rgba(54, 5, 17, 0.55), 0 8px 20px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+  padding: 1.4rem 1.65rem 1.65rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #ffffff;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  user-select: none;
+  z-index: 3;
+}
+
+.aurum-id-card.is-hanging {
+  animation: aurum-drop-pendulum 2.4s cubic-bezier(0.25, 1.25, 0.4, 1) forwards;
+}
+
+.aurum-id-card.is-hovered {
+  transform: translate3d(var(--pos-x, 0px), var(--pos-y, 0px), 0px)
+    rotateX(var(--rot-x, 0deg))
+    rotateY(var(--rot-y, 0deg))
+    rotateZ(var(--rot-z, 0deg));
+  transition: transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes aurum-drop-pendulum {
+  0% {
+    transform: translate3d(0, -90px, 0) rotateZ(10deg) rotateX(12deg);
+    opacity: 0;
+  }
+  25% {
+    transform: translate3d(0, 14px, 0) rotateZ(-7deg) rotateX(-6deg);
+    opacity: 1;
+  }
+  45% {
+    transform: translate3d(0, -8px, 0) rotateZ(4.5deg) rotateX(4deg);
+  }
+  65% {
+    transform: translate3d(0, 4px, 0) rotateZ(-2.5deg) rotateX(-2deg);
+  }
+  80% {
+    transform: translate3d(0, -2px, 0) rotateZ(1.2deg) rotateX(1deg);
+  }
+  92% {
+    transform: translate3d(0, 1px, 0) rotateZ(-0.5deg);
+  }
+  100% {
+    transform: translate3d(0, 0px, 0) rotateZ(0deg) rotateX(0deg);
+    opacity: 1;
+  }
+}
+
+/* Punch Hole Slot */
+.aurum-punch-hole {
+  width: 32px;
+  height: 9px;
+  border-radius: 999px;
+  background: #08110d;
+  margin: 0 auto 0.6rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+/* Dynamic Specular Glare */
+.aurum-card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  pointer-events: none;
+  opacity: var(--glare-opacity, 0);
+  background: radial-gradient(
+    circle at var(--glare-x, 50%) var(--glare-y, 50%),
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.08) 45%,
+    transparent 70%
+  );
+  mix-blend-mode: overlay;
+  transition: opacity 220ms ease;
+  z-index: 8;
+}
+
+/* Diagonal Wave Mesh Texture */
+.aurum-card-mesh {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  pointer-events: none;
+  opacity: 0.12;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0px,
+    transparent 16px,
+    rgba(255, 255, 255, 0.25) 16px,
+    rgba(255, 255, 255, 0.25) 17px
+  );
+  z-index: 2;
+}
+
+/* Header */
+.aurum-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 3;
+}
+
+.aurum-card-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.aurum-card-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Hero Identity */
+.aurum-card-hero {
+  margin: 1.6rem 0 1.2rem;
+  position: relative;
+  z-index: 3;
+}
+
+.aurum-card-name {
+  font-family: "BDO Grotesk Variable", Arial, sans-serif;
+  font-size: clamp(2.3rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1;
+}
+
+.aurum-card-sub {
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 0.6rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Metadata Grid */
+.aurum-card-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 3;
+}
+
+.aurum-meta-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.aurum-meta-label {
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.aurum-meta-val {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+/* Email Row with Copy Interaction */
+.aurum-card-email-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.75rem;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  position: relative;
+  z-index: 4;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.aurum-card-email-row:hover {
+  background: rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.aurum-email-val-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.aurum-email-val {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.aurum-copy-icon {
+  color: rgba(255, 255, 255, 0.7);
+  transition: transform 150ms ease;
+}
+
+.aurum-card-email-row:hover .aurum-copy-icon {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.aurum-copied-tooltip {
+  position: absolute;
+  right: -6px;
+  top: -24px;
+  background: #22c55e;
+  color: #0c1410;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: aurum-copy-pop 200ms ease;
+}
+
+@keyframes aurum-copy-pop {
+  from { opacity: 0; transform: translateY(4px) scale(0.8); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Card Footer */
+.aurum-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.2rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  position: relative;
+  z-index: 3;
+}
+
+.aurum-footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.aurum-heart-icon {
+  color: #ffffff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.aurum-footer-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.aurum-footer-text strong {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.aurum-footer-text small {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.aurum-card-chip {
+  width: 32px;
+  height: 24px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #d1b46a 0%, #fef08a 50%, #996515 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
 /* About Page - Introduction */
 .about-introduction {
   width: var(--shell);
@@ -3705,10 +4165,10 @@ a {
 .book3d-cover {
   width: 100%;
   height: 100%;
-  background: #111513;
+  background: linear-gradient(140deg, #edf5f0 0%, #dbebe1 50%, #cbe0d3 100%);
   border-radius: 8px 18px 18px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(25, 82, 59, 0.18);
+  box-shadow: 0 18px 45px rgba(18, 55, 40, 0.14);
   position: relative;
   cursor: pointer;
   overflow: hidden;
@@ -3717,9 +4177,19 @@ a {
   transition: transform 320ms cubic-bezier(0.25, 1, 0.5, 1), box-shadow 320ms ease;
 }
 
+:root[data-theme="dark"] .book3d-cover {
+  background: linear-gradient(145deg, #13221b 0%, #0e1a14 60%, #08110d 100%);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55);
+}
+
 .book3d-cover:hover {
   transform: rotateY(-7deg) rotateX(2deg) translateY(-4px);
-  box-shadow: 0 26px 58px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 24px 54px rgba(18, 55, 40, 0.22);
+}
+
+:root[data-theme="dark"] .book3d-cover:hover {
+  box-shadow: 0 26px 58px rgba(0, 0, 0, 0.7);
 }
 
 /* Realistic Spine Edge Highlight */
@@ -3731,13 +4201,23 @@ a {
   width: 22px;
   background: linear-gradient(
     to right,
+    rgba(20, 60, 42, 0.35) 0%,
+    rgba(255, 255, 255, 0.6) 40%,
+    rgba(20, 60, 42, 0.12) 75%,
+    transparent 100%
+  );
+  z-index: 6;
+  pointer-events: none;
+}
+
+:root[data-theme="dark"] .book3d-spine-edge {
+  background: linear-gradient(
+    to right,
     rgba(0, 0, 0, 0.85) 0%,
     rgba(255, 255, 255, 0.12) 40%,
     rgba(0, 0, 0, 0.55) 75%,
     transparent 100%
   );
-  z-index: 6;
-  pointer-events: none;
 }
 
 /* Layered Paper Edge Stack on the Right */
@@ -3766,23 +4246,13 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: #ffffff;
+  color: var(--ink);
   position: relative;
   z-index: 3;
 }
 
-.book3d-cover__badge {
-  display: inline-block;
-  align-self: flex-start;
-  padding: 0.3rem 0.75rem;
-  border-radius: 999px;
-  background: rgba(34, 150, 110, 0.22);
-  border: 1px solid rgba(34, 150, 110, 0.45);
-  color: var(--accent-bright);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+:root[data-theme="dark"] .book3d-cover__content {
+  color: #ffffff;
 }
 
 .book3d-cover__title {
@@ -3792,6 +4262,10 @@ a {
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: -0.04em;
+  color: #12281d;
+}
+
+:root[data-theme="dark"] .book3d-cover__title {
   color: #f3f5f3;
 }
 
@@ -3800,16 +4274,20 @@ a {
   font-family: "BDO Grotesk Variable", Arial, sans-serif;
   font-size: 0.88rem;
   font-weight: 500;
-  color: #d1b46a;
+  color: #216e4e;
   font-style: italic;
   letter-spacing: 0.02em;
   margin-top: 0.3rem;
 }
 
+:root[data-theme="dark"] .book3d-cover__title span {
+  color: #d1b46a;
+}
+
 .book3d-cover__author {
   margin: 0;
   font-size: 0.84rem;
-  color: #949a96;
+  color: var(--muted);
   font-weight: 400;
 }
 
@@ -3819,9 +4297,15 @@ a {
   border-radius: 12px;
   overflow: hidden;
   margin: 0.6rem 0 0;
+  box-shadow: 0 10px 26px rgba(18, 55, 40, 0.12);
+  background: #dbebe1;
+  border: 1px solid rgba(25, 82, 59, 0.16);
+}
+
+:root[data-theme="dark"] .book3d-cover__art-wrap {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   background: #0d1612;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .book3d-cover__art {
@@ -3980,6 +4464,59 @@ a {
   font-size: 0.78rem;
   font-weight: 500;
   color: var(--muted);
+}
+
+/* Certifications List on Left Page */
+.book3d-page__certs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 0.2rem 0;
+}
+
+.book3d-cert-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.book3d-cert-group__category {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+:root[data-theme="dark"] .book3d-cert-group__category {
+  color: var(--accent-bright);
+}
+
+.book3d-cert-group__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+
+.book3d-cert-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-size: 0.84rem;
+  line-height: 1.38;
+  color: var(--ink);
+}
+
+.book3d-cert-dot {
+  width: 4.5px;
+  height: 4.5px;
+  border-radius: 50%;
+  background: var(--accent-bright);
+  flex-shrink: 0;
+  transform: translateY(-2px);
 }
 
 .book3d-page__quote {
