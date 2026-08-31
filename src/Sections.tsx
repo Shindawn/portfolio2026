@@ -264,7 +264,20 @@ export function LatestWork() {
       {projects.map(([index, name, category, tag], projectIndex) => <a className="project-row" href="#contact" key={index} onPointerEnter={() => setActiveProject(projectIndex)} onFocus={() => setActiveProject(projectIndex)} onBlur={() => setActiveProject(null)}>
         <span className="project-row__index">{index}</span><span className="project-row__name">{name}</span><span className="project-row__category">{category} <small>{tag}</small></span><span className="project-row__arrow" aria-hidden="true">↗</span>
       </a>)}
-      {activeProject !== null && <span className="project-preview is-visible" aria-hidden="true" style={{ "--art": projects[activeProject][4], "--preview-x": `${previewPosition.x}px`, "--preview-y": `${previewPosition.y}px`, "--preview-offset-x": previewPosition.flip ? "calc(-100% - 1.5rem)" : "1.5rem" } as CSSProperties}><span className="project-preview__image" /><span className="project-preview__shade" /><span className="project-preview__content"><span className="project-preview__eyebrow">About the project</span><span className="project-preview__description">{projects[activeProject][5]}</span></span></span>}
+      {activeProject !== null && <span className="project-preview is-visible" aria-hidden="true" style={{ "--art": projects[activeProject][4], "--preview-x": `${previewPosition.x}px`, "--preview-y": `${previewPosition.y}px`, "--preview-offset-x": previewPosition.flip ? "calc(-100% - 1.5rem)" : "1.5rem" } as CSSProperties}>
+        <span
+          className="project-preview__image"
+          style={
+            projects[activeProject][6]
+              ? {
+                  backgroundImage: `url('${projects[activeProject][6]}')`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : undefined
+          }
+        />
+      </span>}
     </div>
   </div></section>;
 }

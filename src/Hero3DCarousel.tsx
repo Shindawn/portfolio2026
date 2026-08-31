@@ -5,7 +5,9 @@ type CarouselItem = {
   title: string;
   category: string;
   tag: string;
-  artIndex: number;
+  artIndex?: number;
+  image?: string;
+  imageStyle?: React.CSSProperties;
   color: string;
 };
 
@@ -31,7 +33,13 @@ const items: CarouselItem[] = [
     title: "ARIBA BATO",
     category: "Interactive AR App",
     tag: "AR/3D",
-    artIndex: 2,
+    image: "/ariba-bato-poster.jpg",
+    imageStyle: {
+      backgroundImage: "url('/ariba-bato-poster.jpg')",
+      backgroundSize: "220%",
+      backgroundPosition: "49.5% 50.5%",
+      backgroundRepeat: "no-repeat",
+    },
     color: "#d97706",
   },
   {
@@ -47,24 +55,42 @@ const items: CarouselItem[] = [
     title: "CC Wedding",
     category: "Event Experience",
     tag: "Design",
-    artIndex: 4,
+    image: "/cc-wedding-mobile.jpg",
+    imageStyle: {
+      backgroundImage: "url('/cc-wedding-mobile.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center 45%",
+      backgroundRepeat: "no-repeat",
+    },
     color: "#e11d48",
   },
   {
     id: "06",
-    title: "Solis Architecture",
-    category: "Digital Architecture",
-    tag: "Platform",
-    artIndex: 1,
-    color: "#059669",
+    title: "Pandanggo Sa Ilaw",
+    category: "Cultural Visual System",
+    tag: "Illustration",
+    image: "/pandanggo-sa-ilaw.png",
+    imageStyle: {
+      backgroundImage: "url('/pandanggo-sa-ilaw.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center 42%",
+      backgroundRepeat: "no-repeat",
+    },
+    color: "#e11d48",
   },
   {
     id: "07",
-    title: "Chrome Type Lab",
-    category: "Experimental UI",
-    tag: "Creative",
-    artIndex: 2,
-    color: "#0284c7",
+    title: "ARIBA BATO App",
+    category: "Interactive Mobile AR",
+    tag: "AR/UI",
+    image: "/ariba-bato-app.png",
+    imageStyle: {
+      backgroundImage: "url('/ariba-bato-app.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center 30%",
+      backgroundRepeat: "no-repeat",
+    },
+    color: "#8b5cf6",
   },
 ];
 
@@ -187,9 +213,11 @@ export default function Hero3DCarousel() {
                 <div className="hero-3d-card__inner">
                   <div
                     className="hero-3d-card__image"
-                    style={{
-                      backgroundPosition: `calc(${item.artIndex} * 20%) center`,
-                    }}
+                    style={
+                      item.imageStyle || {
+                        backgroundPosition: `calc(${item.artIndex ?? 0} * 20%) center`,
+                      }
+                    }
                   />
                 </div>
               </div>

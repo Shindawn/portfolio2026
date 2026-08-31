@@ -1,25 +1,22 @@
 import { useState, useEffect, useRef, type KeyboardEvent } from "react";
 
+export interface BookPageContent {
+  tag: string;
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  stats?: { label: string; value: string }[];
+  pills?: string[];
+  quote?: string;
+  image?: string;
+  caption?: string;
+  certList?: { category: string; items: string[] }[];
+}
+
 export interface BookSpread {
   id: string;
-  leftPage: {
-    tag: string;
-    quote?: string;
-    title?: string;
-    image?: string;
-    caption?: string;
-    text?: string;
-    certList?: { category: string; items: string[] }[];
-  };
-  rightPage: {
-    tag: string;
-    title: string;
-    subtitle?: string;
-    description: string;
-    stats?: { label: string; value: string }[];
-    pills?: string[];
-    image?: string;
-  };
+  leftPage: BookPageContent;
+  rightPage: BookPageContent;
 }
 
 const spreads: BookSpread[] = [
@@ -46,7 +43,26 @@ const spreads: BookSpread[] = [
   {
     id: "spread-2",
     leftPage: {
-      tag: "Chapter 02 • Certifications",
+      tag: "Chapter 02 • Awards & Accreditations",
+      title: "Scholastic Honors & Certs",
+      subtitle: "Multi-Year Dean’s List Distinction",
+      description:
+        "Awarded continuous Dean’s Honor Roll recognition throughout 2022–2026, complemented by verified industry credentials across Cloud, Security, Backend, and AI systems.",
+      stats: [
+        { label: "Honors", value: "Dean’s Lister (2022–2026)" },
+        { label: "Accreditations", value: "8+ Industry Certifications" },
+      ],
+      pills: [
+        "Oracle Cloud AI",
+        "GitHub Foundations",
+        "CISCO Cyber",
+        "IBM AI & UX",
+        "Google GenAI",
+        "Laravel Web Dev",
+      ],
+    },
+    rightPage: {
+      tag: "Industry Certifications",
       certList: [
         {
           category: "Backend & Cloud",
@@ -71,25 +87,6 @@ const spreads: BookSpread[] = [
             "Technical Support (Google)",
           ],
         },
-      ],
-    },
-    rightPage: {
-      tag: "Awards & Accreditations",
-      title: "Scholastic Honors & Certs",
-      subtitle: "Multi-Year Dean’s List Distinction",
-      description:
-        "Awarded continuous Dean’s Honor Roll recognition throughout 2022–2026, complemented by verified industry credentials across Cloud, Security, Backend, and AI systems.",
-      stats: [
-        { label: "Honors", value: "Dean’s Lister (2022–2026)" },
-        { label: "Accreditations", value: "8+ Industry Certifications" },
-      ],
-      pills: [
-        "Oracle Cloud AI",
-        "GitHub Foundations",
-        "CISCO Cyber",
-        "IBM AI & UX",
-        "Google GenAI",
-        "Laravel Web Dev",
       ],
     },
   },
@@ -122,6 +119,87 @@ const spreads: BookSpread[] = [
     },
   },
 ];
+
+function PageInner({ page, pageNumber }: { page: BookPageContent; pageNumber: number }) {
+  return (
+    <div className="book3d-page__inner">
+      <div className="book3d-page__header">
+        <span className="book3d-page__tag">{page.tag}</span>
+        <span className="book3d-page__number">{pageNumber}</span>
+      </div>
+
+      {page.title && (
+        <div className="book3d-page__main-content">
+          <h4 className="book3d-page__title">{page.title}</h4>
+          {page.subtitle && (
+            <p className="book3d-page__subtitle">{page.subtitle}</p>
+          )}
+          {page.description && (
+            <p className="book3d-page__desc">{page.description}</p>
+          )}
+
+          {page.stats && (
+            <div className="book3d-page__stats">
+              {page.stats.map((st, i) => (
+                <div key={i} className="book3d-page__stat-item">
+                  <span className="book3d-page__stat-label">{st.label}</span>
+                  <strong className="book3d-page__stat-value">{st.value}</strong>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {page.pills && (
+            <div className="book3d-page__pills">
+              {page.pills.map((pill, i) => (
+                <span key={i} className="book3d-page__pill">
+                  {pill}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {page.certList && (
+        <div className="book3d-page__certs">
+          {page.certList.map((group, idx) => (
+            <div key={idx} className="book3d-cert-group">
+              <span className="book3d-cert-group__category">{group.category}</span>
+              <ul className="book3d-cert-group__list">
+                {group.items.map((item, itemIdx) => (
+                  <li key={itemIdx} className="book3d-cert-item">
+                    <span className="book3d-cert-dot" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {page.quote && (
+        <blockquote className="book3d-page__quote">
+          {page.quote}
+        </blockquote>
+      )}
+
+      {page.image && (
+        <div className="book3d-page__image-wrap">
+          <img
+            src={page.image}
+            alt={page.caption || "Page visual"}
+            className="book3d-page__image"
+          />
+          {page.caption && (
+            <span className="book3d-page__caption">{page.caption}</span>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Book3D() {
   // State: 0 = Closed (Front Cover), 1..spreads.length = Open Spreads, spreads.length + 1 = Closed (Back Cover)
@@ -234,49 +312,7 @@ export default function Book3D() {
               onClick={handlePrev}
               title="Click left page to turn back"
             >
-              <div className="book3d-page__inner">
-                <div className="book3d-page__header">
-                  <span className="book3d-page__tag">{activeSpread.leftPage.tag}</span>
-                  <span className="book3d-page__number">{currentStep * 2 - 1}</span>
-                </div>
-
-                {activeSpread.leftPage.certList && (
-                  <div className="book3d-page__certs">
-                    {activeSpread.leftPage.certList.map((group, idx) => (
-                      <div key={idx} className="book3d-cert-group">
-                        <span className="book3d-cert-group__category">{group.category}</span>
-                        <ul className="book3d-cert-group__list">
-                          {group.items.map((item, itemIdx) => (
-                            <li key={itemIdx} className="book3d-cert-item">
-                              <span className="book3d-cert-dot" aria-hidden="true" />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {activeSpread.leftPage.quote && (
-                  <blockquote className="book3d-page__quote">
-                    {activeSpread.leftPage.quote}
-                  </blockquote>
-                )}
-
-                {activeSpread.leftPage.image && (
-                  <div className="book3d-page__image-wrap">
-                    <img
-                      src={activeSpread.leftPage.image}
-                      alt={activeSpread.leftPage.caption || "Page visual"}
-                      className="book3d-page__image"
-                    />
-                    {activeSpread.leftPage.caption && (
-                      <span className="book3d-page__caption">{activeSpread.leftPage.caption}</span>
-                    )}
-                  </div>
-                )}
-              </div>
+              <PageInner page={activeSpread.leftPage} pageNumber={currentStep * 2 - 1} />
               {/* Subtle Page Spine Shadow */}
               <div className="book3d-page__spine-gutter book3d-page__spine-gutter--left" aria-hidden="true" />
             </div>
@@ -290,41 +326,7 @@ export default function Book3D() {
               onClick={handleNext}
               title="Click right page to turn next"
             >
-              <div className="book3d-page__inner">
-                <div className="book3d-page__header">
-                  <span className="book3d-page__tag">{activeSpread.rightPage.tag}</span>
-                  <span className="book3d-page__number">{currentStep * 2}</span>
-                </div>
-
-                <div className="book3d-page__main-content">
-                  <h4 className="book3d-page__title">{activeSpread.rightPage.title}</h4>
-                  {activeSpread.rightPage.subtitle && (
-                    <p className="book3d-page__subtitle">{activeSpread.rightPage.subtitle}</p>
-                  )}
-                  <p className="book3d-page__desc">{activeSpread.rightPage.description}</p>
-
-                  {activeSpread.rightPage.stats && (
-                    <div className="book3d-page__stats">
-                      {activeSpread.rightPage.stats.map((st, i) => (
-                        <div key={i} className="book3d-page__stat-item">
-                          <span className="book3d-page__stat-label">{st.label}</span>
-                          <strong className="book3d-page__stat-value">{st.value}</strong>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {activeSpread.rightPage.pills && (
-                    <div className="book3d-page__pills">
-                      {activeSpread.rightPage.pills.map((pill, i) => (
-                        <span key={i} className="book3d-page__pill">
-                          {pill}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
+              <PageInner page={activeSpread.rightPage} pageNumber={currentStep * 2} />
               {/* Subtle Page Spine Shadow */}
               <div className="book3d-page__spine-gutter book3d-page__spine-gutter--right" aria-hidden="true" />
             </div>
