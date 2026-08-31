@@ -17,8 +17,14 @@ const items: CarouselItem[] = [
     title: "LGU Water District",
     category: "Full-Stack System",
     tag: "LGU",
-    artIndex: 0,
-    color: "#1a7a5a",
+    image: "/lgu-water-district-mockup.png",
+    imageStyle: {
+      backgroundImage: "url('/lgu-water-district-mockup.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center center",
+      backgroundRepeat: "no-repeat",
+    },
+    color: "#0284c7",
   },
   {
     id: "02",
