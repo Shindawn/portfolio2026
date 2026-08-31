@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } fr
 import { Footer, Navigation } from "./Sections";
 import Book3D from "./Book3D";
 import HangingIdCard from "./HangingIdCard";
+import HeroBeamLines from "./HeroBeamLines";
 
 const experience = [
   ["01", "Full-Stack Developer", "Jun – Aug 2026"],

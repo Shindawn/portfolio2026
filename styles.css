@@ -2938,8 +2938,20 @@ a {
 }
 
 /* ==========================================================================
-   Aurum 3D Hanging ID Card & Lanyard Physics Component
+   About Page & Aurum 3D Hanging ID Card Component
    ========================================================================== */
+.about-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  background: linear-gradient(180deg, var(--cream) 0%, var(--paper) 40%, var(--paper) 100%);
+}
+
+:root[data-theme="dark"] .about-page {
+  background: linear-gradient(180deg, #071911 0%, #0a1c14 26%, #08120e 60%, var(--paper) 100%);
+}
+
 .about-hero {
   position: relative;
   width: 100%;
