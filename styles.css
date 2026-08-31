@@ -2831,7 +2831,7 @@ a {
     rotateX(var(--rot-x, 0deg))
     rotateY(var(--rot-y, 0deg))
     rotateZ(var(--rot-z, 0deg));
-  transition: transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @keyframes aurum-card-soft-bounce {

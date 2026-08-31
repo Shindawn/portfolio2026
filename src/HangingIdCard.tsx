@@ -14,12 +14,12 @@ export default function HangingIdCard() {
     const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
     const y = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5
 
-    // Smooth cursor-driven 3D physics tilt
-    const rotX = -y * 24;
-    const rotY = x * 28;
-    const rotZ = x * 12;
-    const posX = x * 36;
-    const posY = y * 20;
+    // Smooth damped cursor-driven 3D physics tilt (subtle & refined)
+    const rotX = -y * 10;
+    const rotY = x * 12;
+    const rotZ = x * 4;
+    const posX = x * 14;
+    const posY = y * 8;
 
     // Specular glare reflection tracking
     const glareX = (x + 0.5) * 100;
