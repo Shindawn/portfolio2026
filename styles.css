@@ -2318,8 +2318,8 @@ a {
   .about-experience__item {
     grid-template-columns: 1.75rem 1fr;
     grid-template-areas: "mark name" "mark detail";
-    padding: 1.1rem 1.25rem;
-    min-height: 4.25rem;
+    padding: 0.65rem 1rem;
+    min-height: 3.2rem;
   }
 
   .about-experience__index,
@@ -3165,11 +3165,12 @@ a {
 }
 
 .about-experience__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  gap: clamp(0.45rem, 0.75vw, 0.65rem);
   flex: 1;
-  justify-content: space-between;
+  min-height: 0;
+  height: 100%;
 }
 
 .about-experience__item {
@@ -3177,8 +3178,11 @@ a {
   grid-template-columns: 2.2rem 1fr auto;
   align-items: center;
   gap: 0.85rem;
-  padding: 1.25rem 1.4rem;
-  min-height: 4.5rem;
+  padding-inline: clamp(1rem, 1.4vw, 1.35rem);
+  padding-block: 0.4rem;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
   border-radius: 0.95rem;
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--paper) 70%, transparent);
@@ -3189,8 +3193,8 @@ a {
 
 .about-experience__item:hover {
   border-color: rgba(34, 150, 110, 0.35);
-  transform: translateX(4px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transform: translateX(3px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 
 .about-experience__index {
@@ -3725,6 +3729,18 @@ a {
   .about-experience__grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;
+  }
+
+  .about-experience__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    height: auto;
+  }
+
+  .about-experience__item {
+    min-height: 3.4rem;
+    padding-block: 0.75rem;
   }
 }
 

@@ -79,18 +79,18 @@ const nodes: IntegrationNode[] = [
     ),
   },
   {
-    id: "supabase",
-    name: "Supabase & Edge",
-    category: "Postgres & Auth",
+    id: "figma",
+    name: "Figma",
+    category: "UI/UX & Systems",
     x: 540,
     y: 390,
     path: "M 450 230 C 490 310, 520 350, 540 390",
     speed: 5.6,
     delay: 0.8,
-    status: "Realtime WebSocket Online",
+    status: "Design Systems & Prototyping",
     icon: (
       <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-        <path d="M21.362 9.354H12V.396a.396.396 0 0 0-.716-.233L2.203 12.424l-.174.23a.81.81 0 0 0 .614 1.312h9.357v8.958a.396.396 0 0 0 .716.233l9.081-12.261.174-.23a.81.81 0 0 0-.609-1.312z" />
+        <path d="M12 12a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm-6 0a3 3 0 0 1 3-3h3v6H9a3 3 0 0 1-3-3zm0-6a3 3 0 0 1 3-3h3v6H9a3 3 0 0 1-3-3zm6-3h3a3 3 0 1 1 0 6h-3V3zm-6 15a3 3 0 0 1 3-3h3v3a3 3 0 1 1-6 0z" />
       </svg>
     ),
   },
