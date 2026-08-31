@@ -67,7 +67,7 @@ export default function HangingIdCard() {
       {/* Hanging Webbing Ribbon Strap */}
       <div className="aurum-ribbon-strap">
         <div className="aurum-ribbon-pattern">
-          <span>LESCY G. CAADLAWON ✕ FULL-STACK DEVELOPER ✕ PASS 2026</span>
+          <span>LESCY G. CAADLAWON ✕ JR. DEV &amp; UI/UX DESIGNER ✕ PASS 2026</span>
         </div>
       </div>
 
@@ -110,7 +110,7 @@ export default function HangingIdCard() {
             />
           </div>
           <h2 className="aurum-card-name">Lescy G. Caadlawon</h2>
-          <span className="aurum-card-sub">FULL-STACK DEVELOPER &amp; UI/UX</span>
+          <span className="aurum-card-sub">JR. DEV &amp; UI/UX DESIGNER</span>
         </div>
 
         {/* Metadata Grid */}
@@ -171,8 +171,8 @@ export default function HangingIdCard() {
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
             </svg>
             <div className="aurum-footer-text">
-              <strong>Lescy G. Caadlawon</strong>
-              <small>MANILA, PH</small>
+              <strong>Mandaluyong City</strong>
+              <small>PHILIPPINES</small>
             </div>
           </div>
           <div className="aurum-card-chip" aria-hidden="true" />
