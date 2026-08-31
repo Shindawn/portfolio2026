@@ -116,8 +116,8 @@ export default function HangingIdCard() {
         {/* Metadata Grid */}
         <div className="aurum-card-meta-grid">
           <div className="aurum-meta-cell">
-            <span className="aurum-meta-label">REFERENCE ID</span>
-            <strong className="aurum-meta-val">#LG-2026-08</strong>
+            <span className="aurum-meta-label">PROGRAM</span>
+            <strong className="aurum-meta-val">BSIT</strong>
           </div>
           <div className="aurum-meta-cell">
             <span className="aurum-meta-label">DEPARTMENT</span>
