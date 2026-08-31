@@ -263,6 +263,7 @@ export default function AboutPage() {
     <main className="about-page">
       <Navigation />
       <section className="about-hero" aria-labelledby="about-page-title">
+        <HeroBeamLines />
         <h1 id="about-page-title" className="about-hero__title">
           MEET LEC
         </h1>
