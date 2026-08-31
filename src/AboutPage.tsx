@@ -64,6 +64,14 @@ export default function AboutPage() {
   const nextDirRef = useRef<{ x: number; y: number }>({ x: 1, y: 0 });
   const [food, setFood] = useState<{ x: number; y: number; tech: TechItem } | null>(null);
   const [score, setScore] = useState<number>(0);
+  const [highScore, setHighScore] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem("matrix_snake_highscore");
+      return saved ? parseInt(saved, 10) || 0 : 0;
+    } catch {
+      return 0;
+    }
+  });
   const [eatenCount, setEatenCount] = useState<number>(0);
   const [eatenFeedback, setEatenFeedback] = useState<string | null>(null);
 
@@ -210,7 +218,17 @@ export default function AboutPage() {
 
         // Food consumption check
         if (food && newHead.x === food.x && newHead.y === food.y) {
-          setScore((s) => s + 100);
+          setScore((s) => {
+            const nextScore = s + 100;
+            setHighScore((prevHigh) => {
+              const newHigh = Math.max(prevHigh, nextScore);
+              try {
+                localStorage.setItem("matrix_snake_highscore", String(newHigh));
+              } catch {}
+              return newHigh;
+            });
+            return nextScore;
+          });
           setEatenCount((c) => c + 1);
           setEatenFeedback(`+ ${food.tech.name}`);
           playSynthSound(580 + (eatenCount % 8) * 40, "triangle", 0.09);
@@ -228,13 +246,6 @@ export default function AboutPage() {
 
     return () => clearInterval(interval);
   }, [gameState, food, eatenCount]);
-
-  const getRankTitle = (finalScore: number) => {
-    if (finalScore >= 1600) return { title: "10x Engineering Lead", color: "var(--accent-bright)" };
-    if (finalScore >= 1000) return { title: "Senior Staff Architect", color: "var(--accent-bright)" };
-    if (finalScore >= 500) return { title: "Full-Stack Specialist", color: "var(--accent-bright)" };
-    return { title: "Junior Developer", color: "#94a3b8" };
-  };
 
   const moveCards = (event: PointerEvent<HTMLDivElement>) => {
     const stack = stackRef.current;
@@ -299,11 +310,15 @@ export default function AboutPage() {
                 <>
                   <div className="about-matrix__title-group">
                     <p className="about-experience__label">Tech Stack Matrix</p>
-                    {hoveredTech && (
+                    {hoveredTech ? (
                       <span className="about-matrix__active-name">
                         <strong>{hoveredTech.name}</strong> • {hoveredTech.category}
                       </span>
-                    )}
+                    ) : highScore > 0 ? (
+                      <span className="about-matrix__active-name">
+                        🏆 High Score: <strong>{highScore.toLocaleString()} pts</strong>
+                      </span>
+                    ) : null}
                   </div>
                   <button
                     type="button"
@@ -318,6 +333,11 @@ export default function AboutPage() {
                 <>
                   <div className="blitz-stats">
                     <span className="blitz-score">{score} pts</span>
+                    {highScore > 0 && (
+                      <span className="snake-length-badge" title="Highest score achieved">
+                        🏆 Best: {highScore.toLocaleString()}
+                      </span>
+                    )}
                     <span className="snake-length-badge">Stack: {snake.length}</span>
                     {eatenFeedback && <span className="snake-toast-pill">{eatenFeedback}</span>}
                   </div>
@@ -409,8 +429,12 @@ export default function AboutPage() {
                       {score.toLocaleString()} <small>pts</small>
                     </div>
                     
-                    <div className="blitz-rank" style={{ color: getRankTitle(score).color }}>
-                      {getRankTitle(score).title}
+                    <div className="blitz-rank">
+                      {score > 0 && score >= highScore ? (
+                        <span>🎉 NEW HIGH SCORE!</span>
+                      ) : (
+                        <span>🏆 High Score: <strong>{highScore.toLocaleString()} pts</strong></span>
+                      )}
                     </div>
 
                     <div className="blitz-breakdown">
