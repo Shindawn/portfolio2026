@@ -2215,14 +2215,16 @@ a {
 
 @media (max-width: 650px) {
   .about-hero {
-    min-height: 100svh;
+    min-height: clamp(520px, 92svh, 660px);
     padding-inline: 1rem;
+    padding-top: 1.5rem;
   }
 
   .about-hero__title {
-    top: 9.5rem;
-    font-size: clamp(6rem, 31vw, 9rem);
-    letter-spacing: 0.015em;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(5rem, 24vw, 8.5rem);
+    letter-spacing: -0.04em;
   }
 
   .about-card-stack {
@@ -2617,13 +2619,13 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: clamp(520px, 62vw, 680px);
+  min-height: clamp(540px, 64vw, 700px);
   overflow: visible;
 }
 
 .about-hero__title {
   position: absolute;
-  top: 54%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
@@ -2663,22 +2665,28 @@ a {
   z-index: 10;
   cursor: grab;
   padding-bottom: 2rem;
-  animation: aurum-lanyard-breathe 4.8s ease-in-out infinite;
+  animation: aurum-lanyard-soft-bounce 4.6s ease-in-out infinite;
 }
 
 .aurum-lanyard-stage:active {
   cursor: grabbing;
 }
 
-@keyframes aurum-lanyard-breathe {
+@keyframes aurum-lanyard-soft-bounce {
   0% {
-    transform: translateY(0px);
+    transform: translateY(0px) rotate(0deg);
   }
-  50% {
-    transform: translateY(8px);
+  28% {
+    transform: translateY(-8px) rotate(-0.5deg);
+  }
+  52% {
+    transform: translateY(6px) rotate(0.4deg);
+  }
+  76% {
+    transform: translateY(-4px) rotate(-0.25deg);
   }
   100% {
-    transform: translateY(0px);
+    transform: translateY(0px) rotate(0deg);
   }
 }
 
@@ -2700,7 +2708,9 @@ a {
   display: flex;
   justify-content: center;
   transform-origin: top center;
-  animation: ribbon-hang-sway 2.4s cubic-bezier(0.25, 1.25, 0.4, 1) forwards;
+  animation: 
+    ribbon-hang-sway 2.4s cubic-bezier(0.34, 1.4, 0.64, 1) forwards,
+    ribbon-soft-sway 4.6s ease-in-out 2.4s infinite;
   z-index: 1;
 }
 
@@ -2734,6 +2744,14 @@ a {
   65% { transform: scaleY(1.02) rotateZ(-2deg); }
   80% { transform: scaleY(0.99) rotateZ(1deg); }
   100% { transform: scaleY(1) rotateZ(0deg); opacity: 1; }
+}
+
+@keyframes ribbon-soft-sway {
+  0% { transform: scaleY(1) rotateZ(0deg); }
+  28% { transform: scaleY(0.985) rotateZ(-0.7deg); }
+  52% { transform: scaleY(1.015) rotateZ(0.5deg); }
+  76% { transform: scaleY(0.992) rotateZ(-0.3deg); }
+  100% { transform: scaleY(1) rotateZ(0deg); }
 }
 
 /* Metallic Clasp & Ring Mechanism */
@@ -2803,7 +2821,9 @@ a {
 }
 
 .aurum-id-card.is-hanging {
-  animation: aurum-drop-pendulum 2.4s cubic-bezier(0.25, 1.25, 0.4, 1) forwards, aurum-card-bob 4.5s ease-in-out 2.4s infinite alternate;
+  animation: 
+    aurum-drop-pendulum 2.4s cubic-bezier(0.34, 1.4, 0.64, 1) forwards, 
+    aurum-card-soft-bounce 4.6s ease-in-out 2.4s infinite;
 }
 
 .aurum-id-card.is-hovered {
@@ -2814,15 +2834,21 @@ a {
   transition: transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-@keyframes aurum-card-bob {
+@keyframes aurum-card-soft-bounce {
   0% {
     transform: translate3d(0, 0px, 0) rotateZ(0deg) rotateX(0deg);
   }
-  50% {
-    transform: translate3d(0, 6px, 0) rotateZ(-0.5deg) rotateX(2deg);
+  28% {
+    transform: translate3d(0, -9px, 0) rotateZ(-1.3deg) rotateX(2.5deg);
+  }
+  52% {
+    transform: translate3d(0, 7px, 0) rotateZ(1.1deg) rotateX(-2deg);
+  }
+  76% {
+    transform: translate3d(0, -3.5px, 0) rotateZ(-0.4deg) rotateX(0.8deg);
   }
   100% {
-    transform: translate3d(0, -3px, 0) rotateZ(0.5deg) rotateX(-1deg);
+    transform: translate3d(0, 0px, 0) rotateZ(0deg) rotateX(0deg);
   }
 }
 

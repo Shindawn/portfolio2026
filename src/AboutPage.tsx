@@ -265,12 +265,12 @@ export default function AboutPage() {
       <section className="about-hero" aria-labelledby="about-page-title">
         <HeroBeamLines />
 
-        {/* Interactive 3D Hanging Lanyard ID Card with Gravitational Motion Physics */}
-        <HangingIdCard />
-
         <h1 id="about-page-title" className="about-hero__title">
           MEET LEC
         </h1>
+
+        {/* Interactive 3D Hanging Lanyard ID Card with Gravitational Motion Physics & Soft Bounce */}
+        <HangingIdCard />
       </section>
 
       <section className="about-experience" aria-labelledby="experience-title">
