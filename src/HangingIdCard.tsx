@@ -100,8 +100,15 @@ export default function HangingIdCard() {
           <span className="aurum-card-badge">CREATIVE TECH</span>
         </div>
 
-        {/* Hero Identity */}
+        {/* Hero Identity with Circular Photo Avatar */}
         <div className="aurum-card-hero">
+          <div className="aurum-card-avatar-wrap">
+            <img
+              src="/lescy-portrait.jpg"
+              alt="Lescy Gdawn"
+              className="aurum-card-avatar"
+            />
+          </div>
           <h2 className="aurum-card-name">Lescy Gdawn</h2>
           <span className="aurum-card-sub">FULL-STACK DEVELOPER &amp; UI/UX</span>
         </div>
