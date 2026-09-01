@@ -500,7 +500,6 @@ export function Footer() {
             <a href="https://wa.me/639692467870" target="_blank" rel="noreferrer">WhatsApp</a>
           </nav>
           <div className="footer__visitor-pill" title="Live weekly portfolio visits">
-            <span className="footer__visitor-dot" aria-hidden="true" />
             <svg
               className="footer__visitor-eye"
               viewBox="0 0 24 24"
