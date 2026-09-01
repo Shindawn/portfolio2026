@@ -1915,7 +1915,7 @@ a {
 
 .footer__inner {
   padding-top: clamp(2.5rem, 5vw, 4rem);
-  padding-bottom: clamp(4rem, 6vw, 6rem);
+  padding-bottom: clamp(1.2rem, 2.5vw, 1.75rem);
 }
 
 .footer__contact {
@@ -2660,7 +2660,7 @@ a {
   }
 
   .footer__inner {
-    padding-bottom: 5rem;
+    padding-bottom: 1.5rem;
   }
 
   .footer__email {
