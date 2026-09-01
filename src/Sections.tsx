@@ -453,26 +453,26 @@ export function Faq() {
 }
 
 export function Footer() {
-  const [visitorCount, setVisitorCount] = useState<number>(() => {
-    try {
-      const stored = localStorage.getItem("portfolio_weekly_views_v1");
-      if (stored) {
-        const count = parseInt(stored, 10);
-        if (!isNaN(count)) return count + 1;
-      }
-    } catch {
-      // fallback
-    }
-    return 1482;
-  });
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
 
   useEffect(() => {
-    try {
-      localStorage.setItem("portfolio_weekly_views_v1", String(visitorCount));
-    } catch {
-      // fallback
-    }
-  }, [visitorCount]);
+    const hasVisitedSession = sessionStorage.getItem("lescy_visited_session");
+    const endpoint = hasVisitedSession
+      ? "https://abacus.jasoncameron.dev/get/lescy-portfolio-2026/visits"
+      : "https://abacus.jasoncameron.dev/hit/lescy-portfolio-2026/visits";
+
+    fetch(endpoint)
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data.value === "number") {
+          setVisitorCount(data.value);
+          sessionStorage.setItem("lescy_visited_session", "true");
+        }
+      })
+      .catch(() => {
+        setVisitorCount(1);
+      });
+  }, []);
 
   return (
     <footer className="footer" id="contact">
@@ -515,7 +515,9 @@ export function Footer() {
               <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
               <circle cx="12" cy="12" r="3" />
             </svg>
-            <span className="footer__visitor-num">{visitorCount.toLocaleString()}</span>
+            <span className="footer__visitor-num">
+              {visitorCount !== null ? visitorCount.toLocaleString() : "—"}
+            </span>
             <span className="footer__visitor-label">this week</span>
           </div>
         </div>
