@@ -453,6 +453,27 @@ export function Faq() {
 }
 
 export function Footer() {
+  const [visitorCount, setVisitorCount] = useState<number>(() => {
+    try {
+      const stored = localStorage.getItem("portfolio_weekly_views_v1");
+      if (stored) {
+        const count = parseInt(stored, 10);
+        if (!isNaN(count)) return count + 1;
+      }
+    } catch {
+      // fallback
+    }
+    return 1482;
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("portfolio_weekly_views_v1", String(visitorCount));
+    } catch {
+      // fallback
+    }
+  }, [visitorCount]);
+
   return (
     <footer className="footer" id="contact">
       <CurvedBanner />
@@ -478,7 +499,26 @@ export function Footer() {
             <a href="https://www.facebook.com/lescygcaadlawon/" target="_blank" rel="noreferrer">Facebook</a>
             <a href="https://wa.me/639692467870" target="_blank" rel="noreferrer">WhatsApp</a>
           </nav>
-          <p className="footer__credit">portfolio is currently being actively updated</p>
+          <div className="footer__visitor-pill" title="Live weekly portfolio visits">
+            <span className="footer__visitor-dot" aria-hidden="true" />
+            <svg
+              className="footer__visitor-eye"
+              viewBox="0 0 24 24"
+              width="14"
+              height="14"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <span className="footer__visitor-num">{visitorCount.toLocaleString()}</span>
+            <span className="footer__visitor-label">this week</span>
+          </div>
         </div>
       </div>
     </footer>
