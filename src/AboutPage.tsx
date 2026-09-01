@@ -507,7 +507,7 @@ export default function AboutPage() {
 
       {/* 3D Flipping Book Education Section */}
       <section className="about-education book-education" aria-labelledby="academic-book-title">
-        <header>
+        <header className="about-education__header shell">
           <h2 id="academic-book-title">( Education )</h2>
           <p>An interactive 3D chronicle of university milestones, scholastic honors, merit grants, and leadership.</p>
         </header>
