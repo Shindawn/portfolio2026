@@ -500,25 +500,30 @@ export function Footer() {
             <a href="https://wa.me/639692467870" target="_blank" rel="noreferrer">WhatsApp</a>
           </nav>
           <div className="footer__visitor-pill" title="Live weekly portfolio visits">
-            <svg
-              className="footer__visitor-eye"
-              viewBox="0 0 24 24"
-              width="14"
-              height="14"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-            <span className="footer__visitor-num">
-              {visitorCount !== null ? visitorCount.toLocaleString() : "—"}
-            </span>
-            <span className="footer__visitor-label">this week</span>
+            <div className="footer__visitor-icon-box">
+              <svg
+                className="footer__visitor-eye"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </div>
+            <div className="footer__visitor-divider" aria-hidden="true" />
+            <div className="footer__visitor-details">
+              <strong className="footer__visitor-num">
+                {visitorCount !== null ? visitorCount.toLocaleString() : "—"}
+              </strong>
+              <span className="footer__visitor-label">this week</span>
+            </div>
           </div>
         </div>
       </div>
