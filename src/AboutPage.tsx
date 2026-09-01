@@ -510,7 +510,7 @@ export default function AboutPage() {
       <section className="about-education book-education" aria-labelledby="academic-book-title">
         <header className="about-education__header shell">
           <p className="about-education__desc">
-            An interactive 3D chronicle of university milestones, scholastic honors, merit grants, and leadership.
+            University milestones, Dean's Honor Roll distinctions, and technical certifications.
           </p>
           <h2 id="academic-book-title" className="about-education__title">
             ( Education )
