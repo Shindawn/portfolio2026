@@ -141,7 +141,7 @@ export function Hero() {
   const [wordIndex, setWordIndex] = useState(0);
   const [isFlipping, setIsFlipping] = useState(false);
   const [typedText, setTypedText] = useState("");
-  const fullText = "Available for work";
+  const fullText = "2026 Portfolio";
 
   useEffect(() => {
     let currentIdx = 0;
