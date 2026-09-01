@@ -195,7 +195,13 @@ export function Hero() {
       <section className="intro shell" id="about" aria-labelledby="hero-title">
         <div className="hero-stage">
           <div className="hero-stage__eyebrow-pill">
-            <span className="hero-stage__eyebrow-dot" aria-hidden="true" />
+            <img
+              src="/favicon.svg"
+              alt="LGC Mascot"
+              className="hero-stage__eyebrow-mascot"
+              width="20"
+              height="20"
+            />
             <span className="hero-stage__typing-text">
               {typedText}
               <span className="hero-stage__typing-cursor" aria-hidden="true">|</span>

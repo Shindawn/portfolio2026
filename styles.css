@@ -499,7 +499,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.42rem 1.05rem;
+  padding: 0.32rem 0.95rem 0.32rem 0.42rem;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--paper) 75%, transparent);
@@ -511,20 +511,36 @@ a {
   text-transform: uppercase;
   color: var(--muted);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
-.hero-stage__eyebrow-dot {
-  width: 0.45rem;
-  height: 0.45rem;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
-  animation: hero-dot-pulse 2.2s ease-in-out infinite;
+.hero-stage__eyebrow-pill:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+  box-shadow: 0 6px 20px rgba(14, 90, 60, 0.08);
 }
 
-@keyframes hero-dot-pulse {
-  0%, 100% { opacity: 0.6; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.25); }
+.hero-stage__eyebrow-mascot {
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 6px;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.15));
+  animation: mascot-wiggle 3.8s ease-in-out infinite;
+  transition: transform 220ms ease;
+}
+
+.hero-stage__eyebrow-pill:hover .hero-stage__eyebrow-mascot {
+  transform: scale(1.18) rotate(8deg);
+}
+
+@keyframes mascot-wiggle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-7deg) scale(1.06); }
+  50% { transform: rotate(7deg) scale(1.06); }
+  75% { transform: rotate(-3deg) scale(1.02); }
 }
 
 .hero-stage__typing-text {
