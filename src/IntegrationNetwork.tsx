@@ -189,9 +189,7 @@ export default function IntegrationNetwork() {
               <circle cx="450" cy="230" r="140" className="network-orbit-wave network-orbit-wave--2" />
               <circle cx="450" cy="230" r="140" className="network-orbit-wave network-orbit-wave--3" />
 
-              {/* Concentric Orbit Circles with Active Expanding / Reaching Animation */}
-              <circle cx="450" cy="230" r="160" className="network-orbit network-orbit--outer" />
-              <circle cx="450" cy="230" r="105" className="network-orbit network-orbit--middle" />
+              {/* Inner Orbit Circle around Hub */}
               <circle cx="450" cy="230" r="58" className="network-orbit network-orbit--inner" />
 
               {/* Connector Bezier Lines and Single Calm Floating Particle */}
