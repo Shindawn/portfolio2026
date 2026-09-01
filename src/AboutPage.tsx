@@ -37,6 +37,7 @@ const techItems: TechItem[] = [
   { name: "GitHub", icon: "https://cdn.simpleicons.org/github/20a878", category: "Platform" },
   { name: "GitHub Actions", icon: "https://cdn.simpleicons.org/githubactions/20a878", category: "CI/CD" },
   { name: "Figma", icon: "https://cdn.simpleicons.org/figma/20a878", category: "UI/UX" },
+  { name: "Adobe", icon: "/adobe.svg", category: "Creative Suite" },
   { name: "JavaScript", icon: "https://cdn.simpleicons.org/javascript/20a878", category: "Language" },
   { name: "HTML5", icon: "https://cdn.simpleicons.org/html5/20a878", category: "Frontend" },
   { name: "CSS3", icon: "https://cdn.simpleicons.org/css/20a878", category: "Styling" },
