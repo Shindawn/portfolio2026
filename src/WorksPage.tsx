@@ -94,8 +94,9 @@ export default function WorksPage() {
   }, []);
 
   return (
-    <main className="works-page" id="main-content">
+    <>
       <Navigation />
+      <main className="works-page" id="main-content">
 
       {/* Hero Notice Section */}
       <section className="works-hero shell" aria-labelledby="works-page-title">
@@ -240,8 +241,8 @@ export default function WorksPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
-  );
+    <Footer />
+  </>
+);
 }
