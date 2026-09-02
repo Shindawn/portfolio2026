@@ -5213,4 +5213,944 @@ a {
   }
 }
 
+/* ==========================================================================
+   WORKS PAGE & TAPE RIBBONS SHOWCASE (UNDER CONSTRUCTION / WIP MARQUEE)
+   ========================================================================== */
 
+.works-page {
+  min-height: 100vh;
+  padding-top: clamp(6.5rem, 11vw, 9.5rem);
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  transition: background 320ms ease, color 320ms ease;
+}
+
+/* Works Hero Notice */
+.works-hero {
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.works-hero__badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: clamp(1.5rem, 2.5vw, 2.2rem);
+}
+
+.works-hero__status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  background: rgba(234, 179, 8, 0.12);
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  color: #b45309;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+:root[data-theme="dark"] .works-hero__status-badge {
+  background: rgba(250, 204, 21, 0.12);
+  border-color: rgba(250, 204, 21, 0.32);
+  color: #fde047;
+}
+
+.works-hero__status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #eab308;
+  box-shadow: 0 0 10px #eab308;
+  animation: pulseAmber 1.8s infinite ease-in-out;
+}
+
+@keyframes pulseAmber {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 1;
+    box-shadow: 0 0 16px #eab308;
+  }
+}
+
+.works-hero__edition-pill {
+  font-family: "BDO Grotesk Variable", monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+:root[data-theme="dark"] .works-hero__edition-pill {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.works-hero__header-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: flex-end;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+.works-hero__title {
+  margin: 0;
+  color: var(--accent);
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(3.8rem, 7.5vw, 7.2rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+}
+
+:root[data-theme="dark"] .works-hero__title {
+  color: var(--accent-bright);
+}
+
+.works-hero__desc-col {
+  max-width: 38rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.works-hero__lead {
+  margin: 0;
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  line-height: 1.45;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.works-hero__subtext {
+  margin: 0;
+  font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+  line-height: 1.55;
+  color: var(--muted);
+  letter-spacing: -0.015em;
+}
+
+/* ==========================================================================
+   TAPE RIBBONS SHOWCASE (PHOTO REPLICA)
+   ========================================================================== */
+
+.works-tape-section {
+  position: relative;
+  width: 100%;
+  margin: clamp(3rem, 6vw, 5.5rem) 0;
+  overflow: visible;
+}
+
+.works-tape-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  color: var(--muted);
+  font-size: 0.84rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.works-tape-section__eyebrow {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+:root[data-theme="dark"] .works-tape-section__eyebrow {
+  color: var(--accent-bright);
+}
+
+.works-tape-section__hint {
+  font-size: 0.78rem;
+  opacity: 0.75;
+}
+
+.tape-showcase {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  padding: clamp(2rem, 4vw, 3.5rem) 0 clamp(3rem, 5vw, 4.5rem);
+  background: radial-gradient(circle at 50% 50%, rgba(255, 230, 0, 0.05) 0%, transparent 70%);
+}
+
+.tape-showcase__ambient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75vw;
+  height: 280px;
+  background: radial-gradient(ellipse at center, rgba(14, 120, 80, 0.08) 0%, transparent 65%);
+  filter: blur(50px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tape-showcase__stage {
+  position: relative;
+  width: 100%;
+  height: clamp(340px, 42vw, 450px);
+  overflow: visible;
+  /* Edge fade mask on left and right for seamless infinite flow */
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.6) 4%,
+    #000 10%,
+    #000 90%,
+    rgba(0, 0, 0, 0.6) 96%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.6) 4%,
+    #000 10%,
+    #000 90%,
+    rgba(0, 0, 0, 0.6) 96%,
+    transparent 100%
+  );
+}
+
+/* Individual Tape Strips */
+.tape-strip {
+  position: absolute;
+  left: -12vw;
+  width: 124vw;
+  height: clamp(48px, 5.2vw, 64px);
+  display: flex;
+  align-items: center;
+  transform: rotate(var(--tape-angle, 0deg));
+  transform-origin: center center;
+  cursor: grab;
+  user-select: none;
+  border-radius: 1px;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.28s ease,
+    filter 0.28s ease;
+  will-change: transform;
+}
+
+.tape-strip:hover {
+  cursor: grabbing;
+  transform: rotate(var(--tape-angle, 0deg)) scale(1.022);
+  z-index: 25 !important;
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.26), 0 8px 16px rgba(0, 0, 0, 0.16) !important;
+  filter: brightness(1.05);
+}
+
+.tape-strip:hover .tape-strip__track {
+  animation-play-state: paused;
+}
+
+/* Tape Positions & Layering */
+.tape-strip--layer-1 {
+  top: 4%;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16), 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tape-strip--layer-2 {
+  top: 23%;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.17), 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tape-strip--layer-3 {
+  top: 43%;
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22), 0 5px 12px rgba(0, 0, 0, 0.12);
+}
+
+.tape-strip--layer-4 {
+  top: 63%;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.16), 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tape-strip--layer-5 {
+  top: 81%;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18), 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tape Themes */
+/* 1. Yellow Caution / Billboard Tape */
+.tape-strip--yellow {
+  background: linear-gradient(180deg, #fff242 0%, #ffea00 45%, #ffd600 100%);
+  color: #0b120e;
+}
+
+.tape-strip--yellow .tape-strip__tag {
+  color: #272d24;
+  opacity: 0.9;
+}
+
+/* 2. White Editorial Tape */
+.tape-strip--white {
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 45%, #ebeef2 100%);
+  color: #0d1511;
+}
+
+.tape-strip--white .tape-strip__tag {
+  color: #4b5563;
+  opacity: 0.92;
+}
+
+/* 3. Electric Blue Royal Ribbon */
+.tape-strip--blue {
+  background: linear-gradient(180deg, #1848f6 0%, #0d38e8 45%, #0729c7 100%);
+  color: #ffffff;
+}
+
+.tape-strip--blue .tape-strip__tag {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.tape-strip--blue .tape-strip__dot {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Tape Gloss & Adhesive Details */
+.tape-strip__sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(255, 255, 255, 0.1) 32%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.08) 100%
+  );
+  z-index: 2;
+}
+
+.tape-strip__edge-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.tape-strip__edge-line--top {
+  top: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.tape-strip__edge-line--bottom {
+  bottom: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* Marquee Tracks */
+.tape-strip__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+  z-index: 1;
+}
+
+.tape-strip__track--left {
+  animation: tapeScrollLeft linear infinite;
+}
+
+.tape-strip__track--right {
+  animation: tapeScrollRight linear infinite;
+}
+
+.tape-strip__track.is-paused {
+  animation-play-state: paused !important;
+}
+
+@keyframes tapeScrollLeft {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes tapeScrollRight {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Individual Phrases inside tape */
+.tape-strip__item {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(0.75rem, 1.2vw, 1.35rem);
+  padding: 0 clamp(1.2rem, 2vw, 2.2rem);
+  white-space: nowrap;
+}
+
+.tape-strip__quote {
+  font-family: "BDO Grotesk Variable", -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.02rem, 1.55vw, 1.48rem);
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+.tape-strip__tag {
+  font-family: "BDO Grotesk Variable", monospace, sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.72rem, 0.95vw, 0.88rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.tape-strip__dot {
+  font-size: 1.1rem;
+  opacity: 0.35;
+  margin: 0 0.4rem;
+}
+
+/* Tape Controls Bar */
+.tape-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: min(50rem, calc(100vw - 3rem));
+  margin: 2rem auto 0;
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme="dark"] .tape-controls {
+  background: rgba(18, 26, 22, 0.72);
+}
+
+.tape-controls__status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+}
+
+.tape-controls__pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulseGreen 1.6s infinite ease-in-out;
+}
+
+@keyframes pulseGreen {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+.tape-controls__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.tape-controls__btn {
+  background: none;
+  border: 1px solid var(--line);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.tape-controls__btn:hover,
+.tape-controls__btn.is-active {
+  background: var(--cream);
+  border-color: var(--accent);
+}
+
+.tape-controls__speed-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tape-controls__speed-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-right: 0.25rem;
+}
+
+.tape-controls__speed-btn {
+  background: none;
+  border: none;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tape-controls__speed-btn:hover {
+  color: var(--ink);
+}
+
+.tape-controls__speed-btn.is-active {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   PIPELINE PREVIEW CARDS
+   ========================================================================== */
+
+.works-pipeline {
+  margin-top: clamp(4rem, 8vw, 6.5rem);
+}
+
+.works-pipeline__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: clamp(2rem, 4vw, 3.2rem);
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.works-pipeline__eyebrow {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+:root[data-theme="dark"] .works-pipeline__eyebrow {
+  color: var(--accent-bright);
+}
+
+.works-pipeline__title {
+  margin: 0;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.works-pipeline__meta-note {
+  max-width: 26rem;
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.works-pipeline__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.pipeline-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.6rem, 2.8vw, 2.4rem);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--line);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+:root[data-theme="dark"] .pipeline-card {
+  background: rgba(18, 28, 22, 0.55);
+}
+
+.pipeline-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-pale);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+}
+
+.pipeline-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.pipeline-card__cat {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+:root[data-theme="dark"] .pipeline-card__cat {
+  color: var(--accent-bright);
+}
+
+.pipeline-card__timeline {
+  font-family: "BDO Grotesk Variable", monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.pipeline-card__title {
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+}
+
+.pipeline-card__role-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+  font-size: 0.86rem;
+}
+
+.pipeline-card__role-label {
+  color: var(--muted);
+}
+
+.pipeline-card__role-val {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pipeline-card__desc {
+  margin: 0 0 1.5rem;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--muted);
+  flex-grow: 1;
+}
+
+/* Progress indicator inside card */
+.pipeline-progress {
+  margin-bottom: 1.5rem;
+  padding: 0.95rem 1.15rem;
+  border-radius: 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+
+.pipeline-progress__label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.pipeline-progress__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.pipeline-progress__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.pipeline-progress__percent {
+  font-family: "BDO Grotesk Variable", monospace;
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+.pipeline-progress__track {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.pipeline-progress__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-bright) 100%);
+  transition: width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Highlights */
+.pipeline-card__highlights {
+  margin-bottom: 1.5rem;
+}
+
+.pipeline-card__highlights-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.pipeline-card__highlights-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.pipeline-card__highlights-list li {
+  margin-bottom: 0.35rem;
+}
+
+/* Stack Chips */
+.pipeline-card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: auto;
+}
+
+.pipeline-card__tag {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  background: var(--cream);
+  color: var(--on-accent);
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   CALL TO ACTION FALLBACK BANNER
+   ========================================================================== */
+
+.works-cta {
+  margin-top: clamp(4rem, 8vw, 7rem);
+}
+
+.works-cta__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  padding: clamp(2.4rem, 4.5vw, 3.8rem);
+  border-radius: 28px;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 122, 90, 0.08) 0%,
+    rgba(163, 217, 192, 0.16) 100%
+  );
+  border: 1px solid rgba(26, 122, 90, 0.22);
+}
+
+:root[data-theme="dark"] .works-cta__inner {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 150, 110, 0.12) 0%,
+    rgba(20, 46, 34, 0.45) 100%
+  );
+  border-color: rgba(34, 150, 110, 0.3);
+}
+
+.works-cta__content {
+  max-width: 36rem;
+}
+
+.works-cta__badge {
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+:root[data-theme="dark"] .works-cta__badge {
+  color: var(--accent-bright);
+}
+
+.works-cta__heading {
+  margin: 0 0 0.85rem;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.works-cta__text {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.works-cta__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+  max-width: 17rem;
+}
+
+.button--works-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.5rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: -0.01em;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.button--works-primary:hover {
+  background: var(--accent-bright);
+  transform: translateY(-2px);
+}
+
+.button--works-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.button--works-secondary:hover {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: var(--ink);
+}
+
+.button--works-subtle {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+
+.button--works-subtle:hover {
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS FOR WORKS PAGE
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .works-hero__header-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .works-pipeline__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .works-cta__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .works-cta__buttons {
+    max-width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 640px) {
+  .tape-controls {
+    flex-direction: column;
+    gap: 0.85rem;
+    border-radius: 16px;
+    padding: 0.85rem 1rem;
+  }
+
+  .tape-controls__actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .tape-strip {
+    height: 44px;
+  }
+
+  .tape-strip__quote {
+    font-size: 0.95rem;
+  }
+
+  .tape-strip__tag {
+    font-size: 0.68rem;
+  }
+
+  .works-cta__buttons {
+    flex-direction: column;
+  }
+
+  .button--works-primary,
+  .button--works-secondary {
+    width: 100%;
+  }
+}

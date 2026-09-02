@@ -103,7 +103,7 @@ export function Navigation() {
               </a>
             </li>
             <li className="nav-overlay__item">
-              <a href="/#work" className="nav-overlay__link" onClick={closeMenu}>
+              <a href="/works" className="nav-overlay__link" onClick={closeMenu}>
                 <span>Work</span>
               </a>
             </li>
