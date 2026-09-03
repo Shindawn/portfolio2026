@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Footer, Navigation } from "./Sections";
 import TapeRibbons from "./TapeRibbons";
+import { requestResumeAccess } from "./ResumeGateModal";
 
 interface PipelineProject {
   id: string;
@@ -219,14 +220,13 @@ export default function WorksPage() {
             </p>
           </div>
           <div className="works-cta__buttons">
-            <a
-              href="/LescyGCaadlawon_CV.pdf"
-              target="_blank"
-              rel="noreferrer"
+            <button
+              type="button"
               className="button button--works-primary"
+              onClick={() => requestResumeAccess("download")}
             >
               <span>Download CV / Resume ↗</span>
-            </a>
+            </button>
             <a
               href="https://github.com/Shindawn"
               target="_blank"

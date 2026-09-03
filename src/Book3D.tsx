@@ -120,7 +120,13 @@ const spreads: BookSpread[] = [
   },
 ];
 
-function PageInner({ page, pageNumber }: { page: BookPageContent; pageNumber: number }) {
+function PageInner({
+  page,
+  pageNumber,
+}: {
+  page: BookPageContent;
+  pageNumber: number;
+}) {
   return (
     <div className="book3d-page__inner">
       <div className="book3d-page__header">
@@ -205,6 +211,8 @@ export default function Book3D() {
   // State: 0 = Closed (Front Cover), 1..spreads.length = Open Spreads, spreads.length + 1 = Closed (Back Cover)
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isTurning, setIsTurning] = useState<boolean>(false);
+  const [isMaximized, setIsMaximized] = useState<boolean>(false);
+
   const bookRef = useRef<HTMLDivElement>(null);
 
   const handleNext = () => {
@@ -240,37 +248,51 @@ export default function Book3D() {
     }
   };
 
+  // Lock body scroll and listen for ESC key when maximized
+  useEffect(() => {
+    if (isMaximized) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+
+      const handleGlobalEsc = (e: globalThis.KeyboardEvent) => {
+        if (e.key === "Escape") {
+          setIsMaximized(false);
+        } else if (e.key === "ArrowRight") {
+          handleNext();
+        } else if (e.key === "ArrowLeft") {
+          handlePrev();
+        }
+      };
+
+      window.addEventListener("keydown", handleGlobalEsc);
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        window.removeEventListener("keydown", handleGlobalEsc);
+      };
+    }
+  }, [isMaximized, currentStep, isTurning]);
+
   useEffect(() => {
     const handleGlobalKey = (e: globalThis.KeyboardEvent) => {
-      if (bookRef.current && bookRef.current.contains(document.activeElement)) {
+      if (!isMaximized && bookRef.current && bookRef.current.contains(document.activeElement)) {
         if (e.key === "ArrowRight") handleNext();
         if (e.key === "ArrowLeft") handlePrev();
       }
     };
     window.addEventListener("keydown", handleGlobalKey);
     return () => window.removeEventListener("keydown", handleGlobalKey);
-  }, [currentStep, isTurning]);
+  }, [currentStep, isTurning, isMaximized]);
 
   const isOpen = currentStep >= 1 && currentStep <= spreads.length;
   const isBackCover = currentStep > spreads.length;
-  const activeSpread = isOpen ? spreads[currentStep - 1] : null;
+  const activeSpread = isOpen ? spreads[currentStep - 1] : spreads[0];
 
-  return (
-    <div
-      ref={bookRef}
-      className={`book3d-wrapper ${isOpen ? "book3d-wrapper--open" : ""} ${
-        isBackCover ? "book3d-wrapper--back" : ""
-      }`}
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-      role="region"
-      aria-label="Interactive 3D Flipping Book of Education and Honors"
-    >
-      {/* 3D Realistic Shadow on Floor */}
-      <div className={`book3d-shadow ${isTurning ? "book3d-shadow--turning" : ""}`} aria-hidden="true" />
-
-      {/* Main 3D Book Stage */}
-      <div className="book3d-stage">
+  // Helper to render the book stage (reused in both standard and maximized views)
+  const renderBookStage = (maximizedMode = false) => {
+    return (
+      <div
+        className={`book3d-stage ${maximizedMode ? "book3d-stage--maximized" : ""}`}
+      >
         {/* CASE 1: FRONT COVER (Step 0) */}
         {currentStep === 0 && (
           <div
@@ -280,13 +302,40 @@ export default function Book3D() {
           >
             {/* Book Spine Texture */}
             <div className="book3d-spine-edge" aria-hidden="true" />
-            
+
             {/* Front Cover Artwork */}
             <div className="book3d-cover__content">
-              <h3 className="book3d-cover__title">
-                My Journey <span>education &amp; honors</span>
-              </h3>
-              
+              <div className="book3d-cover__header-row">
+                <h3 className="book3d-cover__title">
+                  My Journey <span>education &amp; honors</span>
+                </h3>
+                {!maximizedMode && (
+                  <button
+                    type="button"
+                    className="book3d-cover__max-shortcut"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsMaximized(true);
+                    }}
+                    title="Maximize Book"
+                    aria-label="Maximize Book"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="14"
+                      height="14"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                    </svg>
+                  </button>
+                )}
+              </div>
+
               <div className="book3d-cover__art-wrap">
                 <img
                   src="/academic-cover-portrait.jpg"
@@ -305,16 +354,25 @@ export default function Book3D() {
 
         {/* CASE 2: OPEN 2-PAGE SPREAD (Steps 1..N) */}
         {isOpen && activeSpread && (
-          <div className="book3d-spread" role="group" aria-label={`Spread ${currentStep} of ${spreads.length}`}>
+          <div
+            className={`book3d-spread ${maximizedMode ? "book3d-spread--maximized" : ""}`}
+            role="group"
+            aria-label={`Spread ${currentStep} of ${spreads.length}`}
+          >
             {/* Left Page (Click to go to previous spread) */}
             <div
-              className="book3d-page book3d-page--left"
+              className={`book3d-page book3d-page--left ${maximizedMode ? "book3d-page--maximized" : ""}`}
               onClick={handlePrev}
               title="Click left page to turn back"
             >
-              <PageInner page={activeSpread.leftPage} pageNumber={currentStep * 2 - 1} />
-              {/* Subtle Page Spine Shadow */}
-              <div className="book3d-page__spine-gutter book3d-page__spine-gutter--left" aria-hidden="true" />
+              <PageInner
+                page={activeSpread.leftPage}
+                pageNumber={currentStep * 2 - 1}
+              />
+              <div
+                className="book3d-page__spine-gutter book3d-page__spine-gutter--left"
+                aria-hidden="true"
+              />
             </div>
 
             {/* Book Center Binding Crease */}
@@ -322,13 +380,18 @@ export default function Book3D() {
 
             {/* Right Page (Click to turn to next spread) */}
             <div
-              className="book3d-page book3d-page--right"
+              className={`book3d-page book3d-page--right ${maximizedMode ? "book3d-page--maximized" : ""}`}
               onClick={handleNext}
               title="Click right page to turn next"
             >
-              <PageInner page={activeSpread.rightPage} pageNumber={currentStep * 2} />
-              {/* Subtle Page Spine Shadow */}
-              <div className="book3d-page__spine-gutter book3d-page__spine-gutter--right" aria-hidden="true" />
+              <PageInner
+                page={activeSpread.rightPage}
+                pageNumber={currentStep * 2}
+              />
+              <div
+                className="book3d-page__spine-gutter book3d-page__spine-gutter--right"
+                aria-hidden="true"
+              />
             </div>
           </div>
         )}
@@ -340,7 +403,10 @@ export default function Book3D() {
             onClick={handleNext}
             title="Click to restart from cover"
           >
-            <div className="book3d-spine-edge book3d-spine-edge--back" aria-hidden="true" />
+            <div
+              className="book3d-spine-edge book3d-spine-edge--back"
+              aria-hidden="true"
+            />
             <div className="book3d-cover__content book3d-cover__content--back">
               <div className="book3d-cover__seal">🏛️</div>
               <h3 className="book3d-cover__title book3d-cover__title--back">
@@ -350,6 +416,97 @@ export default function Book3D() {
           </div>
         )}
       </div>
-    </div>
+    );
+  };
+
+  return (
+    <>
+      {/* Standard Section Book Container */}
+      <div
+        ref={bookRef}
+        className={`book3d-wrapper ${isOpen ? "book3d-wrapper--open" : ""} ${
+          isBackCover ? "book3d-wrapper--back" : ""
+        }`}
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+        role="region"
+        aria-label="Interactive 3D Flipping Book of Education and Honors"
+      >
+        {/* 3D Realistic Shadow on Floor */}
+        <div
+          className={`book3d-shadow ${isTurning ? "book3d-shadow--turning" : ""}`}
+          aria-hidden="true"
+        />
+
+        {/* Main 3D Book Stage */}
+        {renderBookStage(false)}
+      </div>
+
+      {/* =========================================================================
+          MAXIMIZED ENLARGED FLOATING BOOK OVERLAY ("Floating Ganon" Effect)
+          ========================================================================= */}
+      {isMaximized && (
+        <div
+          className="book3d-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Maximized Journey Book"
+          onClick={() => setIsMaximized(false)}
+        >
+          {/* Atmospheric Backdrop Blur */}
+          <div className="book3d-modal-backdrop" aria-hidden="true" />
+
+          {/* Floating Stage Container with 3D Depth & Levitation */}
+          <div
+            className={`book3d-maximized-container ${
+              isOpen ? "book3d-maximized-container--open" : ""
+            } ${isBackCover ? "book3d-maximized-container--back" : ""}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Bar Header with Minimize / Close Button */}
+            <div className="book3d-maximized-header">
+              <button
+                type="button"
+                className="book3d-modal-close-btn"
+                onClick={() => setIsMaximized(false)}
+                aria-label="Minimize Book (Esc)"
+                title="Minimize Book (Esc)"
+              >
+                <span className="book3d-modal-close-btn__text">Minimize</span>
+                <span className="book3d-modal-close-btn__icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7" />
+                  </svg>
+                </span>
+                <kbd className="book3d-esc-key">ESC</kbd>
+              </button>
+            </div>
+
+            {/* The Levitating Enlarged Floating Book Wrapper */}
+            <div className="book3d-floating-book-shell">
+              {/* The Enlarged 3D Book Stage */}
+              {renderBookStage(true)}
+
+              {/* Atmospheric Floor Levitation Shadow ("Floating Ganon" Physics) */}
+              <div
+                className={`book3d-modal-shadow ${
+                  isOpen ? "book3d-modal-shadow--open" : ""
+                }`}
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

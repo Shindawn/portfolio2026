@@ -4,6 +4,7 @@ import Hero3DCarousel from "./Hero3DCarousel";
 import HeroBeamLines from "./HeroBeamLines";
 import ThemeToggle from "./ThemeToggle";
 import { useEffect, useState, type CSSProperties, type PointerEvent } from "react";
+import { requestResumeAccess } from "./ResumeGateModal";
 
 const companyMarks = [
   ["Vercel", "", "brand-mark--triangle"], ["Shopify", "S", ""],
@@ -111,20 +112,30 @@ export function Navigation() {
 
           <div className="nav-overlay__footer">
             <div className="nav-overlay__resume-group">
-              <a
-                href="/LescyGCaadlawon_CV.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="nav-overlay__sublink"
+              <button
+                type="button"
+                className="nav-overlay__sublink nav-overlay__sublink--btn"
+                onClick={() => {
+                  closeMenu();
+                  requestResumeAccess("preview");
+                }}
               >
                 <span>Preview Resume ↗</span>
-              </a>
-              <a
-                href="/LescyGCaadlawon_CV.pdf"
-                download="LescyGCaadlawon_CV.pdf"
-                className="nav-overlay__sublink"
+              </button>
+              <button
+                type="button"
+                className="nav-overlay__sublink nav-overlay__sublink--btn"
+                onClick={() => {
+                  closeMenu();
+                  requestResumeAccess("download");
+                }}
               >
                 <span>Download Resume ↓</span>
+              </button>
+            </div>
+            <div className="nav-overlay__extra-links">
+              <a href="/privacy" className="nav-overlay__sublink" onClick={closeMenu}>
+                <span>Privacy Policy</span>
               </a>
             </div>
             <p className="nav-overlay__copyright">©2026 Lescy Gdawn · Mandaluyong, Philippines</p>
@@ -215,7 +226,7 @@ export function Hero() {
                 <em className={`hero-stage__italic-accent${isFlipping ? " is-flipping" : ""}`}>
                   {rotatingWords[wordIndex]}
                 </em>
-                <span className="hero-stage__main-accent">Web Systems</span>
+                <span className="hero-stage__main-accent">Software Development</span>
               </span>
             </h1>
           </div>
@@ -498,7 +509,11 @@ export function Footer() {
           </p>
         </div>
         <div className="footer__meta">
-          <p>©2026 Lescy G. Caadlawon</p>
+          <div className="footer__legal-group">
+            <p>©2026 Lescy G. Caadlawon</p>
+            <span className="footer__legal-dot" aria-hidden="true">·</span>
+            <a href="/privacy" className="footer__privacy-link">Privacy Policy</a>
+          </div>
           <nav className="footer__socials" aria-label="Social links">
             <a href="https://www.linkedin.com/in/lescycaadlawon" target="_blank" rel="noreferrer">LinkedIn</a>
             <a href="https://github.com/Shindawn" target="_blank" rel="noreferrer">GitHub</a>
