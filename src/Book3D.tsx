@@ -1,200 +1,30 @@
 import { useState, useEffect, useRef, type KeyboardEvent } from "react";
 
-export interface CertCredential {
+export interface BookBadgeItem {
   id: string;
   name: string;
   shortName?: string;
-  issuer: string;
-  category: string;
-  issueDate?: string;
-  credentialId?: string;
-  image?: string;
-  skills?: string[];
-  recipient?: string;
-  description?: string;
-  verifyUrl?: string;
+  badgeImg: string;
+  url: string;
 }
 
-export const CERTIFICATIONS: CertCredential[] = [
-  {
-    id: "oracle-cloud-ai",
-    name: "Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate",
-    shortName: "Oracle Cloud AI Associate",
-    issuer: "Oracle University",
-    category: "Backend & Cloud",
-    issueDate: "May 03, 2026",
-    credentialId: "327802132OCI25AICFA",
-    image: "/certs/oracle-cloud-ai.jpg",
-    recipient: "Lescy Gonzales Caadlawon",
-    skills: ["Oracle Cloud Infrastructure", "AI & Machine Learning Concepts", "GenAI Architecture", "OCI AI Services"],
-    description:
-      "Official certificate of recognition by Oracle Corporation acknowledging foundational mastery of OCI AI services, machine learning infrastructure, and generative AI deployment architectures.",
-  },
-  {
-    id: "cisco-cybersecurity",
-    name: "Junior Cybersecurity Analyst Career Path",
-    shortName: "Junior Cybersecurity Analyst (CISCO)",
-    issuer: "Cisco Networking Academy",
-    category: "Security",
-    issueDate: "Feb 27, 2026",
-    image: "/certs/cisco-cybersecurity.jpg",
-    recipient: "Lescy G. Caadlawon",
-    skills: ["Network Security Controls", "Vulnerability Assessment", "Threat Mitigation", "Incident Response"],
-    description:
-      "Student level credential from Cisco Networking Academy verifying proficiency in network security controls, system threat mitigation, incident management, and security risk assessment tools.",
-  },
-  {
-    id: "github-foundations",
-    name: "GitHub Foundations Credential",
-    shortName: "GitHub Foundations",
-    issuer: "GitHub / Microsoft",
-    category: "Backend & Cloud",
-    issueDate: "2025 – 2026",
-    recipient: "Lescy G. Caadlawon",
-    skills: ["Git Version Control", "GitHub Actions & Workflows", "Branch Governance", "Repository Security"],
-    description:
-      "Core proficiency in distributed version control, CI/CD automated build workflows, issue management, and collaborative software development lifecycle on GitHub.",
-  },
-  {
-    id: "laravel-web-dev",
-    name: "Web Development (Laravel & PHP)",
-    shortName: "Web Development (Laravel)",
-    issuer: "Laravel Ecosystem",
-    category: "Backend & Cloud",
-    issueDate: "2025",
-    recipient: "Lescy G. Caadlawon",
-    skills: ["PHP 8.x", "Laravel MVC Architecture", "Eloquent ORM", "RESTful APIs & Auth"],
-    description:
-      "Applied full-stack backend development involving modern MVC structure, relational database schema design, token authentication, and robust REST APIs.",
-  },
-  {
-    id: "ibm-prompt-eng",
-    name: "Prompt Engineering for Everyone",
-    shortName: "Prompt Engineering (IBM)",
-    issuer: "IBM SkillsBuild",
-    category: "AI & Product",
-    issueDate: "2025 – 2026",
-    recipient: "Lescy G. Caadlawon",
-    skills: ["Generative AI Prompting", "Few-Shot & Zero-Shot Methods", "Chain-of-Thought", "AI Guardrails"],
-    description:
-      "Specialized training in architecting effective LLM prompts, reasoning pipelines, temperature tuning, and generative AI application integration.",
-  },
-  {
-    id: "google-genai",
-    name: "Introduction to Generative AI",
-    shortName: "GenAI (Google)",
-    issuer: "Google Cloud",
-    category: "AI & Product",
-    issueDate: "2025 – 2026",
-    recipient: "Lescy G. Caadlawon",
-    skills: ["Large Language Models", "Responsible AI Principles", "Transformer Models", "Vertex AI"],
-    description:
-      "Foundational accreditation covering generative model architectures, ethical AI design, deep learning fundamentals, and enterprise Google Cloud AI tooling.",
-  },
-  {
-    id: "ibm-ux-design",
-    name: "Enterprise UX Design Fundamentals",
-    shortName: "UX Design (IBM)",
-    issuer: "IBM",
-    category: "AI & Product",
-    issueDate: "2025",
-    recipient: "Lescy G. Caadlawon",
-    skills: ["User Journey Mapping", "Wireframing & Prototyping", "Design Thinking", "Accessibility & WCAG"],
-    description:
-      "Comprehensive UX design principles focused on human-computer interaction, heuristic evaluation, rapid prototyping, and user-centered design methodologies.",
-  },
-  {
-    id: "google-tech-support",
-    name: "Google IT Technical Support Professional",
-    shortName: "Technical Support (Google)",
-    issuer: "Google Career Certificates",
-    category: "AI & Product",
-    issueDate: "2024 – 2025",
-    recipient: "Lescy G. Caadlawon",
-    skills: ["System Diagnostics", "Networking Protocols (TCP/IP, DNS)", "Troubleshooting", "Customer Support"],
-    description:
-      "Rigorous technical support training covering operating system internals, computer networking, hardware diagnostics, and IT systems administration.",
-  },
-  {
-    id: "datacamp-data-eng",
-    name: "Data Engineering & Analytics Track",
-    shortName: "Data Engineering (DataCamp)",
-    issuer: "DataCamp",
-    category: "Specializations & Advanced Studies",
-    issueDate: "2026",
-    recipient: "Lescy G. Caadlawon",
-    skills: ["SQL Pipelines", "Python Analytics", "Data Cleaning & ETL", "Data Warehousing"],
-    description:
-      "Advanced curriculum in data transformation pipelines, relational schemas, exploratory data analysis, and automated ETL workflows.",
-  },
-  {
-    id: "gcp-cloud-specialist",
-    name: "Cloud Architecture & Services Specialization",
-    shortName: "Cloud Architecture Specialization",
-    issuer: "Cloud Training Program",
-    category: "Specializations & Advanced Studies",
-    issueDate: "2026",
-    recipient: "Lescy G. Caadlawon",
-    skills: ["Cloud Storage", "Serverless Functions", "IAM & Security", "Container Deployments"],
-    description:
-      "Hands-on architectural training covering cloud provisioning, microservice containerization, IAM security boundaries, and high availability.",
-  },
-  {
-    id: "devops-workshop",
-    name: "Modern DevOps & CI/CD Deployment Workshop",
-    shortName: "DevOps & Containerization",
-    issuer: "Developer Workshop",
-    category: "Specializations & Advanced Studies",
-    issueDate: "2025 – 2026",
-    recipient: "Lescy G. Caadlawon",
-    skills: ["Docker Containers", "CI/CD Workflows", "Automated Testing", "Environment Config"],
-    description:
-      "Practical workshops in containerized deployment workflows, pipeline automation, and production-ready staging environments.",
-  },
-  {
-    id: "tech-guild-leadership",
-    name: "IT Guild Leadership & Collegiate Workshop Facilitation",
-    shortName: "Tech Guild Specialization",
-    issuer: "CatSU Tech Guild",
-    category: "Specializations & Advanced Studies",
-    issueDate: "2024 – 2026",
-    recipient: "Lescy G. Caadlawon",
-    skills: ["Technical Mentorship", "Workshop Facilitation", "Community Leadership", "Hackathon Organization"],
-    description:
-      "Collegiate technology leadership organizing developer bootcamps, code review sessions, and collaborative hackathons.",
-  },
-];
-
-// Helper to find a certification by item name or ID
-function findCert(identifier: string): CertCredential | undefined {
-  const clean = identifier.toLowerCase().trim();
-  return (
-    CERTIFICATIONS.find((c) => c.id.toLowerCase() === clean) ||
-    CERTIFICATIONS.find((c) => c.name.toLowerCase().includes(clean)) ||
-    CERTIFICATIONS.find((c) => c.shortName && c.shortName.toLowerCase().includes(clean)) ||
-    CERTIFICATIONS.find((c) => clean.includes(c.id.toLowerCase()))
-  );
+export interface BookBadgeSummary {
+  badges: string;
+  skills: string;
 }
 
 export interface BookPageContent {
   tag: string;
   title?: string;
   subtitle?: string;
+  badgeSummary?: BookBadgeSummary;
   description?: string;
   stats?: { label: string; value: string }[];
   pills?: string[];
   quote?: string;
   image?: string;
   caption?: string;
-  certList?: {
-    category: string;
-    items: {
-      name: string;
-      certId?: string;
-      badge?: string;
-    }[];
-  }[];
-  interactiveHint?: string;
+  badges?: BookBadgeItem[];
 }
 
 export interface BookSpread {
@@ -202,6 +32,142 @@ export interface BookSpread {
   leftPage: BookPageContent;
   rightPage: BookPageContent;
 }
+
+const CERT_URL_MAP: Record<string, string> = {
+  "oracle cloud ai": "https://catalog-education.oracle.com/ords/certview/sharebadge?id=84CF78EC86445F84F83A7A554B724E21FB07D74E6411CEFB48A6E412BE55BC7E",
+  "oracle": "https://catalog-education.oracle.com/ords/certview/sharebadge?id=84CF78EC86445F84F83A7A554B724E21FB07D74E6411CEFB48A6E412BE55BC7E",
+  "cisco cyber": "/certs/cisco-cybersecurity.jpg",
+  "cisco": "https://www.credly.com/badges/d0df2177-dda6-45bd-a825-99b28483e872/public_url",
+  "datacamp llms": "https://www.datacamp.com/completed/statement-of-accomplishment/course/7fb144e834b8b7a624cbdac1517dd6131ebc3220",
+  "datacamp": "https://www.datacamp.com/completed/statement-of-accomplishment/course/7fb144e834b8b7a624cbdac1517dd6131ebc3220",
+  "hackerrank sql 5★": "https://www.hackerrank.com/certificates/69cfd4dd5b46",
+  "hackerrank": "https://www.hackerrank.com/certificates/69cfd4dd5b46",
+  "dict devops": "/certs/dict-car-devops.png",
+  "dict car": "/certs/dict-car-devops.png",
+  "dti-car": "/certs/dict-car-devops.png",
+  "networking basics": "https://www.credly.com/badges/70efa984-ef48-40df-9585-c8c15f87b1f8/public_url",
+  "microsoft learn": "https://learn.microsoft.com/en-us/users/lecgdawnshinee-6332/achievements/7k98s4gz?ref=https%3A%2F%2Fwww.linkedin.com%2F",
+  "google": "/certs/gdg-sonder-vietnam.jpg",
+  "asean": "/certs/asean-ai-readiness.png",
+  "ibm ai": "https://www.credly.com/badges/534366e6-3fe5-4e62-abc7-72fb15611785/public_url",
+  "cyber threat management": "https://www.credly.com/badges/38cc93ce-fbce-457e-a2db-7490aa6a8d12/public_url",
+  "github education": "https://education.github.com",
+};
+
+const ALL_BADGES: BookBadgeItem[] = [
+  {
+    id: "oracle-cloud-ai",
+    name: "Oracle Cloud AI Foundations 2025",
+    shortName: "Oracle AI",
+    badgeImg: "/certs/badges/oracle-badge.png",
+    url: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=84CF78EC86445F84F83A7A554B724E21FB07D74E6411CEFB48A6E412BE55BC7E",
+  },
+  {
+    id: "ibm-ai-fundamentals",
+    name: "IBM SkillsBuild: Artificial Intelligence Fundamentals (Credly)",
+    shortName: "IBM AI",
+    badgeImg: "/certs/badges/ibm-ai-fundamentals.png",
+    url: "https://www.credly.com/badges/534366e6-3fe5-4e62-abc7-72fb15611785/public_url",
+  },
+  {
+    id: "cisco-threat-management",
+    name: "Cisco: Cyber Threat Management (Credly)",
+    shortName: "Threat Mgmt",
+    badgeImg: "/certs/badges/cisco-threat-management.png",
+    url: "https://www.credly.com/badges/38cc93ce-fbce-457e-a2db-7490aa6a8d12/public_url",
+  },
+  {
+    id: "cisco-cybersecurity",
+    name: "Cisco Junior Cybersecurity Analyst",
+    shortName: "Cisco Cyber",
+    badgeImg: "/certs/badges/cisco-badge.png",
+    url: "/certs/cisco-cybersecurity.jpg",
+  },
+  {
+    id: "google-gdg-sonder",
+    name: "Google Developer Groups SONDER 2025: Dev Tour Vietnam",
+    shortName: "Google GDG",
+    badgeImg: "/certs/badges/google-gdg-badge.png",
+    url: "/certs/gdg-sonder-vietnam.jpg",
+  },
+  {
+    id: "asean-ai-readiness",
+    name: "ASEAN Foundation: AI Career Readiness (LinkedIn)",
+    shortName: "ASEAN AI",
+    badgeImg: "/certs/badges/asean-foundation-badge.png",
+    url: "/certs/asean-ai-readiness.png",
+  },
+  {
+    id: "cisco-intro-cyber",
+    name: "Cisco Introduction to Cybersecurity (Credly)",
+    shortName: "Security",
+    badgeImg: "/certs/badges/cisco-intro-cyber.png",
+    url: "https://www.credly.com/badges/d0df2177-dda6-45bd-a825-99b28483e872/public_url",
+  },
+  {
+    id: "cisco-networking-basics",
+    name: "Cisco Networking Basics (Credly)",
+    shortName: "Networking",
+    badgeImg: "/certs/badges/cisco-networking-basics.png",
+    url: "https://www.credly.com/badges/70efa984-ef48-40df-9585-c8c15f87b1f8/public_url",
+  },
+  {
+    id: "datacamp-llm",
+    name: "DataCamp: Large Language Models (LLMs) Concepts",
+    shortName: "DataCamp LLMs",
+    badgeImg: "/certs/badges/datacamp-llm-badge.png",
+    url: "https://www.datacamp.com/completed/statement-of-accomplishment/course/7fb144e834b8b7a624cbdac1517dd6131ebc3220",
+  },
+  {
+    id: "datacamp-python",
+    name: "DataCamp: Introduction to Python",
+    shortName: "Python",
+    badgeImg: "/certs/badges/datacamp-llm-badge.png",
+    url: "https://www.datacamp.com/completed/statement-of-accomplishment/course/5abbb908ff646f2f8c87e7edd31db67fb8ad5731",
+  },
+  {
+    id: "datacamp-git",
+    name: "DataCamp: Introduction to Git",
+    shortName: "Git",
+    badgeImg: "/certs/badges/datacamp-llm-badge.png",
+    url: "https://www.datacamp.com/completed/statement-of-accomplishment/course/71563862d53f5c3733bd867e7598760a74bad99c",
+  },
+  {
+    id: "datacamp-r",
+    name: "DataCamp: Introduction to R",
+    shortName: "R Lang",
+    badgeImg: "/certs/badges/datacamp-llm-badge.png",
+    url: "https://www.datacamp.com/completed/statement-of-accomplishment/course/f74da122c50bb715af38e632d34967ed90ba0cb0",
+  },
+  {
+    id: "datacamp-shell",
+    name: "DataCamp: Introduction to Shell",
+    shortName: "Shell",
+    badgeImg: "/certs/badges/datacamp-llm-badge.png",
+    url: "https://www.datacamp.com/completed/statement-of-accomplishment/course/331df5547d466a8ce3040a1817b252cf92c800f9",
+  },
+  {
+    id: "hackerrank-sql-basic",
+    name: "HackerRank SQL Skill Certifications (5★ Gold)",
+    shortName: "SQL 5★",
+    badgeImg: "/certs/badges/hackerrank-sql-badge.png",
+    url: "https://www.hackerrank.com/certificates/69cfd4dd5b46",
+  },
+  {
+    id: "dict-car-devops",
+    name: "DICT CAR Cloud and DevOps Basics",
+    shortName: "DICT DevOps",
+    badgeImg: "/certs/badges/dict-badge.png",
+    url: "/certs/dict-car-devops.png",
+  },
+  {
+    id: "microsoft-learn",
+    name: "Microsoft Learn Achievements & Cloud Tracks",
+    shortName: "MS Learn",
+    badgeImg: "/certs/badges/microsoft-learn.png",
+    url: "https://learn.microsoft.com/en-us/users/lecgdawnshinee-6332/achievements/7k98s4gz?ref=https%3A%2F%2Fwww.linkedin.com%2F",
+  },
+];
 
 const spreads: BookSpread[] = [
   {
@@ -228,108 +194,63 @@ const spreads: BookSpread[] = [
   {
     id: "spread-2",
     leftPage: {
-      tag: "Chapter 02 • Awards & Accreditations",
+      tag: "Chapter 02 • Awards & Honors",
       title: "Scholastic Honors & Certs",
       subtitle: "Multi-Year Dean’s List Distinction",
       description:
-        "Awarded continuous Dean’s Honor Roll recognition throughout 2022–2026, complemented by verified industry credentials across Cloud, Security, Backend, and AI systems.",
+        "Awarded continuous Dean’s Honor Roll recognition throughout 2022–2026, complemented by verified industry credentials across Cloud, Security, AI, and Systems Engineering.",
       stats: [
         { label: "Honors", value: "Dean’s Lister (2022–2026)" },
-        { label: "Accreditations", value: "12+ Credentials & Certs" },
+        { label: "Accreditations", value: "16+ Verified Credentials" },
       ],
       pills: [
         "Oracle Cloud AI",
-        "GitHub Foundations",
         "CISCO Cyber",
-        "IBM AI & UX",
-        "Google GenAI",
-        "Laravel Web Dev",
+        "Google",
+        "ASEAN",
+        "IBM AI",
+        "DataCamp LLMs",
+        "HackerRank SQL 5★",
+        "DICT DevOps",
       ],
     },
     rightPage: {
-      tag: "Industry Certifications • Part 01",
-      interactiveHint: "Click any certification to view certificate image",
-      certList: [
-        {
-          category: "Backend & Cloud",
-          items: [
-            { name: "Oracle Cloud AI Associate", certId: "oracle-cloud-ai", badge: "Image Available" },
-            { name: "Junior Cybersecurity Analyst (CISCO)", certId: "cisco-cybersecurity", badge: "Image Available" },
-            { name: "GitHub Foundations", certId: "github-foundations" },
-            { name: "Web Development (Laravel & PHP)", certId: "laravel-web-dev" },
-          ],
-        },
-        {
-          category: "Security & Infrastructure",
-          items: [
-            { name: "Junior Cybersecurity Analyst Career Path (CISCO)", certId: "cisco-cybersecurity", badge: "Verified" },
-          ],
-        },
-      ],
+      tag: "Chapter 02 • Verified Badges",
+      title: "Accredited Badges & Certs",
+      badgeSummary: {
+        badges: "7 Badges",
+        skills: "51 Skills",
+      },
+      badges: ALL_BADGES,
     },
   },
   {
     id: "spread-3",
     leftPage: {
-      tag: "Chapter 03 • Certifications (Part 02)",
-      title: "AI, Product & UX",
-      subtitle: "Verified Technical Credentials",
-      interactiveHint: "Click any certification to view certificate image",
-      certList: [
-        {
-          category: "AI & Intelligence",
-          items: [
-            { name: "Prompt Engineering for Everyone (IBM)", certId: "ibm-prompt-eng" },
-            { name: "Introduction to Generative AI (Google)", certId: "google-genai" },
-          ],
-        },
-        {
-          category: "Product, UX & Systems",
-          items: [
-            { name: "Enterprise UX Design Fundamentals (IBM)", certId: "ibm-ux-design" },
-            { name: "Google IT Technical Support Professional", certId: "google-tech-support" },
-          ],
-        },
-      ],
-    },
-    rightPage: {
-      tag: "Specializations & Advanced Studies",
-      title: "Continuing Studies",
-      subtitle: "Courses, Tracks & Workshops",
+      tag: "Chapter 03 • Continuous Learning",
+      title: "Specializations & Mentorship",
+      subtitle: "Workshops & Guild Mentorship",
       description:
-        "Ongoing professional development, developer tracks, and community technical mentorship.",
-      interactiveHint: "Click any item to view credential details",
-      certList: [
-        {
-          category: "Data & Cloud Infrastructure",
-          items: [
-            { name: "Data Engineering & Analytics (DataCamp)", certId: "datacamp-data-eng" },
-            { name: "Cloud Architecture Specialization", certId: "gcp-cloud-specialist" },
-          ],
-        },
-        {
-          category: "DevOps & Guild Leadership",
-          items: [
-            { name: "Modern DevOps & Containerization Workshop", certId: "devops-workshop" },
-            { name: "IT Guild Leadership & Workshop Facilitation", certId: "tech-guild-leadership" },
-          ],
-        },
+        "Active collegiate student leader facilitating coding bootcamps, technical workshops, and open-source software initiatives.",
+      stats: [
+        { label: "Community", value: "IT Guild & Society Officer" },
+        { label: "Focus Areas", value: "Full-Stack, AI & Security" },
+      ],
+      pills: [
+        "Google",
+        "ASEAN",
+        "Oracle",
+        "Cisco",
+        "IBM AI",
+        "DataCamp",
+        "HackerRank",
+        "DICT CAR",
+        "Microsoft Learn",
       ],
     },
-  },
-  {
-    id: "spread-4",
-    leftPage: {
-      tag: "Chapter 04 • Merit Grants",
-      quote:
-        "“Opportunity unlocks when dedication meets academic consistency — fueling research, innovation, and community leadership.”",
-      image:
-        "https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0?auto=format&fit=crop&w=700&q=85",
-      caption: "Tertiary scholarship & institutional research grant.",
-    },
     rightPage: {
-      tag: "Scholarships & Affiliations",
-      title: "Grants & Tech Leadership",
+      tag: "Chapter 03 • Merit Grants",
+      title: "Scholarships & Affiliations",
       subtitle: "Merit Scholar & IT Guild Officer",
       description:
         "Recipient of competitive tertiary academic scholarship grants covering full tuition and research initiatives. Active student leader facilitating collegiate coding workshops and hackathons.",
@@ -352,11 +273,9 @@ const spreads: BookSpread[] = [
 function PageInner({
   page,
   pageNumber,
-  onCertClick,
 }: {
   page: BookPageContent;
   pageNumber: number;
-  onCertClick: (certIdOrName: string) => void;
 }) {
   return (
     <div className="book3d-page__inner">
@@ -368,9 +287,34 @@ function PageInner({
       {page.title && (
         <div className="book3d-page__main-content">
           <h4 className="book3d-page__title">{page.title}</h4>
-          {page.subtitle && (
-            <p className="book3d-page__subtitle">{page.subtitle}</p>
+          
+          {page.badgeSummary ? (
+            <div className="book3d-badge-summary-bar">
+              <span className="book3d-badge-summary-item book3d-badge-summary-item--badges">
+                <span className="book3d-badge-summary-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <circle cx="12" cy="8" r="6" />
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+                  </svg>
+                </span>
+                <span className="book3d-badge-summary-val">{page.badgeSummary.badges}</span>
+              </span>
+              <span className="book3d-badge-summary-sep" aria-hidden="true">•</span>
+              <span className="book3d-badge-summary-item book3d-badge-summary-item--skills">
+                <span className="book3d-badge-summary-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
+                </span>
+                <span className="book3d-badge-summary-val">{page.badgeSummary.skills}</span>
+              </span>
+            </div>
+          ) : (
+            page.subtitle && (
+              <p className="book3d-page__subtitle">{page.subtitle}</p>
+            )
           )}
+
           {page.description && (
             <p className="book3d-page__desc">{page.description}</p>
           )}
@@ -388,83 +332,61 @@ function PageInner({
 
           {page.pills && (
             <div className="book3d-page__pills">
-              {page.pills.map((pill, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  className="book3d-page__pill book3d-page__pill--clickable"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onCertClick(pill);
-                  }}
-                  title={`View details for ${pill}`}
-                >
-                  {pill}
-                </button>
-              ))}
+              {page.pills.map((pill, i) => {
+                const url = CERT_URL_MAP[pill.toLowerCase().trim()];
+                return url ? (
+                  <a
+                    key={i}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="book3d-page__pill book3d-page__pill--clickable"
+                    onClick={(e) => e.stopPropagation()}
+                    title={`Open verified credential for ${pill}`}
+                  >
+                    {pill} ↗
+                  </a>
+                ) : (
+                  <span key={i} className="book3d-page__pill">
+                    {pill}
+                  </span>
+                );
+              })}
             </div>
           )}
         </div>
       )}
 
-      {page.certList && (
-        <div className="book3d-page__certs">
-          {page.certList.map((group, idx) => (
-            <div key={idx} className="book3d-cert-group">
-              <span className="book3d-cert-group__category">{group.category}</span>
-              <ul className="book3d-cert-group__list">
-                {group.items.map((item, itemIdx) => {
-                  const cert = findCert(item.certId || item.name);
-                  const hasImage = Boolean(cert?.image);
-
-                  return (
-                    <li key={itemIdx}>
-                      <button
-                        type="button"
-                        className={`book3d-cert-item-btn ${hasImage ? "book3d-cert-item-btn--has-img" : ""}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onCertClick(item.certId || item.name);
-                        }}
-                        title={`Click to view certificate: ${item.name}`}
-                      >
-                        <span className="book3d-cert-dot" aria-hidden="true" />
-                        <span className="book3d-cert-title">{item.name}</span>
-                        {hasImage ? (
-                          <span className="book3d-cert-img-badge" title="Official Certificate Image Available">
-                            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2.2">
-                              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                              <circle cx="8.5" cy="8.5" r="1.5" />
-                              <polyline points="21 15 16 10 5 21" />
-                            </svg>
-                            <span>Image</span>
-                          </span>
-                        ) : (
-                          <span className="book3d-cert-view-cue" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="2.2">
-                              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                              <circle cx="12" cy="12" r="3" />
-                            </svg>
-                          </span>
-                        )}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          ))}
-
-          {page.interactiveHint && (
-            <div className="book3d-cert-hint">
-              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="16" x2="12" y2="12" />
-                <line x1="12" y1="8" x2="12.01" y2="8" />
-              </svg>
-              <span>{page.interactiveHint}</span>
-            </div>
-          )}
+      {/* All Verified Badges in One Page (Cute Responsive Floating Grid) */}
+      {page.badges && (
+        <div className="book3d-badges-showcase">
+          <div className="book3d-badges-grid-cute">
+            {page.badges.map((b, idx) => (
+              <a
+                key={b.id}
+                href={b.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`book3d-badge-cute-btn book3d-badge-cute-btn--pos-${idx % 4}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                title={`Open ${b.name}`}
+                aria-label={`Open certificate for ${b.name}`}
+              >
+                <div className="book3d-badge-cute-img-wrap">
+                  <img
+                    src={b.badgeImg}
+                    alt={`${b.name} Badge`}
+                    className="book3d-badge-cute-img"
+                  />
+                </div>
+                <span className="book3d-badge-cute-tooltip">
+                  {b.shortName || b.name} ↗
+                </span>
+              </a>
+            ))}
+          </div>
         </div>
       )}
 
@@ -490,267 +412,12 @@ function PageInner({
   );
 }
 
-/**
- * Interactive Certificate Lightbox Modal
- * Displays certificate images (e.g. Cisco, Oracle) or structured credential cards with full navigation
- */
-function CertificateViewerModal({
-  cert,
-  onClose,
-  onSelectCert,
-}: {
-  cert: CertCredential;
-  onClose: () => void;
-  onSelectCert: (cert: CertCredential) => void;
-}) {
-  const [isZoomed, setIsZoomed] = useState<boolean>(false);
-  const currentIndex = CERTIFICATIONS.findIndex((c) => c.id === cert.id);
-
-  const handleNextCert = () => {
-    const nextIdx = (currentIndex + 1) % CERTIFICATIONS.length;
-    onSelectCert(CERTIFICATIONS[nextIdx]);
-    setIsZoomed(false);
-  };
-
-  const handlePrevCert = () => {
-    const prevIdx = (currentIndex - 1 + CERTIFICATIONS.length) % CERTIFICATIONS.length;
-    onSelectCert(CERTIFICATIONS[prevIdx]);
-    setIsZoomed(false);
-  };
-
-  useEffect(() => {
-    const handleModalKey = (e: globalThis.KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      } else if (e.key === "ArrowRight") {
-        handleNextCert();
-      } else if (e.key === "ArrowLeft") {
-        handlePrevCert();
-      }
-    };
-    window.addEventListener("keydown", handleModalKey);
-    return () => window.removeEventListener("keydown", handleModalKey);
-  }, [currentIndex]);
-
-  return (
-    <div
-      className="cert-modal-overlay"
-      role="dialog"
-      aria-modal="true"
-      aria-label={`Certificate: ${cert.name}`}
-      onClick={onClose}
-    >
-      <div className="cert-modal-backdrop" aria-hidden="true" />
-
-      <div
-        className={`cert-modal-card ${isZoomed ? "cert-modal-card--zoomed" : ""}`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Top bar header */}
-        <header className="cert-modal-header">
-          <div className="cert-modal-badge-group">
-            <span className="cert-modal-category">{cert.category}</span>
-            {cert.image && (
-              <span className="cert-modal-verified-pill">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                Official Certificate
-              </span>
-            )}
-          </div>
-
-          <div className="cert-modal-actions">
-            {cert.image && (
-              <button
-                type="button"
-                className="cert-modal-btn cert-modal-btn--zoom"
-                onClick={() => setIsZoomed(!isZoomed)}
-                title={isZoomed ? "Zoom out" : "Zoom in"}
-                aria-label={isZoomed ? "Zoom out" : "Zoom in"}
-              >
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2">
-                  {isZoomed ? (
-                    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
-                  ) : (
-                    <path d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35M11 8v6M8 11h6" />
-                  )}
-                </svg>
-              </button>
-            )}
-
-            <button
-              type="button"
-              className="cert-modal-btn cert-modal-btn--close"
-              onClick={onClose}
-              title="Close viewer (Esc)"
-              aria-label="Close viewer (Esc)"
-            >
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.4">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-              <span className="cert-modal-esc">ESC</span>
-            </button>
-          </div>
-        </header>
-
-        {/* Certificate Display Area */}
-        <div className="cert-modal-display-wrap">
-          {/* Navigation arrow left */}
-          <button
-            type="button"
-            className="cert-modal-nav-btn cert-modal-nav-btn--prev"
-            onClick={handlePrevCert}
-            title="Previous Certificate (Left Arrow)"
-            aria-label="Previous Certificate"
-          >
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.4">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-
-          {/* Certificate Main Visual */}
-          <div className="cert-modal-body">
-            {cert.image ? (
-              <div
-                className={`cert-modal-image-shell ${isZoomed ? "cert-modal-image-shell--zoomed" : ""}`}
-                onClick={() => setIsZoomed(!isZoomed)}
-                title="Click to toggle zoom"
-              >
-                <img
-                  src={cert.image}
-                  alt={`${cert.name} Certificate`}
-                  className="cert-modal-image"
-                />
-              </div>
-            ) : (
-              <div className="cert-modal-placeholder-card">
-                <div className="cert-placeholder-seal">
-                  <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.6">
-                    <circle cx="12" cy="8" r="7" />
-                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
-                  </svg>
-                </div>
-                <span className="cert-placeholder-org">{cert.issuer}</span>
-                <h3 className="cert-placeholder-title">{cert.name}</h3>
-                <p className="cert-placeholder-recipient">
-                  Awarded to <strong>{cert.recipient || "Lescy G. Caadlawon"}</strong>
-                </p>
-                <div className="cert-placeholder-badge-notice">
-                  <span className="cert-placeholder-dot" />
-                  <span>Certificate Image upload in progress — Verified Credential</span>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Navigation arrow right */}
-          <button
-            type="button"
-            className="cert-modal-nav-btn cert-modal-nav-btn--next"
-            onClick={handleNextCert}
-            title="Next Certificate (Right Arrow)"
-            aria-label="Next Certificate"
-          >
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2.4">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Certificate Metadata Footer */}
-        <footer className="cert-modal-meta">
-          <div className="cert-modal-meta__main">
-            <div className="cert-modal-meta__head">
-              <h3 className="cert-modal-meta__title">{cert.name}</h3>
-              <span className="cert-modal-meta__issuer">
-                {cert.issuer} {cert.issueDate ? `• Issued ${cert.issueDate}` : ""}
-              </span>
-            </div>
-
-            {cert.description && (
-              <p className="cert-modal-meta__desc">{cert.description}</p>
-            )}
-
-            {cert.skills && cert.skills.length > 0 && (
-              <div className="cert-modal-skills">
-                <span className="cert-modal-skills__label">Verified Skills:</span>
-                <div className="cert-modal-skills__pills">
-                  {cert.skills.map((skill, sIdx) => (
-                    <span key={sIdx} className="cert-modal-skill-tag">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {cert.credentialId && (
-            <div className="cert-modal-meta__id-badge">
-              <span className="cert-modal-id-label">Credential ID</span>
-              <code className="cert-modal-id-val">{cert.credentialId}</code>
-            </div>
-          )}
-        </footer>
-
-        {/* Quick Certificate Switcher Strip */}
-        <div className="cert-modal-strip">
-          <div className="cert-modal-strip__inner">
-            {CERTIFICATIONS.map((c, idx) => {
-              const isSelected = c.id === cert.id;
-              const hasImg = Boolean(c.image);
-
-              return (
-                <button
-                  key={c.id}
-                  type="button"
-                  className={`cert-modal-thumb-btn ${isSelected ? "cert-modal-thumb-btn--active" : ""}`}
-                  onClick={() => {
-                    onSelectCert(c);
-                    setIsZoomed(false);
-                  }}
-                  title={c.name}
-                >
-                  <span className="cert-thumb-index">{idx + 1}</span>
-                  <span className="cert-thumb-label">{c.shortName || c.name}</span>
-                  {hasImg && <span className="cert-thumb-img-dot" title="Has image" />}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function Book3D() {
-  // State: 0 = Closed (Front Cover), 1..spreads.length = Open Spreads, spreads.length + 1 = Closed (Back Cover)
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isTurning, setIsTurning] = useState<boolean>(false);
   const [isMaximized, setIsMaximized] = useState<boolean>(false);
-  const [selectedCert, setSelectedCert] = useState<CertCredential | null>(null);
 
   const bookRef = useRef<HTMLDivElement>(null);
-
-  const handleOpenCert = (identifier: string) => {
-    const cert = findCert(identifier);
-    if (cert) {
-      setSelectedCert(cert);
-    } else {
-      // Fallback for custom entries
-      setSelectedCert({
-        id: identifier.toLowerCase().replace(/\s+/g, "-"),
-        name: identifier,
-        issuer: "Accredited Organization",
-        category: "Industry Credential",
-        recipient: "Lescy G. Caadlawon",
-        description: "Official credential details being indexed.",
-      });
-    }
-  };
 
   const handleNext = () => {
     if (isTurning) return;
@@ -759,7 +426,6 @@ export default function Book3D() {
       setCurrentStep((prev) => prev + 1);
       setTimeout(() => setIsTurning(false), 600);
     } else {
-      // Loop back to cover
       setIsTurning(true);
       setCurrentStep(0);
       setTimeout(() => setIsTurning(false), 600);
@@ -776,8 +442,6 @@ export default function Book3D() {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (selectedCert) return; // Don't handle book flips when cert modal is open
-
     if (e.key === "ArrowRight" || e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       handleNext();
@@ -787,19 +451,14 @@ export default function Book3D() {
     }
   };
 
-  // Lock body scroll and listen for ESC key when maximized or when cert modal is open
   useEffect(() => {
-    if (isMaximized || selectedCert) {
+    if (isMaximized) {
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
 
       const handleGlobalEsc = (e: globalThis.KeyboardEvent) => {
         if (e.key === "Escape") {
-          if (selectedCert) {
-            setSelectedCert(null);
-          } else if (isMaximized) {
-            setIsMaximized(false);
-          }
+          setIsMaximized(false);
         }
       };
 
@@ -809,11 +468,10 @@ export default function Book3D() {
         window.removeEventListener("keydown", handleGlobalEsc);
       };
     }
-  }, [isMaximized, selectedCert, currentStep, isTurning]);
+  }, [isMaximized, currentStep, isTurning]);
 
   useEffect(() => {
     const handleGlobalKey = (e: globalThis.KeyboardEvent) => {
-      if (selectedCert) return;
       if (!isMaximized && bookRef.current && bookRef.current.contains(document.activeElement)) {
         if (e.key === "ArrowRight") handleNext();
         if (e.key === "ArrowLeft") handlePrev();
@@ -821,29 +479,26 @@ export default function Book3D() {
     };
     window.addEventListener("keydown", handleGlobalKey);
     return () => window.removeEventListener("keydown", handleGlobalKey);
-  }, [currentStep, isTurning, isMaximized, selectedCert]);
+  }, [currentStep, isTurning, isMaximized]);
 
   const isOpen = currentStep >= 1 && currentStep <= spreads.length;
   const isBackCover = currentStep > spreads.length;
   const activeSpread = isOpen ? spreads[currentStep - 1] : spreads[0];
 
-  // Helper to render the book stage (reused in both standard and maximized views)
   const renderBookStage = (maximizedMode = false) => {
     return (
       <div
         className={`book3d-stage ${maximizedMode ? "book3d-stage--maximized" : ""}`}
       >
-        {/* CASE 1: FRONT COVER (Step 0) */}
+        {/* CASE 1: FRONT COVER */}
         {currentStep === 0 && (
           <div
             className="book3d-cover book3d-cover--front"
             onClick={handleNext}
             title="Click to open the book"
           >
-            {/* Book Spine Texture */}
             <div className="book3d-spine-edge" aria-hidden="true" />
 
-            {/* Front Cover Artwork */}
             <div className="book3d-cover__content">
               <div className="book3d-cover__header-row">
                 <h3 className="book3d-cover__title">
@@ -885,21 +540,19 @@ export default function Book3D() {
               </div>
             </div>
 
-            {/* Layered 3D Page Edge Stack (Right Edge) */}
             <div className="book3d-page-edges" aria-hidden="true">
               <span /><span /><span /><span />
             </div>
           </div>
         )}
 
-        {/* CASE 2: OPEN 2-PAGE SPREAD (Steps 1..N) */}
+        {/* CASE 2: OPEN 2-PAGE SPREAD */}
         {isOpen && activeSpread && (
           <div
             className={`book3d-spread ${maximizedMode ? "book3d-spread--maximized" : ""}`}
             role="group"
             aria-label={`Spread ${currentStep} of ${spreads.length}`}
           >
-            {/* Left Page (Click to go to previous spread) */}
             <div
               className={`book3d-page book3d-page--left ${maximizedMode ? "book3d-page--maximized" : ""}`}
               onClick={handlePrev}
@@ -908,7 +561,6 @@ export default function Book3D() {
               <PageInner
                 page={activeSpread.leftPage}
                 pageNumber={currentStep * 2 - 1}
-                onCertClick={handleOpenCert}
               />
               <div
                 className="book3d-page__spine-gutter book3d-page__spine-gutter--left"
@@ -916,10 +568,8 @@ export default function Book3D() {
               />
             </div>
 
-            {/* Book Center Binding Crease */}
             <div className="book3d-center-binding" aria-hidden="true" />
 
-            {/* Right Page (Click to turn to next spread) */}
             <div
               className={`book3d-page book3d-page--right ${maximizedMode ? "book3d-page--maximized" : ""}`}
               onClick={handleNext}
@@ -928,7 +578,6 @@ export default function Book3D() {
               <PageInner
                 page={activeSpread.rightPage}
                 pageNumber={currentStep * 2}
-                onCertClick={handleOpenCert}
               />
               <div
                 className="book3d-page__spine-gutter book3d-page__spine-gutter--right"
@@ -938,7 +587,7 @@ export default function Book3D() {
           </div>
         )}
 
-        {/* CASE 3: BACK COVER (Step N+1) */}
+        {/* CASE 3: BACK COVER */}
         {isBackCover && (
           <div
             className="book3d-cover book3d-cover--back"
@@ -963,7 +612,6 @@ export default function Book3D() {
 
   return (
     <>
-      {/* Standard Section Book Container */}
       <div
         ref={bookRef}
         className={`book3d-wrapper ${isOpen ? "book3d-wrapper--open" : ""} ${
@@ -974,19 +622,15 @@ export default function Book3D() {
         role="region"
         aria-label="Interactive 3D Flipping Book of Education and Honors"
       >
-        {/* 3D Realistic Shadow on Floor */}
         <div
           className={`book3d-shadow ${isTurning ? "book3d-shadow--turning" : ""}`}
           aria-hidden="true"
         />
 
-        {/* Main 3D Book Stage */}
         {renderBookStage(false)}
       </div>
 
-      {/* =========================================================================
-          MAXIMIZED ENLARGED FLOATING BOOK OVERLAY
-          ========================================================================= */}
+      {/* Maximized Overlay */}
       {isMaximized && (
         <div
           className="book3d-modal-overlay"
@@ -995,17 +639,14 @@ export default function Book3D() {
           aria-label="Maximized Journey Book"
           onClick={() => setIsMaximized(false)}
         >
-          {/* Atmospheric Backdrop Blur */}
           <div className="book3d-modal-backdrop" aria-hidden="true" />
 
-          {/* Floating Stage Container with 3D Depth & Levitation */}
           <div
             className={`book3d-maximized-container ${
               isOpen ? "book3d-maximized-container--open" : ""
             } ${isBackCover ? "book3d-maximized-container--back" : ""}`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Top Bar Header with Minimize / Close Button */}
             <div className="book3d-maximized-header">
               <button
                 type="button"
@@ -1033,11 +674,9 @@ export default function Book3D() {
               </button>
             </div>
 
-            {/* The Levitating Enlarged Floating Book Wrapper */}
             <div className="book3d-floating-book-shell">
               {renderBookStage(true)}
 
-              {/* Atmospheric Floor Levitation Shadow */}
               <div
                 className={`book3d-modal-shadow ${
                   isOpen ? "book3d-modal-shadow--open" : ""
@@ -1047,17 +686,6 @@ export default function Book3D() {
             </div>
           </div>
         </div>
-      )}
-
-      {/* =========================================================================
-          INTERACTIVE CERTIFICATE IMAGE LIGHTBOX MODAL
-          ========================================================================= */}
-      {selectedCert && (
-        <CertificateViewerModal
-          cert={selectedCert}
-          onClose={() => setSelectedCert(null)}
-          onSelectCert={(c) => setSelectedCert(c)}
-        />
       )}
     </>
   );
