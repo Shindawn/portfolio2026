@@ -172,7 +172,7 @@ export default function IntegrationNetwork() {
             ) : (
               <span className="integration-network__badge">
                 <span className="integration-network__badge-dot" />
-                <span>Connected Tools & Workflow</span>
+                <span>Software Development Connected Tools & Workflow</span>
               </span>
             )}
           </div>
