@@ -17,22 +17,16 @@ const NOTIFICATION_RECIPIENT = "lescycaadlawon.dev@gmail.com";
 
 /**
  * Global helper to trigger the resume gate from anywhere in the app.
- * If already unlocked, performs the download/preview immediately.
+ * Always prompts the email exchange gate modal.
  */
 export function requestResumeAccess(mode: ResumeGateMode = "download"): boolean {
-  const isUnlocked = typeof window !== "undefined" && localStorage.getItem(STORAGE_UNLOCKED_KEY) === "true";
-
-  if (isUnlocked) {
-    executeResumeAction(mode);
-    return true;
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(
+      new CustomEvent<OpenGateEventDetail>("lescy:open-resume-gate", {
+        detail: { mode },
+      })
+    );
   }
-
-  // Dispatch custom event to open the gate modal
-  window.dispatchEvent(
-    new CustomEvent<OpenGateEventDetail>("lescy:open-resume-gate", {
-      detail: { mode },
-    })
-  );
   return false;
 }
 
@@ -64,6 +58,13 @@ export default function ResumeGateModal() {
 
   // Listen for global resume gate open requests
   useEffect(() => {
+    // Clear any past unlock bypass so the exchange modal always appears
+    try {
+      localStorage.removeItem(STORAGE_UNLOCKED_KEY);
+    } catch {
+      // ignore
+    }
+
     const handleOpen = (event: Event) => {
       const customEvent = event as CustomEvent<OpenGateEventDetail>;
       const requestedMode = customEvent.detail?.mode || "download";
@@ -71,6 +72,12 @@ export default function ResumeGateModal() {
       setErrorMessage("");
       setIsSuccess(false);
       setHasInteracted(false);
+      try {
+        const saved = localStorage.getItem(STORAGE_EMAIL_KEY);
+        if (saved) setEmail(saved);
+      } catch {
+        // ignore
+      }
       setIsOpen(true);
     };
 
@@ -161,7 +168,6 @@ export default function ResumeGateModal() {
         const existing = JSON.parse(localStorage.getItem(STORAGE_LEADS_KEY) || "[]");
         existing.push(leadEntry);
         localStorage.setItem(STORAGE_LEADS_KEY, JSON.stringify(existing));
-        localStorage.setItem(STORAGE_UNLOCKED_KEY, "true");
         localStorage.setItem(STORAGE_EMAIL_KEY, normalizedEmail);
       } catch {
         // Safe fallback for restricted storage
