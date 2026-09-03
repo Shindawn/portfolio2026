@@ -220,26 +220,12 @@ const spreads: BookSpread[] = [
   {
     id: "spread-3",
     leftPage: {
-      tag: "Chapter 03 • Continuous Learning",
-      title: "Specializations & Mentorship",
-      subtitle: "Workshops & Guild Mentorship",
-      description:
-        "Active collegiate student leader facilitating coding bootcamps, technical workshops, and open-source software initiatives.",
-      stats: [
-        { label: "Community", value: "IT Guild & Society Officer" },
-        { label: "Focus Areas", value: "Full-Stack, AI & Security" },
-      ],
-      pills: [
-        "Google",
-        "ASEAN",
-        "Oracle",
-        "Cisco",
-        "IBM AI",
-        "DataCamp",
-        "HackerRank",
-        "DICT CAR",
-        "Microsoft Learn",
-      ],
+      tag: "Vol. 02 • Merit & Grants",
+      quote:
+        "“Opportunity unlocks when dedication meets academic consistency — fueling research, innovation, and community leadership.”",
+      image:
+        "https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0?auto=format&fit=crop&w=700&q=85",
+      caption: "Tertiary scholarship & institutional research grant.",
     },
     rightPage: {
       tag: "Chapter 03 • Merit Grants",
