@@ -94,13 +94,6 @@ const ALL_BADGES: BookBadgeItem[] = [
     url: "/certs/cisco-cybersecurity.jpg",
   },
   {
-    id: "asean-ai-readiness",
-    name: "ASEAN Foundation: AI Career Readiness (LinkedIn)",
-    shortName: "ASEAN AI",
-    badgeImg: "/certs/badges/asean-foundation-badge.png",
-    url: "/certs/asean-ai-readiness.png",
-  },
-  {
     id: "cisco-intro-cyber",
     name: "Cisco Introduction to Cybersecurity (Credly)",
     shortName: "Security",
