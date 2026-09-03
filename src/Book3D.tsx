@@ -204,13 +204,8 @@ const spreads: BookSpread[] = [
         { label: "Accreditations", value: "16+ Verified Credentials" },
       ],
       pills: [
-        "Oracle Cloud AI",
-        "CISCO Cyber",
         "Google",
         "ASEAN",
-        "IBM AI",
-        "DataCamp LLMs",
-        "HackerRank SQL 5★",
         "DICT DevOps",
       ],
     },
