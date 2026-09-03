@@ -111,33 +111,16 @@ export function Navigation() {
           </ul>
 
           <div className="nav-overlay__footer">
-            <div className="nav-overlay__resume-group">
-              <button
-                type="button"
-                className="nav-overlay__sublink nav-overlay__sublink--btn"
-                onClick={() => {
-                  closeMenu();
-                  requestResumeAccess("preview");
-                }}
-              >
-                <span>Preview Resume ↗</span>
-              </button>
-              <button
-                type="button"
-                className="nav-overlay__sublink nav-overlay__sublink--btn"
-                onClick={() => {
-                  closeMenu();
-                  requestResumeAccess("download");
-                }}
-              >
-                <span>Download Resume ↓</span>
-              </button>
-            </div>
-            <div className="nav-overlay__extra-links">
-              <a href="/privacy" className="nav-overlay__sublink" onClick={closeMenu}>
-                <span>Privacy Policy</span>
-              </a>
-            </div>
+            <button
+              type="button"
+              className="nav-overlay__sublink nav-overlay__sublink--btn"
+              onClick={() => {
+                closeMenu();
+                requestResumeAccess("download");
+              }}
+            >
+              <span>Download Resume ↓</span>
+            </button>
             <p className="nav-overlay__copyright">©2026 Lescy Gdawn · Mandaluyong, Philippines</p>
           </div>
         </div>
@@ -509,11 +492,7 @@ export function Footer() {
           </p>
         </div>
         <div className="footer__meta">
-          <div className="footer__legal-group">
-            <p>©2026 Lescy G. Caadlawon</p>
-            <span className="footer__legal-dot" aria-hidden="true">·</span>
-            <a href="/privacy" className="footer__privacy-link">Privacy Policy</a>
-          </div>
+          <p>©2026 Lescy G. Caadlawon</p>
           <nav className="footer__socials" aria-label="Social links">
             <a href="https://www.linkedin.com/in/lescycaadlawon" target="_blank" rel="noreferrer">LinkedIn</a>
             <a href="https://github.com/Shindawn" target="_blank" rel="noreferrer">GitHub</a>

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { validateWorkingEmail } from "./utils/emailValidator";
-import PrivacyPolicyModal from "./PrivacyPolicyModal";
 
 export type ResumeGateMode = "download" | "preview";
 
@@ -56,7 +55,6 @@ export default function ResumeGateModal() {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [showPrivacy, setShowPrivacy] = useState(false);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -262,7 +260,7 @@ export default function ResumeGateModal() {
               </div>
 
               <h2 id="resume-gate-title" className="resume-gate-modal__title">
-                {mode === "preview" ? "Preview Lescy's Resume" : "Download Lescy's Resume"}
+                Download Lescy's Resume
               </h2>
 
               <p id="resume-gate-desc" className="resume-gate-modal__desc">
@@ -312,23 +310,10 @@ export default function ResumeGateModal() {
                     <span>
                       {isSubmitting
                         ? "Verifying & Unlocking..."
-                        : mode === "preview"
-                        ? "Verify & Preview Resume ↗"
                         : "Verify & Download Resume ↓"}
                     </span>
                   </button>
                 </div>
-
-                <p className="resume-gate-privacy-note">
-                  <span>🔒 By continuing, you agree that your email is recorded by Lescy for professional inquiries and recruitment. </span>
-                  <button
-                    type="button"
-                    className="privacy-modal-trigger-btn"
-                    onClick={() => setShowPrivacy(true)}
-                  >
-                    Read Privacy Policy
-                  </button>
-                </p>
               </form>
             </div>
           ) : (
@@ -338,9 +323,7 @@ export default function ResumeGateModal() {
               </div>
               <h3 className="resume-gate-success-title">Access Granted</h3>
               <p className="resume-gate-success-desc">
-                {mode === "preview"
-                  ? "Opening Lescy's CV in a new tab..."
-                  : "Your download is starting now. Thank you for your interest!"}
+                Your download is starting now. Thank you for your interest!
               </p>
               <div className="resume-gate-success-bar">
                 <div className="resume-gate-success-progress" />
@@ -349,8 +332,6 @@ export default function ResumeGateModal() {
           )}
         </div>
       </dialog>
-
-      <PrivacyPolicyModal isOpen={showPrivacy} onClose={() => setShowPrivacy(false)} />
     </>
   );
 }
