@@ -6,11 +6,13 @@ export interface BookBadgeItem {
   shortName?: string;
   badgeImg: string;
   url: string;
+  skillsCount?: number;
 }
 
 export interface BookBadgeSummary {
-  badges: string;
-  skills: string;
+  badges?: string;
+  skills?: string;
+  dynamic?: boolean;
 }
 
 export interface BookPageContent {
@@ -64,6 +66,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "Oracle AI",
     badgeImg: "/certs/badges/oracle-badge.png",
     url: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=84CF78EC86445F84F83A7A554B724E21FB07D74E6411CEFB48A6E412BE55BC7E",
+    skillsCount: 6,
   },
   {
     id: "google-coursera-support",
@@ -71,6 +74,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "Google Tech",
     badgeImg: "/certs/badges/google-coursera-badge.png",
     url: "https://www.coursera.org/account/accomplishments/verify/Q4AA46Z0D7I4",
+    skillsCount: 7,
   },
   {
     id: "ibm-ai-fundamentals",
@@ -78,6 +82,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "IBM AI",
     badgeImg: "/certs/badges/ibm-ai-fundamentals.png",
     url: "https://www.credly.com/badges/534366e6-3fe5-4e62-abc7-72fb15611785/public_url",
+    skillsCount: 6,
   },
   {
     id: "cisco-threat-management",
@@ -85,6 +90,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "Threat Mgmt",
     badgeImg: "/certs/badges/cisco-threat-management.png",
     url: "https://www.credly.com/badges/38cc93ce-fbce-457e-a2db-7490aa6a8d12/public_url",
+    skillsCount: 7,
   },
   {
     id: "cisco-cybersecurity",
@@ -92,6 +98,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "Cisco Cyber",
     badgeImg: "/certs/badges/cisco-badge.png",
     url: "/certs/cisco-cybersecurity.jpg",
+    skillsCount: 6,
   },
   {
     id: "cisco-intro-cyber",
@@ -99,6 +106,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "Security",
     badgeImg: "/certs/badges/cisco-intro-cyber.png",
     url: "https://www.credly.com/badges/d0df2177-dda6-45bd-a825-99b28483e872/public_url",
+    skillsCount: 5,
   },
   {
     id: "cisco-networking-basics",
@@ -106,6 +114,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "Networking",
     badgeImg: "/certs/badges/cisco-networking-basics.png",
     url: "https://www.credly.com/badges/70efa984-ef48-40df-9585-c8c15f87b1f8/public_url",
+    skillsCount: 6,
   },
   {
     id: "datacamp-llm",
@@ -113,6 +122,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "DataCamp LLMs",
     badgeImg: "/certs/badges/datacamp-llm-badge.png",
     url: "https://www.datacamp.com/completed/statement-of-accomplishment/course/7fb144e834b8b7a624cbdac1517dd6131ebc3220",
+    skillsCount: 5,
   },
   {
     id: "datacamp-python",
@@ -120,6 +130,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "Python",
     badgeImg: "/certs/badges/datacamp-llm-badge.png",
     url: "https://www.datacamp.com/completed/statement-of-accomplishment/course/5abbb908ff646f2f8c87e7edd31db67fb8ad5731",
+    skillsCount: 5,
   },
   {
     id: "datacamp-git",
@@ -127,6 +138,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "Git",
     badgeImg: "/certs/badges/datacamp-llm-badge.png",
     url: "https://www.datacamp.com/completed/statement-of-accomplishment/course/71563862d53f5c3733bd867e7598760a74bad99c",
+    skillsCount: 4,
   },
   {
     id: "datacamp-r",
@@ -134,6 +146,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "R Lang",
     badgeImg: "/certs/badges/datacamp-llm-badge.png",
     url: "https://www.datacamp.com/completed/statement-of-accomplishment/course/f74da122c50bb715af38e632d34967ed90ba0cb0",
+    skillsCount: 4,
   },
   {
     id: "datacamp-shell",
@@ -141,6 +154,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "Shell",
     badgeImg: "/certs/badges/datacamp-llm-badge.png",
     url: "https://www.datacamp.com/completed/statement-of-accomplishment/course/331df5547d466a8ce3040a1817b252cf92c800f9",
+    skillsCount: 4,
   },
   {
     id: "hackerrank-sql-basic",
@@ -148,6 +162,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "SQL 5★",
     badgeImg: "/certs/badges/hackerrank-sql-badge.png",
     url: "https://www.hackerrank.com/certificates/69cfd4dd5b46",
+    skillsCount: 5,
   },
   {
     id: "dict-car-devops",
@@ -155,6 +170,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "DICT DevOps",
     badgeImg: "/certs/badges/dict-badge.png",
     url: "/certs/dict-car-devops.png",
+    skillsCount: 5,
   },
   {
     id: "microsoft-learn",
@@ -162,6 +178,7 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "MS Learn",
     badgeImg: "/certs/badges/microsoft-learn.png",
     url: "https://learn.microsoft.com/en-us/users/lecgdawnshinee-6332/achievements/7k98s4gz?ref=https%3A%2F%2Fwww.linkedin.com%2F",
+    skillsCount: 5,
   },
 ];
 
@@ -197,7 +214,7 @@ const spreads: BookSpread[] = [
         "Awarded continuous Dean’s Honor Roll recognition throughout 2022–2026, complemented by verified industry credentials across Cloud, Security, AI, and Systems Engineering.",
       stats: [
         { label: "Honors", value: "Dean’s Lister (2022–2026)" },
-        { label: "Accreditations", value: "16+ Verified Credentials" },
+        { label: "Accreditations", value: "15+ Verified Credentials" },
       ],
       pills: [
         "Google",
@@ -211,8 +228,7 @@ const spreads: BookSpread[] = [
       tag: "Chapter 02 • Verified Badges",
       title: "Accredited Badges & Certs",
       badgeSummary: {
-        badges: "7 Badges",
-        skills: "51 Skills",
+        dynamic: true,
       },
       badges: ALL_BADGES,
     },
@@ -256,6 +272,19 @@ function PageInner({
   page: BookPageContent;
   pageNumber: number;
 }) {
+  // Real-time dynamic calculation of verified badges and accredited skills
+  const badgesList = page.badges || (page.badgeSummary ? ALL_BADGES : []);
+  const liveBadgeCount = badgesList.length;
+  const liveSkillsCount = badgesList.reduce(
+    (total, b) => total + (b.skillsCount || 5),
+    0
+  );
+
+  const displayBadges =
+    page.badgeSummary?.badges || `${liveBadgeCount} Badges`;
+  const displaySkills =
+    page.badgeSummary?.skills || `${liveSkillsCount} Skills`;
+
   return (
     <div className="book3d-page__inner">
       <div className="book3d-page__header">
@@ -276,7 +305,7 @@ function PageInner({
                     <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
                   </svg>
                 </span>
-                <span className="book3d-badge-summary-val">{page.badgeSummary.badges}</span>
+                <span className="book3d-badge-summary-val">{displayBadges}</span>
               </span>
               <span className="book3d-badge-summary-sep" aria-hidden="true">•</span>
               <span className="book3d-badge-summary-item book3d-badge-summary-item--skills">
@@ -285,7 +314,7 @@ function PageInner({
                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
                   </svg>
                 </span>
-                <span className="book3d-badge-summary-val">{page.badgeSummary.skills}</span>
+                <span className="book3d-badge-summary-val">{displaySkills}</span>
               </span>
             </div>
           ) : (
