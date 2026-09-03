@@ -47,8 +47,11 @@ const CERT_URL_MAP: Record<string, string> = {
   "dti-car": "/certs/dict-car-devops.png",
   "networking basics": "https://www.credly.com/badges/70efa984-ef48-40df-9585-c8c15f87b1f8/public_url",
   "microsoft learn": "https://learn.microsoft.com/en-us/users/lecgdawnshinee-6332/achievements/7k98s4gz?ref=https%3A%2F%2Fwww.linkedin.com%2F",
-  "google": "/certs/gdg-sonder-vietnam.jpg",
+  "google": "https://www.coursera.org/account/accomplishments/verify/Q4AA46Z0D7I4",
   "asean": "/certs/asean-ai-readiness.png",
+  "figma": "/certs/frontend-masters-figma.png",
+  "dict ms tools": "/certs/dict-ms-tools.png",
+  "ms tools": "/certs/dict-ms-tools.png",
   "ibm ai": "https://www.credly.com/badges/534366e6-3fe5-4e62-abc7-72fb15611785/public_url",
   "cyber threat management": "https://www.credly.com/badges/38cc93ce-fbce-457e-a2db-7490aa6a8d12/public_url",
   "github education": "https://education.github.com",
@@ -61,6 +64,13 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "Oracle AI",
     badgeImg: "/certs/badges/oracle-badge.png",
     url: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=84CF78EC86445F84F83A7A554B724E21FB07D74E6411CEFB48A6E412BE55BC7E",
+  },
+  {
+    id: "google-coursera-support",
+    name: "Google: Technical Support Fundamentals (Coursera)",
+    shortName: "Google Tech",
+    badgeImg: "/certs/badges/google-coursera-badge.png",
+    url: "https://www.coursera.org/account/accomplishments/verify/Q4AA46Z0D7I4",
   },
   {
     id: "ibm-ai-fundamentals",
@@ -82,13 +92,6 @@ const ALL_BADGES: BookBadgeItem[] = [
     shortName: "Cisco Cyber",
     badgeImg: "/certs/badges/cisco-badge.png",
     url: "/certs/cisco-cybersecurity.jpg",
-  },
-  {
-    id: "google-gdg-sonder",
-    name: "Google Developer Groups SONDER 2025: Dev Tour Vietnam",
-    shortName: "Google GDG",
-    badgeImg: "/certs/badges/google-gdg-badge.png",
-    url: "/certs/gdg-sonder-vietnam.jpg",
   },
   {
     id: "asean-ai-readiness",
@@ -206,6 +209,8 @@ const spreads: BookSpread[] = [
       pills: [
         "Google",
         "ASEAN",
+        "Figma",
+        "DICT MS Tools",
         "DICT DevOps",
       ],
     },
@@ -566,7 +571,9 @@ export default function Book3D() {
             <div className="book3d-center-binding" aria-hidden="true" />
 
             <div
-              className={`book3d-page book3d-page--right ${maximizedMode ? "book3d-page--maximized" : ""}`}
+              className={`book3d-page book3d-page--right ${maximizedMode ? "book3d-page--right--turning" : ""} ${
+                maximizedMode ? "book3d-page--maximized" : ""
+              }`}
               onClick={handleNext}
               title="Click right page to turn next"
             >
