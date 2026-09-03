@@ -261,23 +261,75 @@ export function LatestWork() {
   return <section className="latest-work" id="work" aria-labelledby="work-title"><div className="latest-work__inner shell">
     <header className="latest-work__intro reveal-header"><h2 id="work-title">( Latest Work )</h2><p>A selection of systems I’ve shipped end to end — from a full-stack<br />LGU management platform to an AI-powered portfolio and AR UI design.</p></header>
     <div className="project-list" onPointerMove={movePreview} onPointerLeave={() => setActiveProject(null)}><div className="project-list__head" aria-hidden="true"><span>Index</span><span>Project</span><span>Category</span><span /></div>
-      {projects.map(([index, name, category, tag], projectIndex) => <a className="project-row" href="#contact" key={index} onPointerEnter={() => setActiveProject(projectIndex)} onFocus={() => setActiveProject(projectIndex)} onBlur={() => setActiveProject(null)}>
-        <span className="project-row__index">{index}</span><span className="project-row__name">{name}</span><span className="project-row__category">{category} <small>{tag}</small></span><span className="project-row__arrow" aria-hidden="true">↗</span>
-      </a>)}
-      {activeProject !== null && <span className="project-preview is-visible" aria-hidden="true" style={{ "--art": projects[activeProject][4], "--preview-x": `${previewPosition.x}px`, "--preview-y": `${previewPosition.y}px`, "--preview-offset-x": previewPosition.flip ? "calc(-100% - 1.5rem)" : "1.5rem" } as CSSProperties}>
-        <span
-          className="project-preview__image"
-          style={
-            projects[activeProject][6]
-              ? {
-                  backgroundImage: `url('${projects[activeProject][6]}')`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
+      {projects.map(([index, name, category, tag], projectIndex) => (
+        <a
+          className="project-row"
+          href="#contact"
+          key={index}
+          onPointerEnter={() => setActiveProject(projectIndex)}
+          onFocus={() => setActiveProject(projectIndex)}
+          onBlur={() => setActiveProject(null)}
+        >
+          <span className="project-row__index">{index}</span>
+          <span className="project-row__name">{name}</span>
+          <span className="project-row__category">
+            {category} <small>{tag}</small>
+          </span>
+          <span className="project-row__arrow" aria-hidden="true">
+            ↗
+          </span>
+        </a>
+      ))}
+      {activeProject !== null && (() => {
+        const project = projects[activeProject];
+
+        const rawVideo = (project as readonly unknown[])[7] as string | undefined || (typeof (project as readonly unknown[])[6] === "string" && ((project as readonly unknown[])[6] as string).endsWith(".mp4") ? (project as readonly unknown[])[6] as string : undefined);
+        const rawPoster = (project as readonly unknown[])[6] as string | undefined;
+        const posterUrl = typeof rawPoster === "string" && !rawPoster.endsWith(".mp4") ? rawPoster : undefined;
+
+        const isVideo = !!rawVideo;
+
+        return (
+          <span
+            className={`project-preview is-visible${isVideo ? " project-preview--video" : ""}`}
+            aria-hidden="true"
+            style={
+              {
+                "--art": project[4],
+                "--preview-x": `${previewPosition.x}px`,
+                "--preview-y": `${previewPosition.y}px`,
+                "--preview-offset-x": previewPosition.flip ? "calc(-100% - 1.5rem)" : "1.5rem",
+              } as CSSProperties
+            }
+          >
+            {rawVideo ? (
+              <video
+                key={rawVideo}
+                className="project-preview__video"
+                src={rawVideo}
+                poster={posterUrl}
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            ) : (
+              <span
+                className="project-preview__image"
+                style={
+                  posterUrl
+                    ? {
+                        backgroundImage: `url('${posterUrl}')`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }
+                    : undefined
                 }
-              : undefined
-          }
-        />
-      </span>}
+              />
+            )}
+          </span>
+        );
+      })()}
     </div>
   </div></section>;
 }

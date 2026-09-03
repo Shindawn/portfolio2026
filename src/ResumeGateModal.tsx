@@ -252,11 +252,7 @@ export default function ResumeGateModal() {
         aria-describedby="resume-gate-desc"
       >
         <div className="portfolio-dialog__surface resume-gate-modal__surface">
-          <header className="portfolio-dialog__header">
-            <div className="portfolio-dialog__badge">
-              <span className="badge-dot" />
-              <span>Verified Access</span>
-            </div>
+          <header className="portfolio-dialog__header portfolio-dialog__header--end">
             <button
               type="button"
               className="portfolio-dialog__close"
@@ -347,13 +343,14 @@ export default function ResumeGateModal() {
                 </div>
 
                 <p className="resume-gate-privacy-note">
-                  <span>🔒 By continuing, you agree that your email is recorded by Lescy for professional inquiries and recruitment.</span>{" "}
+                  <span>I respect your privacy</span>
+                  <span className="resume-gate-privacy-note__dot" aria-hidden="true">·</span>
                   <button
                     type="button"
                     className="privacy-modal-trigger-btn"
                     onClick={() => setShowPrivacy(true)}
                   >
-                    Read Privacy Policy
+                    Privacy Policy
                   </button>
                 </p>
               </form>

@@ -6,10 +6,6 @@ export default function PrivacyPage() {
       <Navigation />
       <main className="privacy-page shell">
         <header className="privacy-page__hero">
-          <div className="portfolio-dialog__badge" style={{ marginBottom: "1rem" }}>
-            <span className="badge-dot" />
-            <span>Transparency & Privacy</span>
-          </div>
           <h1 className="privacy-page__title">Privacy Policy</h1>
           <p className="privacy-page__subtitle">
             How your information is handled when you visit my portfolio and download my resume.

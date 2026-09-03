@@ -50,11 +50,7 @@ export default function PrivacyPolicyModal({ isOpen, onClose }: PrivacyPolicyMod
       aria-labelledby="privacy-title"
     >
       <div className="portfolio-dialog__surface privacy-modal__surface">
-        <header className="portfolio-dialog__header">
-          <div className="portfolio-dialog__badge">
-            <span className="badge-dot" />
-            <span>Transparency & Privacy</span>
-          </div>
+        <header className="portfolio-dialog__header portfolio-dialog__header--end">
           <button
             type="button"
             className="portfolio-dialog__close"

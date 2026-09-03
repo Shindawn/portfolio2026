@@ -2212,23 +2212,38 @@ a {
   animation: project-preview-in 220ms ease both;
 }
 
-.project-preview__image {
+.project-preview__image,
+.project-preview__video {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  filter: none;
+  transform: scale(1.04);
+  transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.project-preview__image {
   background-image: url("assets/project-covers.png");
   background-position: calc(var(--art) * 20%) center;
   background-repeat: no-repeat;
   background-size: 600% auto;
-  filter: none;
-  transform: scale(1.04);
-  transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .project-preview.is-visible {
   transform: translate3d(calc(var(--preview-x) + var(--preview-offset-x)), calc(var(--preview-y) - 50%), 0) scale(1) rotate(0deg);
 }
 
-.project-preview.is-visible .project-preview__image {
+.project-preview--video {
+  aspect-ratio: 16 / 9;
+  width: clamp(21rem, 36vw, 32rem);
+  background: #090e0b;
+}
+
+.project-preview.is-visible .project-preview__image,
+.project-preview.is-visible .project-preview__video {
   filter: none;
   transform: scale(1);
 }
@@ -2241,6 +2256,7 @@ a {
 @media (prefers-reduced-motion: reduce) {
   .project-preview,
   .project-preview__image,
+  .project-preview__video,
   .project-preview__content { transition-duration: 0.01ms; }
 }
 
@@ -6623,6 +6639,10 @@ a {
   margin-bottom: 1.4rem;
 }
 
+.portfolio-dialog__header--end {
+  justify-content: flex-end;
+}
+
 .portfolio-dialog__badge {
   display: inline-flex;
   align-items: center;
@@ -6838,13 +6858,19 @@ a {
 }
 
 .resume-gate-privacy-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
   margin: 1rem auto 0;
-  max-width: 28rem;
   font-size: 0.76rem;
-  line-height: 1.5;
   color: var(--muted);
-  text-align: center;
   letter-spacing: -0.01em;
+}
+
+.resume-gate-privacy-note__dot {
+  opacity: 0.45;
+  font-size: 0.7rem;
 }
 
 .privacy-modal-trigger-btn {

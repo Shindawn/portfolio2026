@@ -1,9 +1,9 @@
 export const projects = [
-  ["01", "LGU Water District System", "Web / Mobile App", "LGU", 0, "An end-to-end water district management system that streamlines customer records, billing, field operations, and service monitoring.", "/lgu-water-district-mockup.png"],
+  ["01", "LGU Water District System", "Web / Mobile App", "LGU", 0, "An end-to-end water district management system that streamlines customer records, billing, field operations, and service monitoring.", "/lguwater.mp4"],
   ["02", "HR Payroll", "Web App", "HRIS", 1, "A centralized HR and payroll platform for managing employee records, attendance, compensation, and accurate payroll processing."],
-  ["03", "ARIBA BATO", "Mobile App", "Tourism", 2, "An augmented-reality mobile experience that brings local stories, places, and cultural information to life through interactive content."],
+  ["03", "ARIBA BATO", "Mobile App", "Tourism", 2, "An augmented-reality mobile experience that brings local stories, places, and cultural information to life through interactive content.", "/aribabato.mp4"],
   ["04", "Igel Eng. Solutions", "Corporate Website", "Engineering", 3, "A professional company website presenting engineering services, technical capabilities, and completed projects with clarity and credibility."],
-  ["05", "CC Wedding", "Wedding Website", "Events", 4, "An elegant wedding website that brings the couple’s story, event details, guest information, and RSVP experience into one place.", "/cc-wedding-mockup.jpg"],
+  ["05", "CC Wedding", "Wedding Website", "Events", 4, "An elegant wedding website that brings the couple’s story, event details, guest information, and RSVP experience into one place.", "/ccwedding.mp4"],
 ] as const;
 
 export const covers = [
