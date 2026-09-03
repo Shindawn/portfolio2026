@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { validateWorkingEmail } from "./utils/emailValidator";
+import PrivacyPolicyModal from "./PrivacyPolicyModal";
 
 export type ResumeGateMode = "download" | "preview";
 
@@ -55,6 +56,7 @@ export default function ResumeGateModal() {
   const [hasInteracted, setHasInteracted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [showPrivacy, setShowPrivacy] = useState(false);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -314,6 +316,18 @@ export default function ResumeGateModal() {
                     </span>
                   </button>
                 </div>
+
+                <div className="resume-gate-privacy">
+                  <span>We respect your privacy</span>
+                  <span className="resume-gate-privacy__dot" aria-hidden="true">·</span>
+                  <button
+                    type="button"
+                    className="resume-gate-privacy__btn"
+                    onClick={() => setShowPrivacy(true)}
+                  >
+                    Privacy Policy
+                  </button>
+                </div>
               </form>
             </div>
           ) : (
@@ -332,6 +346,8 @@ export default function ResumeGateModal() {
           )}
         </div>
       </dialog>
+
+      <PrivacyPolicyModal isOpen={showPrivacy} onClose={() => setShowPrivacy(false)} />
     </>
   );
 }

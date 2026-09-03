@@ -6837,29 +6837,45 @@ a {
   cursor: not-allowed;
 }
 
-.resume-gate-privacy-note {
-  margin: 0;
-  font-size: 0.78rem;
-  line-height: 1.45;
+.resume-gate-privacy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.95rem;
+  font-size: 0.76rem;
   color: var(--muted);
-  text-align: center;
+  letter-spacing: -0.01em;
 }
 
-.privacy-modal-trigger-btn {
+.resume-gate-privacy__dot {
+  opacity: 0.45;
+  font-size: 0.7rem;
+}
+
+.resume-gate-privacy__btn {
   background: none;
   border: none;
   padding: 0;
-  margin-left: 0.25rem;
   font: inherit;
   font-size: inherit;
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  font-weight: 500;
+  color: var(--muted);
   cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--muted) 40%, transparent);
+  transition: color 160ms ease, text-decoration-color 160ms ease;
 }
 
-.privacy-modal-trigger-btn:hover {
-  color: var(--accent-bright);
+.resume-gate-privacy__btn:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+
+:root[data-theme="dark"] .resume-gate-privacy__btn:hover {
+  color: #fff;
+  text-decoration-color: #fff;
 }
 
 /* Success State in Gate Modal */
