@@ -13,6 +13,7 @@ const RESUME_FILENAME = "LescyGCaadlawon_CV.pdf";
 const STORAGE_UNLOCKED_KEY = "lescy_resume_unlocked";
 const STORAGE_EMAIL_KEY = "lescy_user_email";
 const STORAGE_LEADS_KEY = "lescy_captured_leads";
+const NOTIFICATION_RECIPIENT = "lescycaadlawon.dev@gmail.com";
 
 /**
  * Global helper to trigger the resume gate from anywhere in the app.
@@ -166,28 +167,50 @@ export default function ResumeGateModal() {
         // Safe fallback for restricted storage
       }
 
-      // 2. Transmit lead notice asynchronously
-      // Dispatches lead payload to Web3Forms / Formspree or endpoint
+      // 2. Transmit instant email notification to owner
       try {
-        void fetch("https://api.web3forms.com/submit", {
+        const now = new Date();
+        const formattedMonthDayTime = `${now.toLocaleDateString("en-US", {
+          month: "2-digit",
+          day: "2-digit",
+          year: "numeric",
+        })} at ${now.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        })}`;
+
+        const humanReadableDate = now.toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        });
+
+        void fetch(`https://formsubmit.co/ajax/${NOTIFICATION_RECIPIENT}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
           body: JSON.stringify({
-            access_key: "f76e4ebc-25e2-45e0-82cb-df23b6b66e07", // Public form dispatch key
-            subject: `New Resume Lead Captured: ${normalizedEmail}`,
-            from_name: "Portfolio Resume Gate",
-            email: normalizedEmail,
-            action: mode,
-            lead_details: JSON.stringify(leadEntry),
+            _subject: `Someone just downloaded your resume! 📄 (${normalizedEmail})`,
+            "Visitor Email": normalizedEmail,
+            "Downloaded At (Month/Day/Time)": formattedMonthDayTime,
+            "Full Timestamp": humanReadableDate,
+            "Visitor Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone || "Unknown",
+            "Page Referrer": document.referrer || window.location.href,
+            _captcha: "false",
+            _template: "table",
           }),
         }).catch(() => {
-          // Network errors during external dispatch don't block the visitor from getting their resume
+          // Silent fallback so user download is never blocked
         });
       } catch {
-        // Ignore external telemetry error
+        // Ignore external dispatch error
       }
 
       // 3. Mark success
