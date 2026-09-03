@@ -226,7 +226,7 @@ export function Hero() {
                 <em className={`hero-stage__italic-accent${isFlipping ? " is-flipping" : ""}`}>
                   {rotatingWords[wordIndex]}
                 </em>
-                <span className="hero-stage__main-accent">Software Development</span>
+                <span className="hero-stage__main-accent">Software</span>
               </span>
             </h1>
           </div>
