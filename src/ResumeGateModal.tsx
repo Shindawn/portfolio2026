@@ -340,17 +340,16 @@ export default function ResumeGateModal() {
                   </button>
                 </div>
 
-                <div className="resume-gate-privacy">
-                  <span>We respect your privacy</span>
-                  <span className="resume-gate-privacy__dot" aria-hidden="true">·</span>
+                <p className="resume-gate-privacy-note">
+                  <span>🔒 By continuing, you agree that your email is recorded by Lescy for professional inquiries and recruitment.</span>{" "}
                   <button
                     type="button"
-                    className="resume-gate-privacy__btn"
+                    className="privacy-modal-trigger-btn"
                     onClick={() => setShowPrivacy(true)}
                   >
-                    Privacy Policy
+                    Read Privacy Policy
                   </button>
-                </div>
+                </p>
               </form>
             </div>
           ) : (
