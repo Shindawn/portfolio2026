@@ -926,17 +926,6 @@ export default function Book3D() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="cert-modal-header">
-              <div className="cert-modal-badge-group">
-                {selectedCert.category && (
-                  <span className="cert-modal-category">{selectedCert.category}</span>
-                )}
-                <span className="cert-modal-verified-pill">
-                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d="M20 6L9 17l-5-5" />
-                  </svg>
-                  Verified Credential
-                </span>
-              </div>
               <div className="cert-modal-actions">
                 {selectedCert.verifyUrl && (
                   <a

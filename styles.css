@@ -6784,8 +6784,8 @@ a {
 .cert-modal-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.9rem 1.4rem;
+  justify-content: flex-end;
+  padding: 0.65rem 1.1rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   background: rgba(248, 250, 252, 0.8);
   backdrop-filter: blur(8px);
