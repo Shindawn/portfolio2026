@@ -1,4 +1,5 @@
-import { useState, type ReactNode } from "react";
+import { useState, useRef, useEffect, type ReactNode } from "react";
+import gsap from "gsap";
 import "./IntegrationNetwork.css";
 
 export type NetworkCategoryKey = "dev" | "n8n" | "wordpress";
@@ -391,6 +392,8 @@ const categoryKeys: NetworkCategoryKey[] = ["dev", "n8n", "wordpress"];
 export default function IntegrationNetwork() {
   const [activeCategory, setActiveCategory] = useState<NetworkCategoryKey>("dev");
   const [hoveredNode, setHoveredNode] = useState<IntegrationNode | null>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
+  const hubRef = useRef<HTMLDivElement>(null);
 
   const currentCategory = networkCategories[activeCategory];
   const currentIndex = categoryKeys.indexOf(activeCategory);
@@ -408,6 +411,89 @@ export default function IntegrationNetwork() {
   const handleNext = () => {
     const nextIndex = (currentIndex + 1) % categoryKeys.length;
     handleCategoryChange(categoryKeys[nextIndex]);
+  };
+
+  // Entrance animation whenever activeCategory changes
+  useEffect(() => {
+    if (!canvasRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".network-node",
+        { scale: 0.82, opacity: 0, y: 12 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.42, stagger: 0.045, ease: "back.out(1.6)" }
+      );
+      gsap.fromTo(
+        ".network-hub",
+        { scale: 0.78, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.45, ease: "back.out(1.8)" }
+      );
+      gsap.fromTo(
+        ".network-path-base",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4, stagger: 0.03, ease: "power2.out" }
+      );
+    }, canvasRef);
+
+    return () => ctx.revert();
+  }, [activeCategory]);
+
+  // Damped 3D Parallax & Magnetic Cursor Float
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!canvasRef.current) return;
+    const rect = canvasRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+    // Subtle 3D card tilt
+    gsap.to(canvasRef.current, {
+      rotationY: x * 6,
+      rotationX: -y * 6,
+      transformPerspective: 1200,
+      ease: "power2.out",
+      duration: 0.45,
+    });
+
+    // Hub gentle magnetic attraction
+    if (hubRef.current) {
+      gsap.to(hubRef.current, {
+        x: x * 12,
+        y: y * 12,
+        ease: "power2.out",
+        duration: 0.4,
+      });
+    }
+
+    // Layered node depth parallax
+    gsap.to(".network-node", {
+      x: (i) => x * (8 + (i % 3) * 3),
+      y: (i) => y * (8 + (i % 3) * 3),
+      ease: "power2.out",
+      duration: 0.45,
+    });
+  };
+
+  const handlePointerLeave = () => {
+    if (!canvasRef.current) return;
+    gsap.to(canvasRef.current, {
+      rotationY: 0,
+      rotationX: 0,
+      ease: "power2.out",
+      duration: 0.65,
+    });
+    if (hubRef.current) {
+      gsap.to(hubRef.current, {
+        x: 0,
+        y: 0,
+        ease: "power2.out",
+        duration: 0.65,
+      });
+    }
+    gsap.to(".network-node", {
+      x: 0,
+      y: 0,
+      ease: "power2.out",
+      duration: 0.65,
+    });
   };
 
   const hubLeftPercent = (currentCategory.hubX / 900) * 100;
@@ -475,7 +561,12 @@ export default function IntegrationNetwork() {
             </div>
           </div>
 
-          <div className="integration-network__canvas" key={activeCategory}>
+          <div
+            className="integration-network__canvas"
+            ref={canvasRef}
+            onPointerMove={handlePointerMove}
+            onPointerLeave={handlePointerLeave}
+          >
             <svg
               className="integration-network__svg"
               viewBox="0 0 900 460"
@@ -518,7 +609,7 @@ export default function IntegrationNetwork() {
                   <g key={node.id} className={`network-connector ${isHovered ? "is-active" : ""}`}>
                     {/* Primary Path */}
                     <path d={node.path} className="network-path-base" />
-                    <circle r="2.4" className="network-particle">
+                    <circle r="2.6" className="network-particle">
                       <animateMotion
                         dur={`${node.speed}s`}
                         repeatCount="indefinite"
@@ -533,7 +624,7 @@ export default function IntegrationNetwork() {
                     {node.extraPath && (
                       <>
                         <path d={node.extraPath} className="network-path-base" />
-                        <circle r="2.4" className="network-particle">
+                        <circle r="2.6" className="network-particle">
                           <animateMotion
                             dur={`${node.speed}s`}
                             repeatCount="indefinite"
@@ -553,6 +644,7 @@ export default function IntegrationNetwork() {
             {/* Dynamic Center Hub Badge */}
             <div
               className="network-hub"
+              ref={hubRef}
               title={currentCategory.hubTooltip}
               style={{
                 left: `${hubLeftPercent}%`,
