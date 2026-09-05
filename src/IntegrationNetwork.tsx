@@ -486,7 +486,6 @@ export default function IntegrationNetwork() {
               {/* Distinct Background Blueprint Guide per layout */}
               {currentCategory.layoutType === "radial" && (
                 <>
-                  <circle cx="450" cy="230" r="260" className="network-orbit network-orbit--outer" />
                   <circle cx="450" cy="230" r="160" className="network-orbit network-orbit--mid" />
                   <circle cx="450" cy="230" r="70" className="network-orbit network-orbit--inner" />
                 </>
