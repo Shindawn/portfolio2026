@@ -457,7 +457,6 @@ export default function IntegrationNetwork() {
                 onClick={handleNext}
                 title="Click to switch category"
               >
-                <span className="integration-network__tab-dot" />
                 <span className="integration-network__stepper-label">{currentCategory.label}</span>
                 <span className="integration-network__stepper-index">{currentIndex + 1}/{categoryKeys.length}</span>
               </button>
