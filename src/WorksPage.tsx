@@ -14,25 +14,47 @@ interface PipelineProject {
   description: string;
   stack: string[];
   highlights: string[];
+  caseStudyUrl?: string;
+  liveUrl?: string;
 }
 
 const pipelineProjects: PipelineProject[] = [
   {
+    id: "cc-wedding",
+    title: "CC Wedding Digital Experience & RSVP Platform",
+    category: "Interactive Digital Experience & RSVP Engine",
+    role: "Lead Frontend Engineer & UI/UX Designer",
+    timeline: "2025 — 2026",
+    progress: 100,
+    status: "Case Study Published · Live in Production",
+    description:
+      "Transforming the traditional wedding invitation into a high-performance, interactive web application featuring real-time chroma-key canvas rendering, frictionless RSVP pipelines, and a mobile-first design system.",
+    stack: ["React 18", "TypeScript", "Vite", "Canvas API", "Tailwind CSS", "Formspree"],
+    highlights: [
+      "Custom 60 FPS in-browser chroma-key green-screen monogram engine",
+      "94% RSVP submission rate within first 10 days of invite distribution",
+      "99/100 mobile Lighthouse performance score with zero layout shift",
+    ],
+    caseStudyUrl: "/works/cc-wedding",
+    liveUrl: "https://www.ccwedding.page/",
+  },
+  {
     id: "water-district",
     title: "LGU Water District Management & Billing Enterprise",
-    category: "Full-Stack Enterprise System",
-    role: "Lead Systems Architect & Developer",
+    category: "Full-Stack Enterprise FinTech & GovTech",
+    role: "Lead Systems Architect & Full-Stack Developer",
     timeline: "2024 — Present",
-    progress: 92,
-    status: "Drafting Architecture Case Study & ERDs",
+    progress: 100,
+    status: "Case Study Published · Active Municipal System",
     description:
-      "A comprehensive municipal-grade billing and operations engine serving thousands of active consumer accounts. Automates tiered water rate calculations, arrears compounding, real-time meter audits, and cashier reconciliation.",
-    stack: ["Laravel", "React", "MySQL", "Tailwind CSS", "Cloudflare", "REST APIs"],
+      "An enterprise-grade, digital Meter-to-Cash (M2C) municipal platform engineered for the Municipality of Bagamanoc. Automates multi-tier volumetric rate calculations, offline Android field sync, cashier reconciliation, and COA-compliant auditing.",
+    stack: ["Next.js 16", "TypeScript", "PostgreSQL", "Prisma ORM", "Android Sync", "CSS Modules"],
     highlights: [
-      "Sub-second billing calculation across 10,000+ subscriber records",
-      "Field meter reader reconciliation with automated discrepancy flagging",
-      "Complete fiscal audit trail and compliance reporting for LGU administrators",
+      "Sub-second automated billing calculation across municipal subscriber accounts",
+      "Offline-first Android field meter reader sync with zero data loss",
+      "Immutable financial audit trail compliant with Commission on Audit (COA) standards",
     ],
+    caseStudyUrl: "/works/lgu-water",
   },
   {
     id: "payroll-hris",
@@ -203,6 +225,32 @@ export default function WorksPage() {
                   </span>
                 ))}
               </div>
+
+              {/* Action Buttons if Case Study is Available */}
+              {(project.caseStudyUrl || project.liveUrl) && (
+                <div className="pipeline-card__actions" style={{ marginTop: "1.25rem", display: "flex", gap: "0.65rem", flexWrap: "wrap" }}>
+                  {project.caseStudyUrl && (
+                    <a
+                      href={project.caseStudyUrl}
+                      className="button button--case-study-primary"
+                      style={{ padding: "0.55rem 1.15rem", fontSize: "0.85rem" }}
+                    >
+                      <span>Read Full Case Study →</span>
+                    </a>
+                  )}
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="button button--case-study-secondary"
+                      style={{ padding: "0.55rem 1rem", fontSize: "0.85rem" }}
+                    >
+                      <span>Live Site ↗</span>
+                    </a>
+                  )}
+                </div>
+              )}
             </article>
           ))}
         </div>

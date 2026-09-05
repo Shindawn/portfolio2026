@@ -104,7 +104,7 @@ export function Navigation() {
               </a>
             </li>
             <li className="nav-overlay__item">
-              <a href="/works" className="nav-overlay__link" onClick={closeMenu}>
+              <a href="/#work" className="nav-overlay__link" onClick={closeMenu}>
                 <span>Work</span>
               </a>
             </li>
@@ -261,25 +261,33 @@ export function LatestWork() {
   return <section className="latest-work" id="work" aria-labelledby="work-title"><div className="latest-work__inner shell">
     <header className="latest-work__intro reveal-header"><h2 id="work-title">( Latest Work )</h2><p>A selection of systems I’ve shipped end to end — from a full-stack<br />LGU management platform to an AI-powered portfolio and AR UI design.</p></header>
     <div className="project-list" onPointerMove={movePreview} onPointerLeave={() => setActiveProject(null)}><div className="project-list__head" aria-hidden="true"><span>Index</span><span>Project</span><span>Category</span><span /></div>
-      {projects.map(([index, name, category, tag], projectIndex) => (
-        <a
-          className="project-row"
-          href="#contact"
-          key={index}
-          onPointerEnter={() => setActiveProject(projectIndex)}
-          onFocus={() => setActiveProject(projectIndex)}
-          onBlur={() => setActiveProject(null)}
-        >
-          <span className="project-row__index">{index}</span>
-          <span className="project-row__name">{name}</span>
-          <span className="project-row__category">
-            {category} <small>{tag}</small>
-          </span>
-          <span className="project-row__arrow" aria-hidden="true">
-            ↗
-          </span>
-        </a>
-      ))}
+      {projects.map(([index, name, category, tag], projectIndex) => {
+        const linkHref =
+          name === "CC Wedding"
+            ? "/works/cc-wedding"
+            : name.toLowerCase().includes("water district")
+            ? "/works/lgu-water"
+            : "#contact";
+        return (
+          <a
+            className="project-row"
+            href={linkHref}
+            key={index}
+            onPointerEnter={() => setActiveProject(projectIndex)}
+            onFocus={() => setActiveProject(projectIndex)}
+            onBlur={() => setActiveProject(null)}
+          >
+            <span className="project-row__index">{index}</span>
+            <span className="project-row__name">{name}</span>
+            <span className="project-row__category">
+              {category} <small>{tag}</small>
+            </span>
+            <span className="project-row__arrow" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+        );
+      })}
       {activeProject !== null && (() => {
         const project = projects[activeProject];
 
