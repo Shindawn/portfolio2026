@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Footer, Navigation } from "./Sections";
+import WeddingFlightMap from "./WeddingFlightMap";
 
 gsap.registerPlugin(ScrollTrigger);
 

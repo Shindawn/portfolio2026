@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Footer, Navigation } from "./Sections";
+import WaterGridSimulation from "./WaterGridSimulation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -331,6 +332,18 @@ export default function LGUWaterCaseStudy() {
             <span className="clean-stat__num">Offline</span>
             <span className="clean-stat__label">Android Sync</span>
           </div>
+        </section>
+
+        {/* Live Municipal Grid Simulation */}
+        <section className="clean-section">
+          <div className="clean-section__head">
+            <h2 className="clean-section__title">Live Municipal Pipeline & Metered Neighborhood Simulation</h2>
+            <p className="clean-section__subtitle">
+              Interactive SCADA telemetry simulation showing water reservoir distribution, pipe junctions, live ticking house meter dials, and real-time burst/leak detection.
+            </p>
+          </div>
+
+          <WaterGridSimulation />
         </section>
 
         {/* Interactive Tariff Calculator */}
