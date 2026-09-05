@@ -412,7 +412,7 @@ export function Brands() {
 
         <div className="brand-strip" aria-label="Selected partner institutions and client organizations">
           <div className="brand-track">
-            {[...clientLogos, ...clientLogos, ...clientLogos].map((logo, index) => (
+            {[...clientLogos, ...clientLogos, ...clientLogos, ...clientLogos].map((logo, index) => (
               <span
                 className={`brand-mark brand-mark--${logo.id}`}
                 aria-label={index < clientLogos.length ? logo.alt : undefined}

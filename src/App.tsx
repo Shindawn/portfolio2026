@@ -147,7 +147,7 @@ export default function App() {
         [".expertise__services", ".expertise__services", { y: 45, filter: "blur(12px)", duration: 1.1 }],
         [".integration-network__stage-wrap", ".integration-network", { y: 40, filter: "blur(10px)", duration: 1.0 }],
         [".project-row", ".project-list", { y: 30, stagger: 0.09, duration: 0.7 }],
-        [".brand-mark", ".brand-strip", { y: 18, stagger: 0.055, duration: 0.5 }],
+        [".brand-strip", ".brand-strip", { y: 24, duration: 0.75 }],
         [".testimonial", ".testimonials", { y: 90, stagger: 0.08, duration: 0.85 }],
         [".faq-item", ".faq__list", { y: 18, stagger: 0.06, duration: 0.55 }],
       ] as const;

@@ -1350,6 +1350,7 @@ a {
   margin-top: clamp(2.4rem, 4.5vw, 3.6rem);
   margin-inline: auto;
   overflow: hidden;
+  padding-block: 0.85rem;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.4) 6%, black 16%, black 84%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.4) 6%, black 16%, black 84%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
 }
@@ -1358,9 +1359,10 @@ a {
   width: max-content;
   display: flex;
   align-items: center;
-  gap: clamp(3rem, 6vw, 5.5rem);
+  gap: clamp(3.5rem, 6.5vw, 6rem);
   padding-inline: 2rem;
-  animation: company-marquee 25s linear infinite;
+  padding-block: 0.5rem;
+  animation: company-marquee 20s linear infinite;
   will-change: transform;
 }
 
@@ -1370,11 +1372,12 @@ a {
 
 @keyframes company-marquee {
   to {
-    transform: translateX(-33.333%);
+    transform: translateX(-50%);
   }
 }
 
 .brand-mark {
+  height: 52px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1397,7 +1400,7 @@ a {
 }
 
 .brand-logo-img {
-  height: clamp(36px, 4.5vw, 48px);
+  height: 44px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -1405,26 +1408,30 @@ a {
 }
 
 .brand-logo-img--catsu {
-  height: clamp(42px, 5.2vw, 54px);
-  width: auto;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.15));
+  height: 48px;
+  width: 48px;
+  aspect-ratio: 1 / 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
 
 .brand-logo-img--bato-tourism {
-  height: clamp(42px, 5.2vw, 54px);
-  width: auto;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.15));
+  height: 48px;
+  width: 48px;
+  aspect-ratio: 1 / 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
 
 .brand-logo-img--klcc {
-  height: clamp(34px, 4.2vw, 44px);
+  height: 38px;
   width: auto;
+  max-width: 140px;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.12));
 }
 
 .brand-logo-img--cc-wedding {
-  height: clamp(28px, 3.6vw, 36px);
+  height: 32px;
   width: auto;
+  max-width: 110px;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
 }
 
