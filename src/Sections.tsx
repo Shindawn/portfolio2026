@@ -267,6 +267,8 @@ export function LatestWork() {
             ? "/works/cc-wedding"
             : name.toLowerCase().includes("water district")
             ? "/works/lgu-water"
+            : name.toLowerCase().includes("payroll")
+            ? "/works/hr-payroll"
             : "#contact";
         return (
           <a

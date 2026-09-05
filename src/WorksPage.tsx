@@ -30,6 +30,7 @@ const pipelineProjects: PipelineProject[] = [
     description:
       "Transforming the traditional wedding invitation into a high-performance, interactive web application featuring real-time chroma-key canvas rendering, frictionless RSVP pipelines, and a mobile-first design system.",
     stack: ["React 18", "TypeScript", "Vite", "Canvas API", "Tailwind CSS", "Formspree"],
+    caseStudyUrl: "/works/hr-payroll",
     highlights: [
       "Custom 60 FPS in-browser chroma-key green-screen monogram engine",
       "94% RSVP submission rate within first 10 days of invite distribution",
