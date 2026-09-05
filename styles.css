@@ -1346,11 +1346,10 @@ a {
 }
 
 .brand-strip {
-  max-width: min(64rem, 94vw);
+  max-width: min(58rem, 90vw);
   margin-top: clamp(2.4rem, 4.5vw, 3.6rem);
   margin-inline: auto;
   overflow: hidden;
-  color: var(--ink);
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.4) 6%, black 16%, black 84%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
   mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.4) 6%, black 16%, black 84%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
 }
@@ -1359,9 +1358,9 @@ a {
   width: max-content;
   display: flex;
   align-items: center;
-  gap: clamp(1.2rem, 2.2vw, 1.8rem);
-  padding-inline: 1.5rem;
-  animation: company-marquee 30s linear infinite;
+  gap: clamp(3rem, 6vw, 5.5rem);
+  padding-inline: 2rem;
+  animation: company-marquee 25s linear infinite;
   will-change: transform;
 }
 
@@ -1371,107 +1370,72 @@ a {
 
 @keyframes company-marquee {
   to {
-    transform: translateX(-50%);
+    transform: translateX(-33.333%);
   }
 }
 
 .brand-mark {
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
-  padding: 0.5rem 1.1rem;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  justify-content: center;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   flex: 0 0 auto;
-  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  opacity: 0.88;
+  transition: opacity 0.25s ease, transform 0.25s ease;
   user-select: none;
 }
 
 .brand-mark:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(14, 90, 60, 0.25);
-  box-shadow: 0 6px 18px rgba(14, 90, 60, 0.1);
+  opacity: 1;
+  transform: translateY(-2px) scale(1.05);
 }
 
 .brand-logo-img {
-  height: 28px;
+  height: clamp(36px, 4.5vw, 48px);
   width: auto;
   object-fit: contain;
   display: block;
+  background: transparent !important;
 }
 
 .brand-logo-img--catsu {
-  height: 32px;
-  width: 32px;
-  border-radius: 50%;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.14));
+  height: clamp(42px, 5.2vw, 54px);
+  width: auto;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.15));
 }
 
 .brand-logo-img--bato-tourism {
-  height: 32px;
-  width: 32px;
-  border-radius: 50%;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.14));
+  height: clamp(42px, 5.2vw, 54px);
+  width: auto;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.15));
 }
 
 .brand-logo-img--klcc {
-  height: 28px;
+  height: clamp(34px, 4.2vw, 44px);
   width: auto;
-  max-width: 140px;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.12));
 }
 
-.brand-logo-img--cc-events {
-  height: 24px;
+.brand-logo-img--cc-wedding {
+  height: clamp(28px, 3.6vw, 36px);
   width: auto;
-  max-width: 54px;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
 }
 
 .brand-logo-img--dark {
   display: none;
 }
 
-.brand-icon {
-  display: block;
-  flex: 0 0 auto;
-}
-
-.brand-mark__label {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.15;
-}
-
-.brand-mark__name {
-  font-family: var(--font-sans, "Outfit", sans-serif);
-  font-size: 0.86rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-}
-
-.brand-mark__sub {
-  font-size: 0.68rem;
-  font-weight: 500;
-  color: var(--ink-muted, #64748b);
-  letter-spacing: 0.01em;
-}
-
 :root[data-theme="dark"] .brand-mark {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-}
-
-:root[data-theme="dark"] .brand-mark:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: rgba(46, 213, 115, 0.35);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 :root[data-theme="dark"] .brand-logo-img--light {
@@ -1480,14 +1444,6 @@ a {
 
 :root[data-theme="dark"] .brand-logo-img--dark {
   display: block;
-}
-
-:root[data-theme="dark"] .brand-mark__name {
-  color: #f1f5f3;
-}
-
-:root[data-theme="dark"] .brand-mark__sub {
-  color: #94a3b8;
 }
 
 /* Full-width Compact Testimonial Banner (System-styled with Grid Crosshairs & Moving Lights) */

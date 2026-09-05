@@ -6,77 +6,37 @@ import ThemeToggle from "./ThemeToggle";
 import { useEffect, useState, type CSSProperties, type PointerEvent } from "react";
 import { requestResumeAccess } from "./ResumeGateModal";
 
-interface ClientBrand {
+interface ClientLogo {
   id: string;
-  name: string;
-  shortName?: string;
-  type: "image" | "icon";
-  imageLight?: string;
-  imageDark?: string;
-  icon?: string;
-  sub?: string;
+  alt: string;
+  light: string;
+  dark: string;
 }
 
-const clientBrands: ClientBrand[] = [
+const clientLogos: ClientLogo[] = [
   {
     id: "catsu",
-    name: "CatSU",
-    shortName: "CatSU",
-    type: "image",
-    imageLight: "/logos/catsu.png",
-    imageDark: "/logos/catsu.png",
-    sub: "Catanduanes State University",
+    alt: "Catanduanes State University",
+    light: "/logos/catsu.png",
+    dark: "/logos/catsu.png",
   },
   {
     id: "bato-tourism",
-    name: "Bato Tourism",
-    shortName: "Bato Tourism",
-    type: "image",
-    imageLight: "/logos/bato-tourism.png",
-    imageDark: "/logos/bato-tourism.png",
-    sub: "Municipal Tourism Office",
+    alt: "Municipal Tourism Office - Bato, Catanduanes",
+    light: "/logos/bato-tourism.png",
+    dark: "/logos/bato-tourism.png",
   },
   {
     id: "klcc",
-    name: "Kurakog Lending Company Corp.",
-    shortName: "KLCC",
-    type: "image",
-    imageLight: "/logos/klcc.png",
-    imageDark: "/logos/klcc-dark.png",
-    sub: "Fintech & HRIS Platform",
+    alt: "Kurakog Lending Company Corp.",
+    light: "/logos/klcc.png",
+    dark: "/logos/klcc-dark.png",
   },
   {
-    id: "cc-events",
-    name: "CC Wedding",
-    shortName: "CC Wedding",
-    type: "image",
-    imageLight: "/logos/cc-wedding.png",
-    imageDark: "/logos/cc-wedding-dark.png",
-    sub: "Bespoke Wedding Experience",
-  },
-  {
-    id: "lgu-water",
-    name: "LGU Water District",
-    shortName: "LGU Water",
-    type: "icon",
-    icon: "water",
-    sub: "Municipal Utilities System",
-  },
-  {
-    id: "islatech",
-    name: "IslaTech Innovations",
-    shortName: "IslaTech",
-    type: "icon",
-    icon: "tech",
-    sub: "Software Systems",
-  },
-  {
-    id: "igel",
-    name: "IGEL Engineering Solutions",
-    shortName: "IGEL",
-    type: "icon",
-    icon: "engineering",
-    sub: "Industrial Engineering",
+    id: "cc-wedding",
+    alt: "CC Wedding & Bespoke Events",
+    light: "/logos/cc-wedding.png",
+    dark: "/logos/cc-wedding-dark.png",
   },
 ];
 
@@ -450,70 +410,30 @@ export function Brands() {
           <h2 id="brands-title">Working with Teams That Value Design</h2>
         </header>
 
-        <div className="brand-strip" aria-label="Selected institutions, clients, and partners">
+        <div className="brand-strip" aria-label="Selected partner institutions and client organizations">
           <div className="brand-track">
-            {[...clientBrands, ...clientBrands].map((brand, index) => (
-              <div
-                className={`brand-mark brand-mark--${brand.id}`}
-                aria-label={index < clientBrands.length ? brand.name : undefined}
-                aria-hidden={index >= clientBrands.length}
-                key={`${brand.id}-${index}`}
+            {[...clientLogos, ...clientLogos, ...clientLogos].map((logo, index) => (
+              <span
+                className={`brand-mark brand-mark--${logo.id}`}
+                aria-label={index < clientLogos.length ? logo.alt : undefined}
+                aria-hidden={index >= clientLogos.length}
+                key={`${logo.id}-${index}`}
               >
-                {brand.type === "image" ? (
-                  <>
-                    <img
-                      src={brand.imageLight}
-                      alt={brand.name}
-                      className={`brand-logo-img brand-logo-img--${brand.id} ${brand.imageDark && brand.imageDark !== brand.imageLight ? "brand-logo-img--light" : ""}`}
-                      loading="lazy"
-                    />
-                    {brand.imageDark && brand.imageDark !== brand.imageLight && (
-                      <img
-                        src={brand.imageDark}
-                        alt={brand.name}
-                        className={`brand-logo-img brand-logo-img--${brand.id} brand-logo-img--dark`}
-                        loading="lazy"
-                      />
-                    )}
-                    {brand.id !== "klcc" && (
-                      <div className="brand-mark__label">
-                        <strong className="brand-mark__name">{brand.name}</strong>
-                        {brand.sub && <span className="brand-mark__sub">{brand.sub}</span>}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    {brand.icon === "water" && (
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="brand-icon brand-icon--water">
-                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="rgba(43, 140, 238, 0.25)" stroke="#2b8cee" />
-                      </svg>
-                    )}
-                    {brand.icon === "tech" && (
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="brand-icon brand-icon--tech">
-                        <polygon points="12 2 2 7 12 12 22 7 12 2" fill="rgba(16, 185, 129, 0.25)" stroke="#10b981" />
-                        <polyline points="2 17 12 22 22 17" stroke="#10b981" />
-                        <polyline points="2 12 12 17 22 12" stroke="#10b981" />
-                      </svg>
-                    )}
-                    {brand.icon === "engineering" && (
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="brand-icon brand-icon--eng">
-                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" stroke="#f59e0b" />
-                        <circle cx="12" cy="12" r="3" fill="rgba(245, 158, 11, 0.25)" stroke="#f59e0b" />
-                      </svg>
-                    )}
-                    {brand.icon === "wedding" && (
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="brand-icon brand-icon--wedding">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="rgba(236, 72, 153, 0.25)" stroke="#ec4899" />
-                      </svg>
-                    )}
-                    <div className="brand-mark__label">
-                      <strong className="brand-mark__name">{brand.name}</strong>
-                      {brand.sub && <span className="brand-mark__sub">{brand.sub}</span>}
-                    </div>
-                  </>
+                <img
+                  src={logo.light}
+                  alt={logo.alt}
+                  className={`brand-logo-img brand-logo-img--${logo.id} ${logo.dark !== logo.light ? "brand-logo-img--light" : ""}`}
+                  loading="lazy"
+                />
+                {logo.dark !== logo.light && (
+                  <img
+                    src={logo.dark}
+                    alt={logo.alt}
+                    className={`brand-logo-img brand-logo-img--${logo.id} brand-logo-img--dark`}
+                    loading="lazy"
+                  />
                 )}
-              </div>
+              </span>
             ))}
           </div>
         </div>
