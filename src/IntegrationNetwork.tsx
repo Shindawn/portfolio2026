@@ -489,8 +489,6 @@ export default function IntegrationNetwork() {
                   <circle cx="450" cy="230" r="260" className="network-orbit network-orbit--outer" />
                   <circle cx="450" cy="230" r="160" className="network-orbit network-orbit--mid" />
                   <circle cx="450" cy="230" r="70" className="network-orbit network-orbit--inner" />
-                  <circle cx="450" cy="230" r="140" className="network-orbit-wave network-orbit-wave--1" />
-                  <circle cx="450" cy="230" r="140" className="network-orbit-wave network-orbit-wave--2" />
                 </>
               )}
 
@@ -564,7 +562,6 @@ export default function IntegrationNetwork() {
                 "--hub-color": currentCategory.hubColor,
               } as React.CSSProperties}
             >
-              <div className="network-hub__pulse" />
               <div
                 className="network-hub__core"
                 style={{

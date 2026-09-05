@@ -45,15 +45,13 @@
 
 /* Category Stepper (< Software Dev >) placed at Top-Right */
 .integration-network__stepper {
-  height: 40px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.25rem 0.35rem;
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--line);
-  border-radius: 999px;
+  padding: 0;
+  background: transparent;
+  border: none;
   box-shadow: none;
   margin-left: auto;
   box-sizing: border-box;
@@ -66,8 +64,8 @@
 }
 
 :root[data-theme="dark"] .integration-network__stepper {
-  background: rgba(18, 28, 23, 0.75);
-  border-color: rgba(255, 255, 255, 0.08);
+  background: transparent;
+  border-color: transparent;
   box-shadow: none;
 }
 
@@ -78,21 +76,29 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 1px solid transparent;
-  background: transparent;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 80%, transparent);
+  backdrop-filter: blur(8px);
   color: var(--muted);
   cursor: pointer;
   transition: all 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-sizing: border-box;
 }
 
 .integration-network__stepper-arrow:hover {
   background: color-mix(in srgb, var(--cream) 80%, transparent);
   color: var(--ink);
-  transform: scale(1.08);
+  transform: scale(1.06);
+}
+
+:root[data-theme="dark"] .integration-network__stepper-arrow {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #a0b8ac;
 }
 
 :root[data-theme="dark"] .integration-network__stepper-arrow:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   color: #ffffff;
 }
 
@@ -101,23 +107,24 @@
 }
 
 .integration-network__stepper-current {
-  height: 32px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0 0.95rem;
+  padding: 0 1.15rem;
   border-radius: 999px;
   border: 1px solid var(--ink);
   background: var(--ink);
   color: var(--paper);
   font-family: inherit;
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   font-weight: 600;
   cursor: pointer;
   user-select: none;
   box-shadow: none;
   transition: all 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
   box-sizing: border-box;
+  line-height: 1;
 }
 
 .integration-network__stepper-current:hover {
@@ -148,13 +155,13 @@
   height: 6px;
   border-radius: 50%;
   background: currentColor;
-  opacity: 0.9;
+  opacity: 0.75;
   flex-shrink: 0;
 }
 
 /* Status Bar / Tagline Pill */
 .integration-network__status-bar {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: flex-start;
   margin: 0;
@@ -162,7 +169,7 @@
 }
 
 .integration-network__badge {
-  height: 40px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
@@ -172,33 +179,41 @@
   background: color-mix(in srgb, var(--paper) 80%, transparent);
   backdrop-filter: blur(10px);
   color: var(--muted);
-  font-size: 0.82rem;
-  font-weight: 450;
+  font-size: 0.84rem;
+  font-weight: 500;
   letter-spacing: -0.01em;
   box-shadow: none;
   transition: all 220ms ease;
   box-sizing: border-box;
+  line-height: 1;
 }
 
 .integration-network__badge.is-active {
-  border-color: var(--accent-bright);
+  border-color: var(--line);
   color: var(--ink);
-  background: color-mix(in srgb, var(--cream) 90%, var(--paper));
+  background: color-mix(in srgb, var(--cream) 70%, var(--paper));
   box-shadow: none;
 }
 
+:root[data-theme="dark"] .integration-network__badge {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #a0b8ac;
+}
+
 :root[data-theme="dark"] .integration-network__badge.is-active {
-  background: #142e22;
-  border-color: rgba(34, 150, 110, 0.65);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #e8f0eb;
   box-shadow: none;
 }
 
 .integration-network__badge strong {
   font-family: "Instrument Serif", "Times New Roman", Georgia, serif;
   font-style: italic;
-  font-size: 1.12rem;
+  font-size: 1.08rem;
   font-weight: 400;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
 .integration-network__badge-divider {
@@ -209,17 +224,14 @@
 }
 
 .integration-network__badge-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--accent-bright);
+  background: currentColor;
+  opacity: 0.65;
   box-shadow: none;
-  animation: badge-pulse 1.8s ease infinite;
-}
-
-@keyframes badge-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.75); }
+  animation: none;
+  flex-shrink: 0;
 }
 
 /* Network Canvas */
@@ -263,7 +275,7 @@
   overflow: visible;
 }
 
-/* Concentric Orbit Rings & Expanding Radar Waves */
+/* Concentric Orbit Rings */
 .network-orbit {
   fill: none;
   stroke: var(--line);
@@ -279,28 +291,6 @@
   stroke-dasharray: 4 5;
   transform-origin: 450px 230px;
   animation: orbit-dash-spin 26s linear infinite;
-}
-
-/* Expanding Signal Pulse Radar Waves */
-.network-orbit-wave {
-  fill: none;
-  stroke: rgba(26, 122, 90, 0.25);
-  stroke-width: 1.2;
-  pointer-events: none;
-  transform-origin: 450px 230px;
-  animation: network-radar-expand 6.6s cubic-bezier(0.1, 0.7, 0.3, 1) infinite;
-}
-
-.network-orbit-wave--1 {
-  animation-delay: 0s;
-}
-
-.network-orbit-wave--2 {
-  animation-delay: 2.2s;
-}
-
-.network-orbit-wave--3 {
-  animation-delay: 4.4s;
 }
 
 @keyframes orbit-dash-spin {
@@ -437,21 +427,6 @@
   z-index: 15;
   cursor: pointer;
   transition: left 320ms cubic-bezier(0.2, 0.8, 0.2, 1), top 320ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.network-hub__pulse {
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: 1.5px solid var(--hub-color, rgba(0, 122, 204, 0.4));
-  opacity: 0.65;
-  animation: hub-pulse-ring 3s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
-}
-
-@keyframes hub-pulse-ring {
-  0% { transform: scale(0.9); opacity: 0.8; }
-  70% { transform: scale(1.35); opacity: 0; }
-  100% { transform: scale(1.35); opacity: 0; }
 }
 
 .network-hub__core {
