@@ -276,6 +276,18 @@ export default function CCWeddingCaseStudy() {
           </div>
         </section>
 
+        {/* Global Guest Flight Arc Network */}
+        <section className="clean-section">
+          <div className="clean-section__head">
+            <h2 className="clean-section__title">Global Guest Odyssey & Flight Network</h2>
+            <p className="clean-section__subtitle">
+              Interactive travel network mapping international and local guests traveling from Tokyo, San Francisco, London, Sydney, Manila, and provincial regions to the destination celebration.
+            </p>
+          </div>
+
+          <WeddingFlightMap />
+        </section>
+
         {/* Design System Swatches */}
         <section className="clean-section">
           <div className="clean-section__head">
