@@ -412,7 +412,6 @@ const spreads: BookSpread[] = [
     leftPage: {
       tag: "Chapter 02 • Awards & Honors",
       title: "Scholastic Honors & Certs",
-      subtitle: "Multi-Year Dean’s List Distinction",
       description:
         "Awarded continuous Dean’s Honor Roll recognition throughout 2022–2026, complemented by verified industry credentials across Cloud, Security, AI, and Systems Engineering.",
       stats: [
@@ -449,7 +448,6 @@ const spreads: BookSpread[] = [
     rightPage: {
       tag: "Chapter 03 • Merit Grants",
       title: "Scholarships & Affiliations",
-      subtitle: "Merit Scholar & IT Guild Officer",
       description:
         "Recipient of competitive tertiary academic scholarship grants covering full tuition and research initiatives. Active student leader facilitating collegiate coding workshops and hackathons.",
       stats: [
