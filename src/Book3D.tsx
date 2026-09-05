@@ -35,29 +35,210 @@ export interface BookSpread {
   rightPage: BookPageContent;
 }
 
-const CERT_URL_MAP: Record<string, string> = {
-  "oracle cloud ai": "https://catalog-education.oracle.com/ords/certview/sharebadge?id=84CF78EC86445F84F83A7A554B724E21FB07D74E6411CEFB48A6E412BE55BC7E",
-  "oracle": "https://catalog-education.oracle.com/ords/certview/sharebadge?id=84CF78EC86445F84F83A7A554B724E21FB07D74E6411CEFB48A6E412BE55BC7E",
-  "cisco cyber": "/certs/cisco-cybersecurity.jpg",
-  "cisco": "https://www.credly.com/badges/d0df2177-dda6-45bd-a825-99b28483e872/public_url",
-  "datacamp llms": "https://www.datacamp.com/completed/statement-of-accomplishment/course/7fb144e834b8b7a624cbdac1517dd6131ebc3220",
-  "datacamp": "https://www.datacamp.com/completed/statement-of-accomplishment/course/7fb144e834b8b7a624cbdac1517dd6131ebc3220",
-  "hackerrank sql 5★": "https://www.hackerrank.com/certificates/69cfd4dd5b46",
-  "hackerrank": "https://www.hackerrank.com/certificates/69cfd4dd5b46",
-  "dict devops": "/certs/dict-car-devops.png",
-  "dict car": "/certs/dict-car-devops.png",
-  "dti-car": "/certs/dict-car-devops.png",
-  "networking basics": "https://www.credly.com/badges/70efa984-ef48-40df-9585-c8c15f87b1f8/public_url",
-  "microsoft learn": "https://learn.microsoft.com/en-us/users/lecgdawnshinee-6332/achievements/7k98s4gz?ref=https%3A%2F%2Fwww.linkedin.com%2F",
-  "google": "https://www.coursera.org/account/accomplishments/verify/Q4AA46Z0D7I4",
-  "asean": "/certs/asean-ai-readiness.png",
-  "figma": "/certs/frontend-masters-figma.png",
-  "dict ms tools": "/certs/dict-ms-tools.png",
-  "ms tools": "/certs/dict-ms-tools.png",
-  "ibm ai": "https://www.credly.com/badges/534366e6-3fe5-4e62-abc7-72fb15611785/public_url",
-  "cyber threat management": "https://www.credly.com/badges/38cc93ce-fbce-457e-a2db-7490aa6a8d12/public_url",
-  "github education": "https://education.github.com",
+export interface CertModalItem {
+  title: string;
+  issuer: string;
+  category?: string;
+  image?: string;
+  badgeImg?: string;
+  verifyUrl?: string;
+}
+
+const CERT_METADATA_MAP: Record<string, CertModalItem> = {
+  "google": {
+    title: "Google: Technical Support Fundamentals",
+    issuer: "Google (Coursera)",
+    category: "Cloud & IT Systems",
+    badgeImg: "/certs/badges/google-coursera-badge.png",
+    verifyUrl: "https://www.coursera.org/account/accomplishments/verify/Q4AA46Z0D7I4",
+  },
+  "asean": {
+    title: "ASEAN Foundation: AI Readiness & Literacy",
+    issuer: "ASEAN Foundation & Microsoft",
+    category: "Artificial Intelligence",
+    image: "/certs/asean-ai-readiness.png",
+    badgeImg: "/certs/badges/asean-foundation-badge.png",
+  },
+  "figma": {
+    title: "Figma for Developers",
+    issuer: "Frontend Masters",
+    category: "UI/UX & Product Design",
+    image: "/certs/frontend-masters-figma.png",
+  },
+  "dict ms tools": {
+    title: "Productivity Tools with Microsoft 365",
+    issuer: "Department of Information and Communications Technology (DICT)",
+    category: "Cloud Productivity",
+    image: "/certs/dict-ms-tools.png",
+    badgeImg: "/certs/badges/dict-badge.png",
+  },
+  "ms tools": {
+    title: "Productivity Tools with Microsoft 365",
+    issuer: "Department of Information and Communications Technology (DICT)",
+    category: "Cloud Productivity",
+    image: "/certs/dict-ms-tools.png",
+    badgeImg: "/certs/badges/dict-badge.png",
+  },
+  "dict devops": {
+    title: "DevOps & Cloud Engineering",
+    issuer: "DICT & DTI-CAR",
+    category: "DevOps & Infrastructure",
+    image: "/certs/dict-car-devops.png",
+    badgeImg: "/certs/badges/dict-badge.png",
+  },
+  "dict car": {
+    title: "DevOps & Cloud Engineering",
+    issuer: "DICT & DTI-CAR",
+    category: "DevOps & Infrastructure",
+    image: "/certs/dict-car-devops.png",
+    badgeImg: "/certs/badges/dict-badge.png",
+  },
+  "dti-car": {
+    title: "DevOps & Cloud Engineering",
+    issuer: "DICT & DTI-CAR",
+    category: "DevOps & Infrastructure",
+    image: "/certs/dict-car-devops.png",
+    badgeImg: "/certs/badges/dict-badge.png",
+  },
+  "cisco cyber": {
+    title: "Cisco Junior Cybersecurity Analyst",
+    issuer: "Cisco Networking Academy",
+    category: "Cybersecurity",
+    image: "/certs/cisco-cybersecurity.jpg",
+    badgeImg: "/certs/badges/cisco-badge.png",
+    verifyUrl: "https://www.credly.com/badges/d0df2177-dda6-45bd-a825-99b28483e872/public_url",
+  },
+  "cisco": {
+    title: "Cisco Junior Cybersecurity Analyst",
+    issuer: "Cisco Networking Academy",
+    category: "Cybersecurity",
+    image: "/certs/cisco-cybersecurity.jpg",
+    badgeImg: "/certs/badges/cisco-badge.png",
+    verifyUrl: "https://www.credly.com/badges/d0df2177-dda6-45bd-a825-99b28483e872/public_url",
+  },
+  "oracle": {
+    title: "Oracle Cloud AI Foundations 2025",
+    issuer: "Oracle University",
+    category: "Cloud AI Foundations",
+    image: "/certs/oracle-cloud-ai.jpg",
+    badgeImg: "/certs/badges/oracle-badge.png",
+    verifyUrl: "https://catalog-education.oracle.com/ords/certview/sharebadge?id=84CF78EC86445F84F83A7A554B724E21FB07D74E6411CEFB48A6E412BE55BC7E",
+  },
+  "dti-albay coursera": {
+    title: "DTI-Albay Coursera Scholarship Program",
+    issuer: "Department of Trade and Industry & Coursera",
+    category: "Verified Grant",
+    badgeImg: "/certs/badges/google-coursera-badge.png",
+    verifyUrl: "https://www.coursera.org/account/accomplishments/verify/Q4AA46Z0D7I4",
+  },
+  "datacamp": {
+    title: "Large Language Models (LLMs) Concepts",
+    issuer: "DataCamp",
+    category: "Generative AI",
+    badgeImg: "/certs/badges/datacamp-llm-badge.png",
+    verifyUrl: "https://www.datacamp.com/completed/statement-of-accomplishment/course/7fb144e834b8b7a624cbdac1517dd6131ebc3220",
+  },
+  "datacamp llms": {
+    title: "Large Language Models (LLMs) Concepts",
+    issuer: "DataCamp",
+    category: "Generative AI",
+    badgeImg: "/certs/badges/datacamp-llm-badge.png",
+    verifyUrl: "https://www.datacamp.com/completed/statement-of-accomplishment/course/7fb144e834b8b7a624cbdac1517dd6131ebc3220",
+  },
+  "github education": {
+    title: "GitHub Developer Student Pack",
+    issuer: "GitHub Education",
+    category: "Developer Ecosystem",
+    verifyUrl: "https://education.github.com",
+  },
+  "hackerrank": {
+    title: "HackerRank SQL (Advanced) 5★",
+    issuer: "HackerRank",
+    category: "Databases & Algorithms",
+    badgeImg: "/certs/badges/hackerrank-sql-badge.png",
+    verifyUrl: "https://www.hackerrank.com/certificates/69cfd4dd5b46",
+  },
+  "hackerrank sql 5★": {
+    title: "HackerRank SQL (Advanced) 5★",
+    issuer: "HackerRank",
+    category: "Databases & Algorithms",
+    badgeImg: "/certs/badges/hackerrank-sql-badge.png",
+    verifyUrl: "https://www.hackerrank.com/certificates/69cfd4dd5b46",
+  },
+  "microsoft learn": {
+    title: "Microsoft Learn Cloud & DevOps Modules",
+    issuer: "Microsoft Learn",
+    category: "Cloud Engineering",
+    badgeImg: "/certs/badges/microsoft-learn.png",
+    verifyUrl: "https://learn.microsoft.com/en-us/users/lecgdawnshinee-6332/achievements/7k98s4gz",
+  },
+  "ibm ai": {
+    title: "IBM SkillsBuild: Artificial Intelligence Fundamentals",
+    issuer: "IBM SkillsBuild (Credly)",
+    category: "Artificial Intelligence",
+    badgeImg: "/certs/badges/ibm-ai-fundamentals.png",
+    verifyUrl: "https://www.credly.com/badges/534366e6-3fe5-4e62-abc7-72fb15611785/public_url",
+  },
+  "cyber threat management": {
+    title: "Cisco: Cyber Threat Management",
+    issuer: "Cisco Networking Academy (Credly)",
+    category: "Cybersecurity",
+    badgeImg: "/certs/badges/cisco-threat-management.png",
+    verifyUrl: "https://www.credly.com/badges/38cc93ce-fbce-457e-a2db-7490aa6a8d12/public_url",
+  },
+  "networking basics": {
+    title: "Cisco: Networking Basics",
+    issuer: "Cisco Networking Academy (Credly)",
+    category: "Computer Networks",
+    badgeImg: "/certs/badges/cisco-networking-basics.png",
+    verifyUrl: "https://www.credly.com/badges/70efa984-ef48-40df-9585-c8c15f87b1f8/public_url",
+  },
 };
+
+function getCertModalInfo(key: string, badgeItem?: BookBadgeItem): CertModalItem {
+  const norm = key.toLowerCase().trim();
+  if (CERT_METADATA_MAP[norm]) {
+    const data = CERT_METADATA_MAP[norm];
+    if (badgeItem) {
+      return {
+        ...data,
+        badgeImg: badgeItem.badgeImg || data.badgeImg,
+        verifyUrl: badgeItem.url.startsWith("http") ? badgeItem.url : data.verifyUrl,
+        image: badgeItem.url.startsWith("/certs/") ? badgeItem.url : data.image,
+      };
+    }
+    return data;
+  }
+  for (const k of Object.keys(CERT_METADATA_MAP)) {
+    if (norm.includes(k) || k.includes(norm)) {
+      const data = CERT_METADATA_MAP[k];
+      return badgeItem
+        ? {
+            ...data,
+            badgeImg: badgeItem.badgeImg || data.badgeImg,
+            verifyUrl: badgeItem.url.startsWith("http") ? badgeItem.url : data.verifyUrl,
+            image: badgeItem.url.startsWith("/certs/") ? badgeItem.url : data.image,
+          }
+        : data;
+    }
+  }
+  if (badgeItem) {
+    return {
+      title: badgeItem.name,
+      issuer: "Verified Credential",
+      category: "Accreditation",
+      badgeImg: badgeItem.badgeImg,
+      verifyUrl: badgeItem.url.startsWith("http") ? badgeItem.url : undefined,
+      image: badgeItem.url.startsWith("/certs/") ? badgeItem.url : undefined,
+    };
+  }
+  return {
+    title: key,
+    issuer: "Verified Credential",
+    category: "Accreditation",
+    image: undefined,
+  };
+}
 
 const ALL_BADGES: BookBadgeItem[] = [
   {
@@ -188,14 +369,15 @@ const spreads: BookSpread[] = [
     leftPage: {
       tag: "Vol. 01 • Academic Roots",
       quote:
-        "“In engineering and design, true craft is born at the intersection of mathematical rigor and aesthetic intuition.”",
-      image: "/catsu-campus.jpg",
-      caption: "Catanduanes State University Main Campus.",
+        "“True engineering elegance is forged at the intersection of rigorous theory, architectural discipline, and relentless real-world execution.”",
+      image:
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=700&q=85",
+      caption: "Collegiate computing & systems laboratory research.",
     },
     rightPage: {
-      tag: "Chapter 01 • Degree",
-      title: "Catanduanes State University",
-      subtitle: "Bachelor of Science in Information Technology",
+      tag: "Chapter 01 • University Degree",
+      title: "Bachelor of Science in Information Technology",
+      subtitle: "Catanduanes State University (2022–2026)",
       description:
         "A rigorous 4-year curriculum spanning software architecture, distributed databases, algorithmic complexity, and human-computer interfaces. Consistently maintained top academic honors.",
       stats: [
@@ -268,9 +450,11 @@ const spreads: BookSpread[] = [
 function PageInner({
   page,
   pageNumber,
+  onOpenCert,
 }: {
   page: BookPageContent;
   pageNumber: number;
+  onOpenCert: (cert: CertModalItem) => void;
 }) {
   // Real-time dynamic calculation of verified badges and accredited skills
   const badgesList = page.badges || (page.badgeSummary ? ALL_BADGES : []);
@@ -341,23 +525,20 @@ function PageInner({
           {page.pills && (
             <div className="book3d-page__pills">
               {page.pills.map((pill, i) => {
-                const url = CERT_URL_MAP[pill.toLowerCase().trim()];
-                return url ? (
-                  <a
+                const certInfo = getCertModalInfo(pill);
+                return (
+                  <button
                     key={i}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    type="button"
                     className="book3d-page__pill book3d-page__pill--clickable"
-                    onClick={(e) => e.stopPropagation()}
-                    title={`Open verified credential for ${pill}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenCert(certInfo);
+                    }}
+                    title={`View certificate for ${pill}`}
                   >
                     {pill} ↗
-                  </a>
-                ) : (
-                  <span key={i} className="book3d-page__pill">
-                    {pill}
-                  </span>
+                  </button>
                 );
               })}
             </div>
@@ -370,17 +551,16 @@ function PageInner({
         <div className="book3d-badges-showcase">
           <div className="book3d-badges-grid-cute">
             {page.badges.map((b, idx) => (
-              <a
+              <button
                 key={b.id}
-                href={b.url}
-                target="_blank"
-                rel="noopener noreferrer"
+                type="button"
                 className={`book3d-badge-cute-btn book3d-badge-cute-btn--pos-${idx % 4}`}
                 onClick={(e) => {
                   e.stopPropagation();
+                  onOpenCert(getCertModalInfo(b.shortName || b.name, b));
                 }}
-                title={`Open ${b.name}`}
-                aria-label={`Open certificate for ${b.name}`}
+                title={`View ${b.name}`}
+                aria-label={`View certificate for ${b.name}`}
               >
                 <div className="book3d-badge-cute-img-wrap">
                   <img
@@ -392,7 +572,7 @@ function PageInner({
                 <span className="book3d-badge-cute-tooltip">
                   {b.shortName || b.name} ↗
                 </span>
-              </a>
+              </button>
             ))}
           </div>
         </div>
@@ -424,6 +604,7 @@ export default function Book3D() {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isTurning, setIsTurning] = useState<boolean>(false);
   const [isMaximized, setIsMaximized] = useState<boolean>(false);
+  const [selectedCert, setSelectedCert] = useState<CertModalItem | null>(null);
 
   const bookRef = useRef<HTMLDivElement>(null);
 
@@ -459,6 +640,26 @@ export default function Book3D() {
     }
   };
 
+  // Keyboard and body scroll lock for cert modal
+  useEffect(() => {
+    if (selectedCert) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+
+      const handleCertEsc = (e: globalThis.KeyboardEvent) => {
+        if (e.key === "Escape") {
+          setSelectedCert(null);
+        }
+      };
+
+      window.addEventListener("keydown", handleCertEsc);
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        window.removeEventListener("keydown", handleCertEsc);
+      };
+    }
+  }, [selectedCert]);
+
   useEffect(() => {
     if (isMaximized) {
       const originalOverflow = document.body.style.overflow;
@@ -480,14 +681,14 @@ export default function Book3D() {
 
   useEffect(() => {
     const handleGlobalKey = (e: globalThis.KeyboardEvent) => {
-      if (!isMaximized && bookRef.current && bookRef.current.contains(document.activeElement)) {
+      if (!isMaximized && !selectedCert && bookRef.current && bookRef.current.contains(document.activeElement)) {
         if (e.key === "ArrowRight") handleNext();
         if (e.key === "ArrowLeft") handlePrev();
       }
     };
     window.addEventListener("keydown", handleGlobalKey);
     return () => window.removeEventListener("keydown", handleGlobalKey);
-  }, [currentStep, isTurning, isMaximized]);
+  }, [currentStep, isTurning, isMaximized, selectedCert]);
 
   const isOpen = currentStep >= 1 && currentStep <= spreads.length;
   const isBackCover = currentStep > spreads.length;
@@ -569,6 +770,7 @@ export default function Book3D() {
               <PageInner
                 page={activeSpread.leftPage}
                 pageNumber={currentStep * 2 - 1}
+                onOpenCert={setSelectedCert}
               />
               <div
                 className="book3d-page__spine-gutter book3d-page__spine-gutter--left"
@@ -588,6 +790,7 @@ export default function Book3D() {
               <PageInner
                 page={activeSpread.rightPage}
                 pageNumber={currentStep * 2}
+                onOpenCert={setSelectedCert}
               />
               <div
                 className="book3d-page__spine-gutter book3d-page__spine-gutter--right"
@@ -693,6 +896,106 @@ export default function Book3D() {
                 }`}
                 aria-hidden="true"
               />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Floating Certificate Lightbox Modal with Minimal Blur */}
+      {selectedCert && (
+        <div
+          className="cert-modal-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedCert.title}
+          onClick={() => setSelectedCert(null)}
+        >
+          <div className="cert-modal-backdrop" aria-hidden="true" />
+          <div
+            className="cert-modal-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="cert-modal-header">
+              <div className="cert-modal-badge-group">
+                {selectedCert.category && (
+                  <span className="cert-modal-category">{selectedCert.category}</span>
+                )}
+                <span className="cert-modal-verified-pill">
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                  Verified Credential
+                </span>
+              </div>
+              <div className="cert-modal-actions">
+                {selectedCert.verifyUrl && (
+                  <a
+                    href={selectedCert.verifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cert-modal-btn cert-modal-btn--verify"
+                    title="Open external verification in new tab"
+                  >
+                    <span>Verify ↗</span>
+                  </a>
+                )}
+                <button
+                  type="button"
+                  className="cert-modal-btn"
+                  onClick={() => setSelectedCert(null)}
+                  aria-label="Close certificate modal"
+                  title="Close (Esc)"
+                >
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="cert-modal-display-wrap">
+              <div className="cert-modal-body">
+                {selectedCert.image ? (
+                  <div className="cert-modal-image-shell">
+                    <img
+                      src={selectedCert.image}
+                      alt={selectedCert.title}
+                      className="cert-modal-image"
+                    />
+                  </div>
+                ) : (
+                  <div className="cert-modal-placeholder-card">
+                    {selectedCert.badgeImg && (
+                      <img
+                        src={selectedCert.badgeImg}
+                        alt={selectedCert.title}
+                        style={{ width: "90px", height: "90px", objectFit: "contain", marginBottom: "1rem" }}
+                      />
+                    )}
+                    <span className="cert-placeholder-org">{selectedCert.issuer}</span>
+                    <h3 className="cert-placeholder-title">{selectedCert.title}</h3>
+                    {selectedCert.verifyUrl && (
+                      <a
+                        href={selectedCert.verifyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="cert-placeholder-verify-link"
+                      >
+                        Verify on Issuer Portal ↗
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="cert-modal-meta">
+              <div className="cert-modal-meta__main">
+                <h4 className="cert-modal-meta__title">{selectedCert.title}</h4>
+                <span className="cert-modal-meta__issuer">{selectedCert.issuer}</span>
+              </div>
+              <span className="cert-modal-esc">Press ESC to close</span>
             </div>
           </div>
         </div>
