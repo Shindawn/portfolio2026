@@ -1346,23 +1346,27 @@ a {
 }
 
 .brand-strip {
-  max-width: min(40rem, 88vw);
-  margin-top: clamp(2.8rem, 5vw, 4.2rem);
+  max-width: min(64rem, 94vw);
+  margin-top: clamp(2.4rem, 4.5vw, 3.6rem);
   margin-inline: auto;
   overflow: hidden;
-  color: #595957;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.4) 14%, black 28%, black 72%, rgba(0, 0, 0, 0.4) 86%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.4) 14%, black 28%, black 72%, rgba(0, 0, 0, 0.4) 86%, transparent 100%);
+  color: var(--ink);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.4) 6%, black 16%, black 84%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.4) 6%, black 16%, black 84%, rgba(0, 0, 0, 0.4) 94%, transparent 100%);
 }
 
 .brand-track {
   width: max-content;
   display: flex;
   align-items: center;
-  gap: clamp(2.6rem, 4.5vw, 4.5rem);
-  padding-inline: 2rem;
-  animation: company-marquee 20s linear infinite;
+  gap: clamp(1.2rem, 2.2vw, 1.8rem);
+  padding-inline: 1.5rem;
+  animation: company-marquee 30s linear infinite;
   will-change: transform;
+}
+
+.brand-track:hover {
+  animation-play-state: paused;
 }
 
 @keyframes company-marquee {
@@ -1372,35 +1376,104 @@ a {
 }
 
 .brand-mark {
-  width: 1.8rem;
-  height: 1.8rem;
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   flex: 0 0 auto;
-  font-family: Arial, sans-serif;
-  font-size: 1.45rem;
-  font-weight: 800;
-  line-height: 1;
+  transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
 }
 
-.brand-mark--triangle {
-  width: 0;
-  height: 0;
-  border-right: 0.8rem solid transparent;
-  border-bottom: 1.4rem solid #969694;
-  border-left: 0.8rem solid transparent;
+.brand-mark:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(14, 90, 60, 0.25);
+  box-shadow: 0 6px 18px rgba(14, 90, 60, 0.1);
 }
 
-.brand-mark--round {
+.brand-logo-img {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.brand-logo-img--catsu {
+  height: 32px;
+  width: 32px;
   border-radius: 50%;
-  background: #595957;
-  color: #fdfdfd;
-  font-size: 1.2rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.14));
 }
 
-.brand-mark--line {
-  font-family: Georgia, serif;
-  font-weight: 400;
+.brand-logo-img--klcc {
+  height: 28px;
+  width: auto;
+  max-width: 140px;
+}
+
+.brand-logo-img--dark {
+  display: none;
+}
+
+.brand-icon {
+  display: block;
+  flex: 0 0 auto;
+}
+
+.brand-mark__label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brand-mark__name {
+  font-family: var(--font-sans, "Outfit", sans-serif);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.brand-mark__sub {
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--ink-muted, #64748b);
+  letter-spacing: 0.01em;
+}
+
+:root[data-theme="dark"] .brand-mark {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+:root[data-theme="dark"] .brand-mark:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(46, 213, 115, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+:root[data-theme="dark"] .brand-logo-img--light {
+  display: none;
+}
+
+:root[data-theme="dark"] .brand-logo-img--dark {
+  display: block;
+}
+
+:root[data-theme="dark"] .brand-mark__name {
+  color: #f1f5f3;
+}
+
+:root[data-theme="dark"] .brand-mark__sub {
+  color: #94a3b8;
 }
 
 /* Full-width Compact Testimonial Banner (System-styled with Grid Crosshairs & Moving Lights) */
