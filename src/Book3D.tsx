@@ -256,14 +256,6 @@ function getCertModalInfo(key: string, badgeItem?: BookBadgeItem): CertModalItem
 
 const ALL_BADGES: BookBadgeItem[] = [
   {
-    id: "google-gdg-sonder",
-    name: "Google Developer Groups (GDG) Sonder Vietnam",
-    shortName: "Google GDG",
-    badgeImg: "/certs/badges/google-gdg-badge.png",
-    url: "/certs/gdg-sonder-vietnam.jpg",
-    skillsCount: 7,
-  },
-  {
     id: "oracle-cloud-ai",
     name: "Oracle Cloud AI Foundations 2025",
     shortName: "Oracle AI",
