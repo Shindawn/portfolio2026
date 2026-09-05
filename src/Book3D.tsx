@@ -570,16 +570,15 @@ function PageInner({
         <div className="book3d-badges-showcase">
           <div className="book3d-badges-grid-cute">
             {page.badges.map((b, idx) => (
-              <button
+              <a
                 key={b.id}
-                type="button"
+                href={b.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`book3d-badge-cute-btn book3d-badge-cute-btn--pos-${idx % 4}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onOpenCert(getCertModalInfo(b.shortName || b.name, b));
-                }}
-                title={`View ${b.name}`}
-                aria-label={`View certificate for ${b.name}`}
+                onClick={(e) => e.stopPropagation()}
+                title={`Verify ${b.name} on external portal`}
+                aria-label={`Verify ${b.name}`}
               >
                 <div className="book3d-badge-cute-img-wrap">
                   <img
@@ -591,7 +590,7 @@ function PageInner({
                 <span className="book3d-badge-cute-tooltip">
                   {b.shortName || b.name} ↗
                 </span>
-              </button>
+              </a>
             ))}
           </div>
         </div>
