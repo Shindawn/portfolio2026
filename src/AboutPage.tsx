@@ -311,15 +311,11 @@ export default function AboutPage() {
                 <>
                   <div className="about-matrix__title-group">
                     <p className="about-experience__label">Tech Stack Matrix</p>
-                    {hoveredTech ? (
+                    {hoveredTech && (
                       <span className="about-matrix__active-name">
                         <strong>{hoveredTech.name}</strong> • {hoveredTech.category}
                       </span>
-                    ) : highScore > 0 ? (
-                      <span className="about-matrix__active-name">
-                        🏆 High Score: <strong>{highScore.toLocaleString()} pts</strong>
-                      </span>
-                    ) : null}
+                    )}
                   </div>
                   <button
                     type="button"
