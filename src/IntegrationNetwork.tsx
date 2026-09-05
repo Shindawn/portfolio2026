@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from "react";
 import "./IntegrationNetwork.css";
 
-export type NetworkCategoryKey = "dev" | "n8n" | "wordpress" | "va";
+export type NetworkCategoryKey = "dev" | "n8n" | "wordpress";
 
 interface IntegrationNode {
   id: string;
@@ -10,6 +10,7 @@ interface IntegrationNode {
   x: number;
   y: number;
   path: string;
+  extraPath?: string;
   speed: number;
   delay: number;
   icon: ReactNode;
@@ -21,6 +22,9 @@ interface NetworkCategory {
   label: string;
   shortLabel: string;
   tagline: string;
+  layoutType: "radial" | "pipeline" | "tiered";
+  hubX: number;
+  hubY: number;
   hubName: string;
   hubTooltip: string;
   hubColor: string;
@@ -29,22 +33,15 @@ interface NetworkCategory {
   nodes: IntegrationNode[];
 }
 
-// 8 standard node coordinate slots for balanced geometry (900x460 canvas, center: 450, 230)
-// Slot 0: Top-Left (130, 110)
-// Slot 1: Mid-Left (230, 230)
-// Slot 2: Bot-Left (140, 350)
-// Slot 3: Bot-Center-Left (360, 390)
-// Slot 4: Bot-Center-Right (540, 390)
-// Slot 5: Bot-Right (760, 350)
-// Slot 6: Mid-Right (670, 230)
-// Slot 7: Top-Right (770, 110)
-
 const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
   dev: {
     id: "dev",
     label: "Software Dev",
     shortLabel: "Dev",
-    tagline: "Software Development Connected Tools & Workflow",
+    tagline: "Centralized IDE Orbit & Full-Stack Development Pipeline",
+    layoutType: "radial",
+    hubX: 450,
+    hubY: 230,
     hubName: "VS Code",
     hubTooltip: "VS Code / Primary Development Environment",
     hubColor: "#007acc",
@@ -56,131 +53,15 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
     ),
     nodes: [
       {
-        id: "notion",
-        name: "Notion",
-        category: "Notes & Docs",
-        x: 130,
-        y: 110,
-        path: "M 450 230 C 310 230, 230 110, 130 110",
-        speed: 5.5,
-        delay: 0,
-        status: "Docs, notes & project specs",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M4.459 4.208c.746.606 1.026.56 2.428.466l11.43-.84c1.12-.093 1.214-.56 1.4-.933L20.9 1.41c.093-.186.28-.28.56-.28.467 0 .653.28.653.746v16.7c0 .84-.373 1.306-1.306 1.4l-14.55 1.026c-.84.093-1.306-.28-1.773-.84l-2.053-2.613c-.28-.373-.373-.653-.373-.933V4.954c0-.653.467-.933.933-.933.28 0 .56.093.84.28l-.384-.093zm1.68 2.053v11.756c0 .467.28.653.653.653l12.41-.84c.373-.093.56-.373.56-.746V5.421c0-.467-.28-.653-.653-.653L6.792 5.608c-.373.093-.653.373-.653.653zm2.52 1.306h2.893l4.666 7.466V7.567h2.333v9.052h-2.706L9.046 9.06v7.56h-2.387V7.567z" />
-          </svg>
-        ),
-      },
-      {
-        id: "google-cloud",
-        name: "Google Cloud",
-        category: "Cloud & Hosting",
-        x: 230,
-        y: 230,
-        path: "M 450 230 L 230 230",
-        speed: 4.8,
-        delay: 1.2,
-        status: "Cloud hosting & serverless backends",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.053 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
-          </svg>
-        ),
-      },
-      {
-        id: "slack-dev",
-        name: "Slack",
-        category: "Collaboration",
-        x: 140,
-        y: 350,
-        path: "M 450 230 C 310 230, 240 350, 140 350",
-        speed: 6.2,
-        delay: 2.1,
-        status: "Team chat, standups & build alerts",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z" />
-          </svg>
-        ),
-      },
-      {
-        id: "github",
-        name: "GitHub",
-        category: "Version Control",
-        x: 360,
-        y: 390,
-        path: "M 450 230 C 410 310, 380 350, 360 390",
-        speed: 5.0,
-        delay: 3.2,
-        status: "Git repositories & CI/CD pipelines",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-          </svg>
-        ),
-      },
-      {
-        id: "figma",
-        name: "Figma",
-        category: "UI/UX Design",
-        x: 540,
-        y: 390,
-        path: "M 450 230 C 490 310, 520 350, 540 390",
-        speed: 5.6,
-        delay: 0.8,
-        status: "Design systems & component mockups",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M12 12a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm-6 0a3 3 0 0 1 3-3h3v6H9a3 3 0 0 1-3-3zm0-6a3 3 0 0 1 3-3h3v6H9a3 3 0 0 1-3-3zm6-3h3a3 3 0 1 1 0 6h-3V3zm-6 15a3 3 0 0 1 3-3h3v3a3 3 0 1 1-6 0z" />
-          </svg>
-        ),
-      },
-      {
-        id: "openai-dev",
-        name: "AI & LLMs",
-        category: "AI Tooling",
-        x: 760,
-        y: 350,
-        path: "M 450 230 C 590 230, 660 350, 760 350",
-        speed: 5.8,
-        delay: 2.0,
-        status: "Generative AI coding & prompt workflows",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.771-4.209 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.746-7.07zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.677l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.674 8.105v-5.659a.79.79 0 0 0-.409-.686zm2.01-3.023l-.141-.085-4.779-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l2.6-1.5 2.6 1.5v3l-2.6 1.5-2.6-1.5z" />
-          </svg>
-        ),
-      },
-      {
-        id: "apis",
-        name: "REST & GraphQL",
-        category: "Backend & Data",
-        x: 670,
-        y: 230,
-        path: "M 450 230 L 670 230",
-        speed: 4.6,
-        delay: 2.8,
-        status: "API endpoints & structured payload routing",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-            <polyline points="14 2 14 8 20 8" />
-            <line x1="8" y1="13" x2="16" y2="13" />
-            <line x1="8" y1="17" x2="16" y2="17" />
-            <line x1="10" y1="9" x2="8" y2="9" />
-          </svg>
-        ),
-      },
-      {
         id: "react",
         name: "React & Next.js",
-        category: "Frontend",
-        x: 770,
+        category: "Frontend UI",
+        x: 750,
         y: 110,
-        path: "M 450 230 C 590 230, 670 110, 770 110",
-        speed: 6.0,
-        delay: 1.6,
-        status: "Modern interactive web applications",
+        path: "M 450 230 C 580 230, 660 110, 750 110",
+        speed: 5.2,
+        delay: 0,
+        status: "High-performance SPA & SSR web applications",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
             <circle cx="12" cy="12" r="2.2" />
@@ -192,96 +73,35 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
           </svg>
         ),
       },
-    ],
-  },
-
-  n8n: {
-    id: "n8n",
-    label: "n8n Automation",
-    shortLabel: "n8n",
-    tagline: "n8n AI & Automated Workflow Ecosystem",
-    hubName: "n8n Core",
-    hubTooltip: "n8n / Self-Hosted & Cloud Workflow Orchestration",
-    hubColor: "#ea4b71",
-    hubBgHover: "rgba(234, 75, 113, 0.15)",
-    hubIcon: (
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
-        <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12c0-5.523-4.477-10-10-10z" style={{ display: "none" }} />
-        {/* Crisp geometric n8n node flow icon */}
-        <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="5" cy="12" r="3" fill="currentColor" />
-          <circle cx="12" cy="6" r="3" fill="currentColor" />
-          <circle cx="12" cy="18" r="3" fill="currentColor" />
-          <circle cx="19" cy="12" r="3" fill="currentColor" />
-          <path d="M8 12h8" />
-          <path d="M5 12l7-6" />
-          <path d="M5 12l7 6" />
-          <path d="M12 6l7 6" />
-          <path d="M12 18l7-6" />
-        </g>
-      </svg>
-    ),
-    nodes: [
       {
-        id: "webhooks",
-        name: "Webhooks & HTTP",
-        category: "Triggers & APIs",
-        x: 130,
-        y: 110,
-        path: "M 450 230 C 310 230, 230 110, 130 110",
-        speed: 5.2,
-        delay: 0,
-        status: "Real-time incoming triggers & REST calls",
+        id: "apis",
+        name: "REST & GraphQL",
+        category: "Backend & APIs",
+        x: 740,
+        y: 260,
+        path: "M 450 230 C 580 230, 650 260, 740 260",
+        speed: 4.8,
+        delay: 1.2,
+        status: "Structured API endpoints & data serialization",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-            <path d="M2 8c0-2.2 1.8-4 4-4" />
-          </svg>
-        ),
-      },
-      {
-        id: "airtable",
-        name: "Airtable",
-        category: "Database & CRM",
-        x: 230,
-        y: 230,
-        path: "M 450 230 L 230 230",
-        speed: 4.8,
-        delay: 1.1,
-        status: "Relational records, CRM syncing & base updates",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M11.667 1.63L2.247 6.002a.75.75 0 000 1.348l9.42 4.372a.75.75 0 00.632 0l9.42-4.372a.75.75 0 000-1.348L12.3 1.63a.75.75 0 00-.633 0zm-.917 11.23L1.5 8.525V17a.75.75 0 00.434.68l8.5 4a.75.75 0 00.316.07V12.86zm2.5 0v8.89a.75.75 0 00.316-.07l8.5-4A.75.75 0 0022.5 17V8.525l-9.25 4.335z" />
-          </svg>
-        ),
-      },
-      {
-        id: "telegram",
-        name: "Telegram & Discord",
-        category: "Bot Notifications",
-        x: 140,
-        y: 350,
-        path: "M 450 230 C 310 230, 240 350, 140 350",
-        speed: 6.0,
-        delay: 2.2,
-        status: "Interactive bots, alerts & auto-responders",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .37z" />
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="8" y1="13" x2="16" y2="13" />
+            <line x1="8" y1="17" x2="16" y2="17" />
           </svg>
         ),
       },
       {
         id: "postgres",
-        name: "PostgreSQL",
-        category: "Data Store",
-        x: 360,
-        y: 390,
-        path: "M 450 230 C 410 310, 380 350, 360 390",
-        speed: 5.1,
-        delay: 3.1,
-        status: "Raw relational storage, caching & SQL ETL",
+        name: "PostgreSQL & Redis",
+        category: "Database & Cache",
+        x: 630,
+        y: 380,
+        path: "M 450 230 C 530 310, 580 350, 630 380",
+        speed: 5.6,
+        delay: 2.4,
+        status: "ACID relational schema, query tuning & cache",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <ellipse cx="12" cy="5" rx="9" ry="3" />
@@ -291,47 +111,142 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
         ),
       },
       {
-        id: "stripe-n8n",
-        name: "Stripe Billing",
-        category: "E-Commerce Events",
-        x: 540,
-        y: 390,
-        path: "M 450 230 C 490 310, 520 350, 540 390",
-        speed: 5.7,
-        delay: 0.9,
-        status: "Subscription events, webhooks & invoicing",
+        id: "github",
+        name: "GitHub CI/CD",
+        category: "Version Control",
+        x: 270,
+        y: 380,
+        path: "M 450 230 C 370 310, 320 350, 270 380",
+        speed: 5.0,
+        delay: 3.1,
+        status: "Automated test suites, branching & deployment",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697.5 12.603.5 7.08.5 3.197 3.538 3.197 8.358c0 4.975 4.316 6.376 7.747 7.746 2.378.951 3.298 1.603 3.298 2.656 0 .979-.877 1.545-2.28 1.545-2.224 0-5.187-.992-7.247-2.19l-.919 5.568C5.772 24.6 8.91 25.1 11.83 25.1c5.845 0 9.773-2.909 9.773-7.917 0-4.66-3.69-6.309-7.627-8.033z" />
+            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
           </svg>
         ),
       },
       {
-        id: "slack-n8n",
-        name: "Slack Ops",
-        category: "Team Alerts",
-        x: 760,
-        y: 350,
-        path: "M 450 230 C 590 230, 660 350, 760 350",
-        speed: 5.9,
+        id: "google-cloud",
+        name: "Google Cloud",
+        category: "Cloud Hosting",
+        x: 160,
+        y: 260,
+        path: "M 450 230 C 320 230, 250 260, 160 260",
+        speed: 4.6,
         delay: 1.8,
-        status: "Incident alerts, approvals & channel broadcasting",
+        status: "Serverless containers, GCP compute & storage",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z" />
+            <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.053 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
+          </svg>
+        ),
+      },
+      {
+        id: "figma",
+        name: "Figma UI/UX",
+        category: "Interface Design",
+        x: 150,
+        y: 110,
+        path: "M 450 230 C 320 230, 240 110, 150 110",
+        speed: 5.4,
+        delay: 0.6,
+        status: "Interactive prototypes & design system components",
+        icon: (
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+            <path d="M12 12a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm-6 0a3 3 0 0 1 3-3h3v6H9a3 3 0 0 1-3-3zm0-6a3 3 0 0 1 3-3h3v6H9a3 3 0 0 1-3-3zm6-3h3a3 3 0 1 1 0 6h-3V3zm-6 15a3 3 0 0 1 3-3h3v3a3 3 0 1 1-6 0z" />
+          </svg>
+        ),
+      },
+    ],
+  },
+
+  n8n: {
+    id: "n8n",
+    label: "n8n Automation",
+    shortLabel: "n8n",
+    tagline: "Linear Event-Driven DAG Pipeline & Multi-Channel Orchestration",
+    layoutType: "pipeline",
+    hubX: 320,
+    hubY: 230,
+    hubName: "n8n Core",
+    hubTooltip: "n8n / Central Workflow Engine & Logic Router",
+    hubColor: "#ea4b71",
+    hubBgHover: "rgba(234, 75, 113, 0.15)",
+    hubIcon: (
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="5" cy="12" r="3" fill="currentColor" />
+        <circle cx="12" cy="6" r="3" fill="currentColor" />
+        <circle cx="12" cy="18" r="3" fill="currentColor" />
+        <circle cx="19" cy="12" r="3" fill="currentColor" />
+        <path d="M8 12h8" />
+        <path d="M5 12l7-6" />
+        <path d="M5 12l7 6" />
+        <path d="M12 6l7 6" />
+        <path d="M12 18l7-6" />
+      </svg>
+    ),
+    nodes: [
+      {
+        id: "webhooks-n8n",
+        name: "Webhooks & Stripe",
+        category: "Input Triggers",
+        x: 120,
+        y: 130,
+        path: "M 120 130 C 200 130, 240 230, 320 230",
+        speed: 4.4,
+        delay: 0,
+        status: "Real-time payment events & incoming webhooks",
+        icon: (
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            <path d="M2 8c0-2.2 1.8-4 4-4" />
+          </svg>
+        ),
+      },
+      {
+        id: "airtable-n8n",
+        name: "Airtable Forms",
+        category: "Lead Ingestion",
+        x: 120,
+        y: 330,
+        path: "M 120 330 C 200 330, 240 230, 320 230",
+        speed: 4.6,
+        delay: 1.1,
+        status: "CRM form submissions & client intake sync",
+        icon: (
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+            <path d="M11.667 1.63L2.247 6.002a.75.75 0 000 1.348l9.42 4.372a.75.75 0 00.632 0l9.42-4.372a.75.75 0 000-1.348L12.3 1.63a.75.75 0 00-.633 0zm-.917 11.23L1.5 8.525V17a.75.75 0 00.434.68l8.5 4a.75.75 0 00.316.07V12.86zm2.5 0v8.89a.75.75 0 00.316-.07l8.5-4A.75.75 0 0022.5 17V8.525l-9.25 4.335z" />
+          </svg>
+        ),
+      },
+      {
+        id: "openai-n8n",
+        name: "OpenAI Agents & RAG",
+        category: "AI Processing",
+        x: 550,
+        y: 140,
+        path: "M 320 230 C 410 230, 460 140, 550 140",
+        speed: 5.0,
+        delay: 0.5,
+        status: "LangChain embeddings, auto-tagging & summary generation",
+        icon: (
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+            <path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.771-4.209 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.746-7.07zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.677l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.674 8.105v-5.659a.79.79 0 0 0-.409-.686zm2.01-3.023l-.141-.085-4.779-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l2.6-1.5 2.6 1.5v3l-2.6 1.5-2.6-1.5z" />
           </svg>
         ),
       },
       {
         id: "sheets-n8n",
-        name: "Google Sheets",
-        category: "Cloud Sheets",
-        x: 670,
-        y: 230,
-        path: "M 450 230 L 670 230",
-        speed: 4.7,
-        delay: 2.7,
-        status: "Two-way sheet sync, batch append & reports",
+        name: "Database & Sheets",
+        category: "Storage Sync",
+        x: 550,
+        y: 320,
+        path: "M 320 230 C 410 230, 460 320, 550 320",
+        speed: 5.2,
+        delay: 1.8,
+        status: "PostgreSQL & Google Sheets live records synchronization",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -343,18 +258,19 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
         ),
       },
       {
-        id: "openai-n8n",
-        name: "OpenAI Agents",
-        category: "Autonomous AI",
-        x: 770,
-        y: 110,
-        path: "M 450 230 C 590 230, 670 110, 770 110",
-        speed: 6.1,
-        delay: 1.5,
-        status: "LangChain, RAG embeddings & AI decision chains",
+        id: "telegram-n8n",
+        name: "Telegram & Discord",
+        category: "Action Dispatch",
+        x: 780,
+        y: 230,
+        path: "M 550 140 C 640 140, 700 230, 780 230",
+        extraPath: "M 550 320 C 640 320, 700 230, 780 230",
+        speed: 4.8,
+        delay: 2.2,
+        status: "Instant bot alerts, customer pings & channel broadcast",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.771-4.209 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.746-7.07zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.677l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.674 8.105v-5.659a.79.79 0 0 0-.409-.686zm2.01-3.023l-.141-.085-4.779-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l2.6-1.5 2.6 1.5v3l-2.6 1.5-2.6-1.5z" />
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .37z" />
           </svg>
         ),
       },
@@ -365,9 +281,12 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
     id: "wordpress",
     label: "WordPress",
     shortLabel: "WordPress",
-    tagline: "WordPress & CMS Connected Ecosystem",
+    tagline: "Tiered CMS Architecture & Performance Ecosystem",
+    layoutType: "tiered",
+    hubX: 450,
+    hubY: 220,
     hubName: "WordPress Core",
-    hubTooltip: "WordPress / Content Management & Architecture",
+    hubTooltip: "WordPress / Headless & Monolithic Architecture",
     hubColor: "#21759b",
     hubBgHover: "rgba(33, 117, 155, 0.15)",
     hubIcon: (
@@ -379,13 +298,13 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
       {
         id: "woocommerce",
         name: "WooCommerce",
-        category: "E-Commerce",
-        x: 130,
-        y: 110,
-        path: "M 450 230 C 310 230, 230 110, 130 110",
-        speed: 5.4,
+        category: "Store & Checkout",
+        x: 280,
+        y: 85,
+        path: "M 280 85 L 450 220",
+        speed: 5.0,
         delay: 0,
-        status: "Store inventory, cart & checkout funnels",
+        status: "High-conversion product checkout, cart & payment funnels",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="9" cy="21" r="1" />
@@ -397,13 +316,13 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
       {
         id: "elementor",
         name: "Elementor & Blocks",
-        category: "Page Builders",
-        x: 230,
-        y: 230,
-        path: "M 450 230 L 230 230",
-        speed: 4.9,
-        delay: 1.0,
-        status: "FSE, Gutenberg blocks & custom theme builder",
+        category: "Frontend Editor",
+        x: 620,
+        y: 85,
+        path: "M 620 85 L 450 220",
+        speed: 5.2,
+        delay: 0.9,
+        status: "Full site editing, Gutenberg block templates & custom themes",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
             <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-3.5 14.5h-2v-9h2zm8.5 0h-6.5v-2H17zm0-3.5h-6.5v-2H17zm0-3.5h-6.5v-2H17z" />
@@ -413,13 +332,13 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
       {
         id: "acf",
         name: "ACF Pro & CPTs",
-        category: "Custom Meta & Fields",
-        x: 140,
-        y: 350,
-        path: "M 450 230 C 310 230, 240 350, 140 350",
-        speed: 6.3,
-        delay: 2.3,
-        status: "Structured custom post types & flexible layouts",
+        category: "Custom Data Engine",
+        x: 170,
+        y: 220,
+        path: "M 170 220 L 450 220",
+        speed: 4.6,
+        delay: 1.8,
+        status: "Relational custom fields, repeatable layouts & custom post types",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="4 7 4 4 20 4 20 7" />
@@ -429,33 +348,15 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
         ),
       },
       {
-        id: "php-mysql",
-        name: "PHP & MySQL",
-        category: "Backend Engine",
-        x: 360,
-        y: 390,
-        path: "M 450 230 C 410 310, 380 350, 360 390",
-        speed: 5.2,
-        delay: 3.0,
-        status: "High-performance server stack & queries",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="16 18 22 12 16 6" />
-            <polyline points="8 6 2 12 8 18" />
-            <line x1="10" y1="20" x2="14" y2="4" />
-          </svg>
-        ),
-      },
-      {
         id: "rankmath",
         name: "SEO & Schema",
-        category: "Search Optimization",
-        x: 540,
-        y: 390,
-        path: "M 450 230 C 490 310, 520 350, 540 390",
-        speed: 5.5,
-        delay: 0.7,
-        status: "Technical SEO, rich snippets & meta tags",
+        category: "Search Visibility",
+        x: 730,
+        y: 220,
+        path: "M 450 220 L 730 220",
+        speed: 4.8,
+        delay: 2.6,
+        status: "OpenGraph tags, JSON-LD structured data & indexing",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8" />
@@ -466,209 +367,18 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
         ),
       },
       {
-        id: "cloudflare",
-        name: "Cloudflare & CDN",
-        category: "Speed & Security",
-        x: 760,
-        y: 350,
-        path: "M 450 230 C 590 230, 660 350, 760 350",
-        speed: 5.8,
-        delay: 1.9,
-        status: "Edge caching, DNS, WAF & SSL encryption",
+        id: "php-cloudflare",
+        name: "PHP 8 & Cloudflare",
+        category: "Infrastructure & Edge",
+        x: 450,
+        y: 365,
+        path: "M 450 220 L 450 365",
+        speed: 4.5,
+        delay: 1.2,
+        status: "Fast server execution, MySQL caching & Edge CDN security",
         icon: (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
             <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" />
-          </svg>
-        ),
-      },
-      {
-        id: "stripe-wp",
-        name: "Stripe & PayPal",
-        category: "Payment Gateways",
-        x: 670,
-        y: 230,
-        path: "M 450 230 L 670 230",
-        speed: 4.8,
-        delay: 2.6,
-        status: "PCI-compliant merchant payments & recurring plans",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-            <line x1="1" y1="10" x2="23" y2="10" />
-          </svg>
-        ),
-      },
-      {
-        id: "zapier-wp",
-        name: "Zapier & Webhooks",
-        category: "Lead Sync & CRM",
-        x: 770,
-        y: 110,
-        path: "M 450 230 C 590 230, 670 110, 770 110",
-        speed: 6.2,
-        delay: 1.4,
-        status: "Form submission forwarding & CRM integration",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-          </svg>
-        ),
-      },
-    ],
-  },
-
-  va: {
-    id: "va",
-    label: "Virtual Assistant",
-    shortLabel: "VA",
-    tagline: "Virtual Assistance & Administrative Operations",
-    hubName: "Operations Hub",
-    hubTooltip: "VA Operations / Task Management & Executive Support",
-    hubColor: "#8b5cf6",
-    hubBgHover: "rgba(139, 92, 246, 0.15)",
-    hubIcon: (
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <polyline points="16 11 18 13 22 9" />
-      </svg>
-    ),
-    nodes: [
-      {
-        id: "notion-va",
-        name: "Notion & SOPs",
-        category: "Wiki & Documentation",
-        x: 130,
-        y: 110,
-        path: "M 450 230 C 310 230, 230 110, 130 110",
-        speed: 5.3,
-        delay: 0,
-        status: "SOP documentation, wiki hubs & client briefing",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M4.459 4.208c.746.606 1.026.56 2.428.466l11.43-.84c1.12-.093 1.214-.56 1.4-.933L20.9 1.41c.093-.186.28-.28.56-.28.467 0 .653.28.653.746v16.7c0 .84-.373 1.306-1.306 1.4l-14.55 1.026c-.84.093-1.306-.28-1.773-.84l-2.053-2.613c-.28-.373-.373-.653-.373-.933V4.954c0-.653.467-.933.933-.933.28 0 .56.093.84.28l-.384-.093zm1.68 2.053v11.756c0 .467.28.653.653.653l12.41-.84c.373-.093.56-.373.56-.746V5.421c0-.467-.28-.653-.653-.653L6.792 5.608c-.373.093-.653.373-.653.653zm2.52 1.306h2.893l4.666 7.466V7.567h2.333v9.052h-2.706L9.046 9.06v7.56h-2.387V7.567z" />
-          </svg>
-        ),
-      },
-      {
-        id: "workspace-va",
-        name: "Google Workspace",
-        category: "Docs, Sheets & Drive",
-        x: 230,
-        y: 230,
-        path: "M 450 230 L 230 230",
-        speed: 4.7,
-        delay: 1.2,
-        status: "Spreadsheets, executive slide decks & Drive storage",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.053 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" />
-          </svg>
-        ),
-      },
-      {
-        id: "canva-va",
-        name: "Canva & Graphics",
-        category: "Visual Content",
-        x: 140,
-        y: 350,
-        path: "M 450 230 C 310 230, 240 350, 140 350",
-        speed: 6.1,
-        delay: 2.1,
-        status: "Social banners, marketing collateral & decks",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
-            <line x1="9" y1="9" x2="9.01" y2="9" />
-            <line x1="15" y1="9" x2="15.01" y2="9" />
-          </svg>
-        ),
-      },
-      {
-        id: "trello-va",
-        name: "Trello & ClickUp",
-        category: "Task Management",
-        x: 360,
-        y: 390,
-        path: "M 450 230 C 410 310, 380 350, 360 390",
-        speed: 5.0,
-        delay: 3.2,
-        status: "Kanban task boards, milestones & deadline tracking",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-            <rect x="7" y="7" width="3" height="9" rx="1" />
-            <rect x="14" y="7" width="3" height="5" rx="1" />
-          </svg>
-        ),
-      },
-      {
-        id: "calendly-va",
-        name: "Calendly",
-        category: "Scheduling & Booking",
-        x: 540,
-        y: 390,
-        path: "M 450 230 C 490 310, 520 350, 540 390",
-        speed: 5.6,
-        delay: 0.8,
-        status: "Calendar appointments, reminders & time zones",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-            <line x1="16" y1="2" x2="16" y2="6" />
-            <line x1="8" y1="2" x2="8" y2="6" />
-            <line x1="3" y1="10" x2="21" y2="10" />
-            <circle cx="12" cy="15" r="2" />
-          </svg>
-        ),
-      },
-      {
-        id: "mailchimp-va",
-        name: "Email & Outreach",
-        category: "Campaigns & Inboxes",
-        x: 760,
-        y: 350,
-        path: "M 450 230 C 590 230, 660 350, 760 350",
-        speed: 5.8,
-        delay: 2.0,
-        status: "Inbox triage, customer support & newsletters",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-        ),
-      },
-      {
-        id: "zapier-va",
-        name: "Zapier & Make",
-        category: "Productivity Flows",
-        x: 670,
-        y: 230,
-        path: "M 450 230 L 670 230",
-        speed: 4.6,
-        delay: 2.8,
-        status: "Automating routine data entry & cross-app sync",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-          </svg>
-        ),
-      },
-      {
-        id: "chatgpt-va",
-        name: "ChatGPT & AI Research",
-        category: "Executive AI Support",
-        x: 770,
-        y: 110,
-        path: "M 450 230 C 590 230, 670 110, 770 110",
-        speed: 6.0,
-        delay: 1.6,
-        status: "Copywriting, market research & summaries",
-        icon: (
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-            <path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.771-4.209 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.746-7.07zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.677l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.674 8.105v-5.659a.79.79 0 0 0-.409-.686zm2.01-3.023l-.141-.085-4.779-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l2.6-1.5 2.6 1.5v3l-2.6 1.5-2.6-1.5z" />
           </svg>
         ),
       },
@@ -676,7 +386,7 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
   },
 };
 
-const categoryKeys: NetworkCategoryKey[] = ["dev", "n8n", "wordpress", "va"];
+const categoryKeys: NetworkCategoryKey[] = ["dev", "n8n", "wordpress"];
 
 export default function IntegrationNetwork() {
   const [activeCategory, setActiveCategory] = useState<NetworkCategoryKey>("dev");
@@ -699,6 +409,9 @@ export default function IntegrationNetwork() {
     const nextIndex = (currentIndex + 1) % categoryKeys.length;
     handleCategoryChange(categoryKeys[nextIndex]);
   };
+
+  const hubLeftPercent = (currentCategory.hubX / 900) * 100;
+  const hubTopPercent = (currentCategory.hubY / 460) * 100;
 
   return (
     <section className="integration-network" id="integrations" aria-label="Interactive Integration Network">
@@ -731,7 +444,7 @@ export default function IntegrationNetwork() {
                 className="integration-network__stepper-arrow"
                 onClick={handlePrev}
                 aria-label="Previous ecosystem category"
-                title="Previous: <"
+                title="Previous category"
               >
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="15 18 9 12 15 6" />
@@ -742,7 +455,7 @@ export default function IntegrationNetwork() {
                 type="button"
                 className="integration-network__stepper-current"
                 onClick={handleNext}
-                title="Click to cycle next"
+                title="Click to switch category"
               >
                 <span className="integration-network__tab-dot" />
                 <span className="integration-network__stepper-label">{currentCategory.label}</span>
@@ -754,7 +467,7 @@ export default function IntegrationNetwork() {
                 className="integration-network__stepper-arrow"
                 onClick={handleNext}
                 aria-label="Next ecosystem category"
-                title="Next: >"
+                title="Next category"
               >
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 18 15 12 9 6" />
@@ -770,24 +483,46 @@ export default function IntegrationNetwork() {
               preserveAspectRatio="xMidYMid meet"
               aria-hidden="true"
             >
-              {/* Concentric Expanding Radar Waves */}
-              <circle cx="450" cy="230" r="140" className="network-orbit-wave network-orbit-wave--1" />
-              <circle cx="450" cy="230" r="140" className="network-orbit-wave network-orbit-wave--2" />
-              <circle cx="450" cy="230" r="140" className="network-orbit-wave network-orbit-wave--3" />
+              {/* Distinct Background Blueprint Guide per layout */}
+              {currentCategory.layoutType === "radial" && (
+                <>
+                  <circle cx="450" cy="230" r="260" className="network-orbit network-orbit--outer" />
+                  <circle cx="450" cy="230" r="160" className="network-orbit network-orbit--mid" />
+                  <circle cx="450" cy="230" r="70" className="network-orbit network-orbit--inner" />
+                  <circle cx="450" cy="230" r="140" className="network-orbit-wave network-orbit-wave--1" />
+                  <circle cx="450" cy="230" r="140" className="network-orbit-wave network-orbit-wave--2" />
+                </>
+              )}
 
-              {/* Inner Orbit Circle around Hub */}
-              <circle cx="450" cy="230" r="58" className="network-orbit network-orbit--inner" />
+              {currentCategory.layoutType === "pipeline" && (
+                <>
+                  {/* Pipeline Horizontal Rail Guides */}
+                  <line x1="80" y1="130" x2="820" y2="130" className="network-pipeline-rail" />
+                  <line x1="80" y1="230" x2="820" y2="230" className="network-pipeline-rail network-pipeline-rail--center" />
+                  <line x1="80" y1="330" x2="820" y2="330" className="network-pipeline-rail" />
+                  <circle cx="320" cy="230" r="64" className="network-orbit network-orbit--inner" />
+                </>
+              )}
 
-              {/* Connector Bezier Lines and Single Floating Photons */}
+              {currentCategory.layoutType === "tiered" && (
+                <>
+                  {/* Tiered Architectural Matrix / Grid */}
+                  <line x1="180" y1="85" x2="720" y2="85" className="network-tier-rail" />
+                  <line x1="100" y1="220" x2="800" y2="220" className="network-tier-rail" />
+                  <line x1="280" y1="365" x2="620" y2="365" className="network-tier-rail" />
+                  <polygon points="450,55 770,220 450,395 130,220" className="network-diamond-matrix" />
+                  <circle cx="450" cy="220" r="60" className="network-orbit network-orbit--inner" />
+                </>
+              )}
+
+              {/* Connector Lines & Animated Moving Photons */}
               {currentCategory.nodes.map((node) => {
                 const isHovered = hoveredNode?.id === node.id;
                 return (
                   <g key={node.id} className={`network-connector ${isHovered ? "is-active" : ""}`}>
-                    {/* Base Static Connector Path */}
+                    {/* Primary Path */}
                     <path d={node.path} className="network-path-base" />
-
-                    {/* Single Floating Light Particle */}
-                    <circle r="2.2" className="network-particle">
+                    <circle r="2.4" className="network-particle">
                       <animateMotion
                         dur={`${node.speed}s`}
                         repeatCount="indefinite"
@@ -797,16 +532,35 @@ export default function IntegrationNetwork() {
                         keyTimes="0;1"
                       />
                     </circle>
+
+                    {/* Secondary Extra Path (if any, like multi-inlet pipelines) */}
+                    {node.extraPath && (
+                      <>
+                        <path d={node.extraPath} className="network-path-base" />
+                        <circle r="2.4" className="network-particle">
+                          <animateMotion
+                            dur={`${node.speed}s`}
+                            repeatCount="indefinite"
+                            path={node.extraPath}
+                            begin={`-${(node.delay + 1.2) % node.speed}s`}
+                            keyPoints="0;1"
+                            keyTimes="0;1"
+                          />
+                        </circle>
+                      </>
+                    )}
                   </g>
                 );
               })}
             </svg>
 
-            {/* Central Main Hub Badge */}
+            {/* Dynamic Center Hub Badge */}
             <div
               className="network-hub"
               title={currentCategory.hubTooltip}
               style={{
+                left: `${hubLeftPercent}%`,
+                top: `${hubTopPercent}%`,
                 "--hub-color": currentCategory.hubColor,
               } as React.CSSProperties}
             >
@@ -821,7 +575,7 @@ export default function IntegrationNetwork() {
               </div>
             </div>
 
-            {/* Satellite Node Badges Positioned Absolutely (Percentages based on 900x460 canvas) */}
+            {/* Satellite Node Badges Positioned Absolutely */}
             {currentCategory.nodes.map((node) => {
               const leftPercent = (node.x / 900) * 100;
               const topPercent = (node.y / 460) * 100;
@@ -853,4 +607,3 @@ export default function IntegrationNetwork() {
     </section>
   );
 }
-
