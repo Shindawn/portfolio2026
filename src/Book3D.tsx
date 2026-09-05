@@ -46,11 +46,25 @@ export interface CertModalItem {
 
 const CERT_METADATA_MAP: Record<string, CertModalItem> = {
   "google": {
-    title: "Google: Technical Support Fundamentals",
-    issuer: "Google (Coursera)",
-    category: "Cloud & IT Systems",
-    badgeImg: "/certs/badges/google-coursera-badge.png",
-    verifyUrl: "https://www.coursera.org/account/accomplishments/verify/Q4AA46Z0D7I4",
+    title: "Google Developer Groups (GDG) Sonder Vietnam",
+    issuer: "Google Developer Groups (GDG Campus)",
+    category: "Google Developer Ecosystem",
+    image: "/certs/gdg-sonder-vietnam.jpg",
+    badgeImg: "/certs/badges/google-gdg-badge.png",
+  },
+  "google campus": {
+    title: "Google Developer Groups (GDG) Sonder Vietnam",
+    issuer: "Google Developer Groups (GDG Campus)",
+    category: "Google Developer Ecosystem",
+    image: "/certs/gdg-sonder-vietnam.jpg",
+    badgeImg: "/certs/badges/google-gdg-badge.png",
+  },
+  "gdg": {
+    title: "Google Developer Groups (GDG) Sonder Vietnam",
+    issuer: "Google Developer Groups (GDG Campus)",
+    category: "Google Developer Ecosystem",
+    image: "/certs/gdg-sonder-vietnam.jpg",
+    badgeImg: "/certs/badges/google-gdg-badge.png",
   },
   "asean": {
     title: "ASEAN Foundation: AI Readiness & Literacy",
@@ -242,6 +256,14 @@ function getCertModalInfo(key: string, badgeItem?: BookBadgeItem): CertModalItem
 
 const ALL_BADGES: BookBadgeItem[] = [
   {
+    id: "google-gdg-sonder",
+    name: "Google Developer Groups (GDG) Sonder Vietnam",
+    shortName: "Google GDG",
+    badgeImg: "/certs/badges/google-gdg-badge.png",
+    url: "/certs/gdg-sonder-vietnam.jpg",
+    skillsCount: 7,
+  },
+  {
     id: "oracle-cloud-ai",
     name: "Oracle Cloud AI Foundations 2025",
     shortName: "Oracle AI",
@@ -369,10 +391,9 @@ const spreads: BookSpread[] = [
     leftPage: {
       tag: "Vol. 01 • Academic Roots",
       quote:
-        "“True engineering elegance is forged at the intersection of rigorous theory, architectural discipline, and relentless real-world execution.”",
-      image:
-        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=700&q=85",
-      caption: "Collegiate computing & systems laboratory research.",
+        "“In engineering and design, true craft is born at the intersection of mathematical rigor and aesthetic intuition.”",
+      image: "/catsu-campus.jpg",
+      caption: "Catanduanes State University Main Campus.",
     },
     rightPage: {
       tag: "Chapter 01 • University Degree",
