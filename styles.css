@@ -6505,8 +6505,8 @@ a {
   height: 100%;
   object-fit: contain;
   background: transparent !important;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.14));
-  transition: filter 0.25s ease, transform 0.25s ease;
+  filter: none;
+  transition: transform 0.25s ease;
 }
 
 /* Cute Pop & Tilt on Hover */
@@ -6520,7 +6520,7 @@ a {
 }
 
 .book3d-badge-cute-btn:hover .book3d-badge-cute-img {
-  filter: drop-shadow(0 12px 20px rgba(var(--accent-rgb, 14, 165, 233), 0.45));
+  filter: none;
 }
 
 .book3d-badge-cute-btn:active {
@@ -6528,11 +6528,11 @@ a {
 }
 
 :root[data-theme="dark"] .book3d-badge-cute-img {
-  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.55));
+  filter: none;
 }
 
 :root[data-theme="dark"] .book3d-badge-cute-btn:hover .book3d-badge-cute-img {
-  filter: drop-shadow(0 14px 26px rgba(56, 189, 248, 0.45));
+  filter: none;
 }
 
 /* Cute Hover Micro-Tooltip */
