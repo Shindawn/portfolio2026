@@ -20,12 +20,21 @@ interface ClientBrand {
 const clientBrands: ClientBrand[] = [
   {
     id: "catsu",
-    name: "Catanduanes State University",
+    name: "CatSU",
     shortName: "CatSU",
     type: "image",
     imageLight: "/logos/catsu.png",
     imageDark: "/logos/catsu.png",
-    sub: "State University & Research",
+    sub: "Catanduanes State University",
+  },
+  {
+    id: "bato-tourism",
+    name: "Bato Tourism",
+    shortName: "Bato Tourism",
+    type: "image",
+    imageLight: "/logos/bato-tourism.png",
+    imageDark: "/logos/bato-tourism.png",
+    sub: "Municipal Tourism Office",
   },
   {
     id: "klcc",
@@ -35,6 +44,15 @@ const clientBrands: ClientBrand[] = [
     imageLight: "/logos/klcc.png",
     imageDark: "/logos/klcc-dark.png",
     sub: "Fintech & HRIS Platform",
+  },
+  {
+    id: "cc-events",
+    name: "CC Wedding",
+    shortName: "CC Wedding",
+    type: "image",
+    imageLight: "/logos/cc-wedding.png",
+    imageDark: "/logos/cc-wedding-dark.png",
+    sub: "Bespoke Wedding Experience",
   },
   {
     id: "lgu-water",
@@ -59,14 +77,6 @@ const clientBrands: ClientBrand[] = [
     type: "icon",
     icon: "engineering",
     sub: "Industrial Engineering",
-  },
-  {
-    id: "cc-events",
-    name: "CC Wedding & Bespoke Events",
-    shortName: "CC Events",
-    type: "icon",
-    icon: "wedding",
-    sub: "Digital Experience",
   },
 ];
 
@@ -465,10 +475,10 @@ export function Brands() {
                         loading="lazy"
                       />
                     )}
-                    {brand.id === "catsu" && (
+                    {brand.id !== "klcc" && (
                       <div className="brand-mark__label">
-                        <strong className="brand-mark__name">CatSU</strong>
-                        <span className="brand-mark__sub">Catanduanes State University</span>
+                        <strong className="brand-mark__name">{brand.name}</strong>
+                        {brand.sub && <span className="brand-mark__sub">{brand.sub}</span>}
                       </div>
                     )}
                   </>
