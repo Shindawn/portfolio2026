@@ -7,16 +7,9 @@ export default function CurvedBanner() {
     let offset = 0;
     let animationFrameId: number;
 
-    let lastTime = performance.now();
-    const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
-    const speed = isMobile ? 2.4 : 1.5;
-
-    const animate = (currentTime: number) => {
-      const dt = Math.min((currentTime - lastTime) / 16.67, 2.5);
-      lastTime = currentTime;
-
-      offset -= speed * dt;
-      if (offset <= -1400) {
+    const animate = () => {
+      offset -= 0.85; // smooth gliding velocity
+      if (offset <= -1500) {
         offset = 0;
       }
       if (textPathRef.current) {
@@ -29,9 +22,9 @@ export default function CurvedBanner() {
     return () => cancelAnimationFrame(animationFrameId);
   }, []);
 
-  // Compressed font gap for sharper, tighter editorial typography
+  // Repeating text moving continuously inside the arched ribbon
   const repeatingText =
-    "Design that moves.  ·  System that works.  ·  Design that moves.  ·  System that works.  ·  Design that moves.  ·  System that works.  ·  Design that moves.  ·  System that works.  ·  ";
+    "Design that moves.       System that works.       Design that moves.       System that works.       Design that moves.       System that works.       Design that moves.       System that works.       ";
 
   return (
     <section className="curved-marquee" aria-hidden="true">
