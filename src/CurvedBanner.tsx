@@ -7,8 +7,11 @@ export default function CurvedBanner() {
     let offset = 0;
     let animationFrameId: number;
 
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+    const speed = isMobile ? 1.5 : 0.85;
+
     const animate = () => {
-      offset -= 0.85; // smooth gliding velocity
+      offset -= speed; // smooth gliding velocity
       if (offset <= -1500) {
         offset = 0;
       }
