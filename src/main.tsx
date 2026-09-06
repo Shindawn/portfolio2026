@@ -13,6 +13,9 @@ import "../styles.css";
 const pathname = window.location.pathname.toLowerCase().replace(/\/$/, "");
 
 if (pathname === "/work" || pathname === "/works") {
+  try {
+    sessionStorage.setItem("preloader_dismissed", "true");
+  } catch {}
   window.location.replace("/#work");
 }
 

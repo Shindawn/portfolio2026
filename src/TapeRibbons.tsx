@@ -81,9 +81,10 @@ const tapeItems = [
 
 export default function TapeRibbons() {
   const [isPaused, setIsPaused] = useState(false);
-  const [activeSpeed, setActiveSpeed] = useState<"normal" | "slow" | "fast">("normal");
-
-  const speedMultiplier = activeSpeed === "slow" ? 1.75 : activeSpeed === "fast" ? 0.55 : 1;
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+  const mobileSpeedBoost = isMobile ? 0.65 : 1;
+  const speedMultiplier =
+    (activeSpeed === "slow" ? 1.75 : activeSpeed === "fast" ? 0.55 : 1) * mobileSpeedBoost;
 
   return (
     <div className="tape-showcase" aria-label="Animated caution and quote tape ribbons">

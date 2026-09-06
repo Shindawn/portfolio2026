@@ -86,7 +86,8 @@ export function Navigation() {
       <nav className={`nav shell${isMenuOpen ? " is-menu-open" : ""}`} aria-label="Main navigation">
         <div className="nav-start">
           <a className="brand" href="/" aria-label="Lescy Gdawn, home" onClick={closeMenu}>
-            <span>Lescy Gdawn</span>
+            <span className="brand__full">Lescy Gdawn</span>
+            <span className="brand__mobile">LG</span>
           </a>
         </div>
 
@@ -130,7 +131,24 @@ export function Navigation() {
               </a>
             </li>
             <li className="nav-overlay__item">
-              <a href="/#work" className="nav-overlay__link" onClick={closeMenu}>
+              <a
+                href="/#work"
+                className="nav-overlay__link"
+                onClick={(e) => {
+                  closeMenu();
+                  if (typeof window !== "undefined") {
+                    sessionStorage.setItem("preloader_dismissed", "true");
+                    if (window.location.pathname === "/" || window.location.pathname === "") {
+                      const el = document.getElementById("work");
+                      if (el) {
+                        e.preventDefault();
+                        el.scrollIntoView({ behavior: "smooth" });
+                        window.history.replaceState(null, "", "/#work");
+                      }
+                    }
+                  }
+                }}
+              >
                 <span>Work</span>
               </a>
             </li>

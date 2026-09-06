@@ -120,15 +120,17 @@ export default function Hero3DCarousel() {
   useEffect(() => {
     let animationId: number;
     let velocity = dragStartRef.current.velocity;
+    const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
+    const driftSpeed = isMobile ? 1.4 : 0.85;
 
     const loop = () => {
       if (!isDragging) {
         if (Math.abs(velocity) > 0.1) {
-          velocity *= 0.94; // friction
+          velocity *= 0.95; // friction
           setScrollX((prev) => prev - velocity);
         } else if (!isHoveredRef.current) {
-          // Continuous subtle ambient drift
-          setScrollX((prev) => prev + 0.6);
+          // Continuous smooth ambient drift
+          setScrollX((prev) => prev + driftSpeed);
         }
       }
       animationId = requestAnimationFrame(loop);
@@ -155,7 +157,7 @@ export default function Hero3DCarousel() {
     const now = performance.now();
     const dt = Math.max(1, now - dragStartRef.current.time);
     const dx = e.clientX - dragStartRef.current.startX;
-    const instantaneousVelocity = ((e.clientX - dragStartRef.current.lastX) / dt) * 16 * 1.4; // Sensitivity multiplier 4x
+    const instantaneousVelocity = ((e.clientX - dragStartRef.current.lastX) / dt) * 16 * 1.8; // High-sensitivity swipe response
 
     dragStartRef.current.velocity = instantaneousVelocity;
     dragStartRef.current.lastX = e.clientX;

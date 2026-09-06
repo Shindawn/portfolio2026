@@ -11,11 +11,30 @@ export default function Preloader({
   brandName = "lescy®",
   durationMs = 2000,
 }: PreloaderProps) {
+  const isWorkNavigation = () => {
+    if (typeof window === "undefined") return true;
+    const hash = (window.location.hash || "").toLowerCase();
+    const path = (window.location.pathname || "").toLowerCase();
+    return (
+      hash.includes("work") ||
+      path.includes("work") ||
+      path.includes("case-study") ||
+      sessionStorage.getItem("preloader_dismissed") === "true"
+    );
+  };
+
+  const [isSkipped] = useState(isWorkNavigation);
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
-  const [isDone, setIsDone] = useState(false);
+  const [isDone, setIsDone] = useState(isSkipped);
 
   useEffect(() => {
+    if (isSkipped) {
+      onComplete?.();
+      return;
+    }
+
+    sessionStorage.setItem("preloader_dismissed", "true");
     const startTime = performance.now();
 
     const updateCounter = (currentTime: number) => {

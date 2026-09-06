@@ -111,6 +111,10 @@ a {
   letter-spacing: -0.055em;
 }
 
+.brand__mobile {
+  display: none;
+}
+
 .brand__logo-box {
   font-style: normal;
   font-size: 0.95rem;
@@ -2494,7 +2498,27 @@ a {
   .nav {
     top: 1rem;
     height: 3.6rem;
-    padding-inline: 0.85rem;
+    padding-inline: 1.1rem;
+  }
+
+  .brand {
+    display: inline-flex !important;
+    align-items: center;
+  }
+
+  .brand__full {
+    display: none !important;
+  }
+
+  .brand__mobile {
+    display: inline-block !important;
+    font-family: "Instrument Serif", Georgia, serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.55rem;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    color: var(--ink);
   }
 
   .nav-clock {
@@ -2508,22 +2532,44 @@ a {
   }
 
   .intro {
-    padding-top: 7.5rem;
+    padding-top: 6.8rem;
   }
 
   .hero-stage__title {
-    font-size: clamp(2rem, 8.5vw, 3rem);
-    line-height: 1.06;
+    font-size: clamp(2.2rem, 9.2vw, 3.2rem);
+    line-height: 0.98;
+    letter-spacing: -0.055em;
     white-space: normal;
   }
 
   .hero-stage__title-line2 {
     flex-wrap: wrap;
+    gap: 0.08em;
   }
 
   .hero-stage__subtitle {
     font-size: 0.84rem;
-    line-height: 1.45;
+    line-height: 1.36;
+    letter-spacing: -0.025em;
+    margin-top: 0.85rem;
+  }
+
+  .curved-marquee {
+    margin-top: 0.75rem;
+  }
+
+  .curved-marquee__svg {
+    height: clamp(140px, 32vw, 210px);
+  }
+
+  .curved-marquee__text {
+    font-size: 52px;
+    letter-spacing: -0.04em;
+  }
+
+  .hero-3d-card {
+    width: clamp(180px, 48vw, 220px);
+    height: clamp(250px, 68vw, 310px);
   }
 
   .hero-stage__actions {
@@ -2562,10 +2608,6 @@ a {
     min-height: 30rem;
     margin-left: calc(50% - 69vw);
     perspective-origin: 30% 65%;
-  }
-
-  @media (max-width: 480px) {
-    .brand { display: none; }
   }
 
   .shelf-slot {
