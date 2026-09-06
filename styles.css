@@ -9383,5 +9383,529 @@ a {
   }
 }
 
+/* =========================================================================
+   OUTSIDE-THE-BOX CASE STUDY SUITE: AUTOPSY, SCADA & FIRE-DRILL STYLES
+   ========================================================================= */
 
+/* Mode Switcher Pill Bar */
+.case-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--line);
+  margin-bottom: 2rem;
+  backdrop-filter: blur(12px);
+}
 
+:root[data-theme="dark"] .case-mode-bar {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.case-mode-bar__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.case-mode-bar__pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-bright);
+  box-shadow: 0 0 10px var(--accent-bright);
+  animation: pulse-dot 1.8s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+
+.case-mode-toggle {
+  display: inline-flex;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.case-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.case-mode-btn.is-active {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+}
+
+.case-mode-btn--autopsy.is-active {
+  background: #c2410c;
+  color: #fff;
+  box-shadow: 0 3px 14px rgba(194, 65, 12, 0.4);
+}
+
+/* Brutal Autopsy Banner & Cards */
+.autopsy-container {
+  border: 2px dashed #ea580c;
+  background: rgba(234, 88, 12, 0.03);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 2.5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+:root[data-theme="dark"] .autopsy-container {
+  background: rgba(234, 88, 12, 0.05);
+  border-color: rgba(234, 88, 12, 0.5);
+}
+
+.autopsy-stamp {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border: 2px solid #ea580c;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  color: #ea580c;
+  text-transform: uppercase;
+  transform: rotate(4deg);
+  opacity: 0.85;
+}
+
+.autopsy-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.autopsy-card {
+  border: 1px solid rgba(234, 88, 12, 0.25);
+  background: var(--paper);
+  border-radius: 14px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.autopsy-card__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #ea580c;
+  text-transform: uppercase;
+}
+
+.autopsy-card__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0;
+}
+
+.autopsy-card__content {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.autopsy-card__fix {
+  margin-top: auto;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: rgba(34, 150, 110, 0.08);
+  border-left: 3px solid var(--accent-bright);
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+/* -------------------------------------------------------------
+   CC Wedding: Boarding Pass & Interactive Chroma Keyer
+   ------------------------------------------------------------- */
+.boarding-pass-wrap {
+  perspective: 1000px;
+  margin: 2rem 0;
+}
+
+.boarding-pass-card {
+  border: 1px solid var(--line);
+  background: linear-gradient(135deg, rgba(29, 61, 58, 0.05) 0%, rgba(168, 198, 214, 0.08) 100%), var(--paper);
+  border-radius: 20px;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  position: relative;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme="dark"] .boarding-pass-card {
+  background: linear-gradient(135deg, rgba(29, 61, 58, 0.25) 0%, rgba(168, 198, 214, 0.1) 100%), #111a16;
+}
+
+@media (max-width: 800px) {
+  .boarding-pass-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.boarding-pass-stub {
+  border-left: 2px dashed var(--line);
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@media (max-width: 800px) {
+  .boarding-pass-stub {
+    border-left: none;
+    border-top: 2px dashed var(--line);
+    padding-left: 0;
+    padding-top: 1.5rem;
+  }
+}
+
+.guest-airport-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.airport-chip {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: monospace;
+}
+
+.airport-chip.is-active,
+.airport-chip:hover {
+  background: #1d3d3a;
+  color: #fff;
+  border-color: #1d3d3a;
+}
+
+/* Chroma Sandbox Controls */
+.chroma-sandbox {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--paper);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+}
+
+.chroma-sandbox__toolbar {
+  padding: 1.25rem;
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+:root[data-theme="dark"] .chroma-sandbox__toolbar {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.chroma-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.chroma-slider-group label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.chroma-slider-group input[type="range"] {
+  accent-color: var(--accent-bright);
+}
+
+/* -------------------------------------------------------------
+   LGU Water: SCADA Crisis Telemetry & Side-by-Side Duel
+   ------------------------------------------------------------- */
+.scada-crisis-terminal {
+  border: 2px solid #0284c7;
+  border-radius: 18px;
+  background: #07131e;
+  color: #e0f2fe;
+  padding: 1.75rem;
+  margin: 2rem 0;
+  box-shadow: 0 16px 40px rgba(2, 132, 199, 0.15);
+  position: relative;
+}
+
+.scada-crisis-terminal.is-burst {
+  border-color: #ef4444;
+  box-shadow: 0 16px 40px rgba(239, 68, 68, 0.25);
+  animation: alarm-glow 2s infinite ease-in-out;
+}
+
+@keyframes alarm-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
+  50% { box-shadow: 0 0 35px rgba(239, 68, 68, 0.45); }
+}
+
+.scada-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(224, 242, 254, 0.12);
+}
+
+.scada-telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.scada-telemetry-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(224, 242, 254, 0.08);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.scada-telemetry-item__val {
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #38bdf8;
+}
+
+.scada-telemetry-item.is-danger .scada-telemetry-item__val {
+  color: #f87171;
+}
+
+.scada-burst-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.scada-burst-btn--trigger {
+  background: #ef4444;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+}
+
+.scada-burst-btn--trigger:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+.scada-burst-btn--reset {
+  background: #0284c7;
+  color: #fff;
+}
+
+/* Duel Grid */
+.duel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+@media (max-width: 760px) {
+  .duel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.duel-card {
+  border-radius: 16px;
+  padding: 1.75rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.duel-card--legacy {
+  border-left: 4px solid #ef4444;
+  opacity: 0.9;
+}
+
+.duel-card--scada {
+  border-left: 4px solid var(--accent-bright);
+  box-shadow: 0 8px 24px rgba(34, 150, 110, 0.08);
+}
+
+/* -------------------------------------------------------------
+   LightEM HRIS: Friday 4:59 PM Payroll Fire Drill Terminal
+   ------------------------------------------------------------- */
+.fire-drill-terminal {
+  border: 2px solid #8b5cf6;
+  border-radius: 20px;
+  background: #0d0e17;
+  color: #ede9fe;
+  padding: 2rem;
+  margin: 2.5rem 0;
+  box-shadow: 0 20px 48px rgba(139, 92, 246, 0.18);
+  position: relative;
+}
+
+.fire-drill-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(237, 233, 254, 0.12);
+}
+
+.fire-drill-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: monospace;
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+}
+
+.fire-drill-hatch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.6rem;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  border: 1px solid #ef4444;
+  background: linear-gradient(180deg, #ef4444 0%, #b91c1c 100%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.45);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fire-drill-hatch-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.6);
+}
+
+.fire-drill-hatch-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fire-drill-console {
+  margin-top: 1.5rem;
+  background: #06070a;
+  border: 1px solid rgba(237, 233, 254, 0.08);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  font-family: "JetBrains Mono", Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  max-height: 220px;
+  overflow-y: auto;
+  color: #a78bfa;
+}
+
+.fire-drill-log-entry {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.fire-drill-log-entry.is-alert {
+  color: #f87171;
+}
+
+.fire-drill-log-entry.is-success {
+  color: #4ade80;
+}
+
+/* Statutory Multiplier Chips */
+.statutory-preset-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.statutory-preset-chip {
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.statutory-preset-chip.is-active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
