@@ -517,7 +517,6 @@ export default function IntegrationNetwork() {
                 </span>
               ) : (
                 <span className="integration-network__badge">
-                  <span className="integration-network__badge-dot" />
                   <span>{currentCategory.tagline}</span>
                 </span>
               )}
@@ -646,6 +645,24 @@ export default function IntegrationNetwork() {
               className="network-hub"
               ref={hubRef}
               title={currentCategory.hubTooltip}
+              onClick={() => {
+                setHoveredNode((prev) =>
+                  prev?.id === `hub-${currentCategory.id}`
+                    ? null
+                    : {
+                        id: `hub-${currentCategory.id}`,
+                        name: currentCategory.hubName,
+                        category: "Core Environment",
+                        x: currentCategory.hubX,
+                        y: currentCategory.hubY,
+                        path: "",
+                        speed: 0,
+                        delay: 0,
+                        icon: currentCategory.hubIcon,
+                        status: currentCategory.hubTooltip,
+                      }
+                );
+              }}
               style={{
                 left: `${hubLeftPercent}%`,
                 top: `${hubTopPercent}%`,
@@ -678,6 +695,7 @@ export default function IntegrationNetwork() {
                   onMouseLeave={() => setHoveredNode(null)}
                   onFocus={() => setHoveredNode(node)}
                   onBlur={() => setHoveredNode(null)}
+                  onClick={() => setHoveredNode((prev) => (prev?.id === node.id ? null : node))}
                   aria-label={`${node.name} (${node.category})`}
                 >
                   <span className="network-node__icon">{node.icon}</span>
