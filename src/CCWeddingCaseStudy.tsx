@@ -1,207 +1,76 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Footer, Navigation } from "./Sections";
-import WeddingFlightMap from "./WeddingFlightMap";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Swatch {
+interface ColorSwatch {
   name: string;
   hex: string;
-  hsl: string;
+  tone: string;
+  role: string;
 }
 
-const swatches: Swatch[] = [
-  { name: "Deep Teal", hex: "#1D3D3A", hsl: "172°, 35%, 18%" },
-  { name: "Ice Blue", hex: "#A8C6D6", hsl: "201°, 40%, 75%" },
-  { name: "Soft Sky", hex: "#E8F1F5", hsl: "198°, 36%, 94%" },
-  { name: "Champagne", hex: "#E6DAC8", hsl: "37°, 37%, 85%" },
-  { name: "Silver Pearl", hex: "#C5CBD3", hsl: "216°, 14%, 80%" },
+const colorPalette: ColorSwatch[] = [
+  { name: "Deep Teal", hex: "#1D3D3A", tone: "Rich Forest Accent", role: "Primary Identity & Monogram" },
+  { name: "Ice Blue", hex: "#A8C6D6", tone: "Glacial Morning Hue", role: "Secondary Accents & Atmospheric Sheen" },
+  { name: "Soft Sky", hex: "#E8F1F5", tone: "Air & Luminosity", role: "Background Layers & Paper Wash" },
+  { name: "Champagne", hex: "#E6DAC8", tone: "Warm Celebratory Veil", role: "Stationery Borders & Wax Seals" },
+  { name: "Silver Pearl", hex: "#C5CBD3", tone: "Polished Mineral Sheen", role: "Subtle Separators & Micro Details" },
 ];
-
-const rsvpPipelineSnippet = `// Formspree + Passcode Gated RSVP Pipeline with Cryptographic Validation
-export async function submitRSVP(payload: RSVPPayload, passcode: string) {
-  if (passcode.trim().toUpperCase() !== EVENT_PASSCODE) {
-    throw new Error("Invalid access passcode. Please check your invitation.");
-  }
-
-  const response = await fetch("https://formspree.io/f/xgeggpln", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({
-      guestName: payload.name,
-      attendance: payload.attending ? "Attending" : "Declined",
-      dietary: payload.dietary || "None",
-      message: payload.message || "",
-      originFlight: payload.origin || "MNL",
-      submittedAt: new Date().toISOString(),
-    }),
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to submit RSVP. Please try again.");
-  }
-
-  return response.json();
-}`;
 
 export default function CCWeddingCaseStudy() {
   const pageRef = useRef<HTMLElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [copiedHex, setCopiedHex] = useState<string | null>(null);
-  const [codeCopied, setCodeCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState<"video" | "mobile" | "desktop">("video");
-  const [caseMode, setCaseMode] = useState<"executive" | "autopsy">("executive");
-  const [selectedOrigin, setSelectedOrigin] = useState<string>("NRT");
-
-  // Chroma-Key interactive simulator state
-  const [keyColor, setKeyColor] = useState<string>("#1d3d3a");
-  const [threshold, setThreshold] = useState<number>(45);
-  const [smoothness, setSmoothness] = useState<number>(18);
-  const [fpsVal, setFpsVal] = useState<number>(60);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-    document.title = "CC Wedding Digital Platform — Case Study";
+    document.title = "A Digital Invitation Made Personal — CC Wedding";
   }, []);
-
-  // Live Canvas Chroma-Key Simulation Render Loop
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animId: number;
-    let frame = 0;
-
-    const render = () => {
-      frame++;
-      const w = canvas.width;
-      const h = canvas.height;
-
-      // Draw background dynamic gradient
-      const bgGrad = ctx.createLinearGradient(0, 0, w, h);
-      bgGrad.addColorStop(0, "#0e1a15");
-      bgGrad.addColorStop(0.5, "#152e24");
-      bgGrad.addColorStop(1, "#07120d");
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, w, h);
-
-      // Draw synthetic animated character / card silhouette
-      const cx = w / 2 + Math.sin(frame * 0.03) * 20;
-      const cy = h / 2 + Math.cos(frame * 0.02) * 10;
-
-      // Simulated Green-Screen backplate
-      ctx.save();
-      ctx.fillStyle = keyColor;
-      ctx.beginPath();
-      ctx.arc(cx, cy, 75 + (threshold / 100) * 15, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Foreground Subject (Gold Monogram & Rings)
-      ctx.fillStyle = "#e6dac8";
-      ctx.beginPath();
-      ctx.arc(cx - 18, cy, 28, 0, Math.PI * 2);
-      ctx.strokeStyle = "#e6dac8";
-      ctx.lineWidth = 4;
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(cx + 18, cy, 28, 0, Math.PI * 2);
-      ctx.stroke();
-
-      ctx.font = "bold 13px monospace";
-      ctx.fillStyle = "#ffffff";
-      ctx.textAlign = "center";
-      ctx.fillText(`60 FPS CHROMA ISOLATION`, cx, cy + 50);
-      ctx.fillText(`Tolerance: ±${threshold}% | Spill: ${smoothness}%`, cx, cy + 68);
-      ctx.restore();
-
-      // Simulate FPS jitter around 60
-      if (frame % 30 === 0) {
-        setFpsVal(59 + Math.floor(Math.random() * 2));
-      }
-
-      animId = requestAnimationFrame(render);
-    };
-
-    render();
-    return () => cancelAnimationFrame(animId);
-  }, [keyColor, threshold, smoothness]);
 
   useLayoutEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const ctx = gsap.context(() => {
-      gsap.from(".clean-header__meta-row", {
+      // Cinematic Hero Entrance
+      gsap.from(".w-hero__kicker", {
         opacity: 0,
-        y: -12,
-        duration: 0.6,
-        ease: "power3.out",
-      });
-      gsap.from(".clean-header__title", {
-        opacity: 0,
-        y: 28,
+        y: -16,
         duration: 0.8,
-        delay: 0.08,
         ease: "power3.out",
       });
-      gsap.from(".clean-header__subtitle", {
+      gsap.from(".w-hero__title", {
         opacity: 0,
-        y: 20,
-        duration: 0.8,
-        delay: 0.16,
+        y: 32,
+        duration: 1.1,
+        delay: 0.1,
         ease: "power3.out",
       });
-      gsap.from(".case-mode-bar", {
-        opacity: 0,
-        y: 16,
-        duration: 0.7,
-        delay: 0.22,
-        ease: "power3.out",
-      });
-      gsap.from(".clean-meta-strip", {
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        delay: 0.28,
-        ease: "power3.out",
-      });
-
-      gsap.from(".clean-media-frame", {
-        opacity: 0,
-        y: 36,
-        duration: 0.85,
-        delay: 0.35,
-        ease: "power3.out",
-      });
-
-      gsap.from(".clean-stat", {
-        scrollTrigger: {
-          trigger: ".clean-stats-grid",
-          start: "top 85%",
-        },
+      gsap.from(".w-hero__subtitle", {
         opacity: 0,
         y: 24,
-        stagger: 0.08,
-        duration: 0.7,
+        duration: 1.0,
+        delay: 0.25,
+        ease: "power3.out",
+      });
+      gsap.from(".w-hero__meta", {
+        opacity: 0,
+        y: 20,
+        duration: 0.9,
+        delay: 0.4,
         ease: "power3.out",
       });
 
-      gsap.utils.toArray<HTMLElement>(".clean-section").forEach((sec) => {
+      // Editorial Sections Stagger
+      gsap.utils.toArray<HTMLElement>(".w-animate-section").forEach((sec) => {
         gsap.from(sec, {
           scrollTrigger: {
             trigger: sec,
-            start: "top 85%",
+            start: "top 82%",
           },
           opacity: 0,
-          y: 36,
-          duration: 0.8,
+          y: 40,
+          duration: 1.0,
           ease: "power3.out",
         });
       });
@@ -210,409 +79,685 @@ export default function CCWeddingCaseStudy() {
     return () => ctx.revert();
   }, []);
 
-  const copyHex = (hex: string) => {
-    navigator.clipboard.writeText(hex);
-    setCopiedHex(hex);
-    setTimeout(() => setCopiedHex(null), 2000);
-  };
-
-  const copyCode = () => {
-    navigator.clipboard.writeText(rsvpPipelineSnippet);
-    setCodeCopied(true);
-    setTimeout(() => setCodeCopied(false), 2000);
-  };
-
   return (
     <>
       <Navigation />
-      <main ref={pageRef} className="clean-case-study shell" id="main-content">
+      <main ref={pageRef} className="wedding-editorial" id="main-content">
         
-        {/* Top Header */}
-        <header className="clean-header">
-          <div className="clean-header__meta-row">
-            <a href="/#work" className="clean-back-link">
-              ← Latest Work
-            </a>
-            <span className="clean-header__tag">Charlon & Chilzia · 2025—2026</span>
-          </div>
+        {/* =========================================================================
+            OPENING — CINEMATIC HERO
+           ========================================================================= */}
+        <section className="w-hero">
+          <div className="w-hero__container">
+            <span className="w-hero__kicker">Charlon & Chilzia · Destination Celebration</span>
+            
+            <h1 className="w-hero__title">
+              A Digital Invitation <em>Made Personal</em>
+            </h1>
 
-          <h1 className="clean-header__title">
-            CC Wedding Digital Platform
-          </h1>
-          <p className="clean-header__subtitle">
-            An ultra-tactile wedding invitation & global guest hub featuring client-side 60 FPS chroma-key canvas rendering and cryptographic RSVP gatekeeping.
-          </p>
+            <p className="w-hero__subtitle">
+              Designing a wedding website that brings the couple’s story, celebration details, and RSVP experience together in one thoughtful digital space.
+            </p>
 
-          {/* Tactical Mode Switcher */}
-          <div className="case-mode-bar">
-            <div className="case-mode-bar__label">
-              <span className="case-mode-bar__pulse" />
-              <span>Inspection Perspective</span>
+            <div className="w-hero__meta">
+              <span className="w-hero__meta-item">
+                <span className="w-hero__meta-dot" /> Private Client
+              </span>
+              <span className="w-hero__meta-item">
+                <span className="w-hero__meta-dot" /> UI/UX Design + Frontend Development
+              </span>
+              <span className="w-hero__meta-item">
+                <span className="w-hero__meta-dot" /> Responsive Web Experience
+              </span>
             </div>
-            <div className="case-mode-toggle">
-              <button
-                type="button"
-                className={`case-mode-btn${caseMode === "executive" ? " is-active" : ""}`}
-                onClick={() => setCaseMode("executive")}
-              >
-                ✨ Executive Showcase
-              </button>
-              <button
-                type="button"
-                className={`case-mode-btn case-mode-btn--autopsy${caseMode === "autopsy" ? " is-active" : ""}`}
-                onClick={() => setCaseMode("autopsy")}
-              >
-                💀 Brutal Engineering Autopsy
-              </button>
+
+            <div className="w-hero__scroll-hint">
+              <span>Scroll to explore the story</span>
+              <div className="w-hero__scroll-line" />
             </div>
           </div>
+        </section>
 
-          <div className="clean-meta-strip">
-            <div>
-              <span className="clean-meta-label">Role</span>
-              <strong className="clean-meta-value">Lead Frontend Engineer & UI/UX Designer</strong>
-            </div>
-            <div>
-              <span className="clean-meta-label">Stack</span>
-              <strong className="clean-meta-value">React 18 · TypeScript · Vite · HTML5 Canvas · Tailwind CSS · Formspree</strong>
-            </div>
-            <div>
-              <span className="clean-meta-label">Live</span>
-              <a
-                href="https://www.ccwedding.page/"
-                target="_blank"
-                rel="noreferrer"
-                className="clean-live-link"
-              >
-                ccwedding.page ↗
-              </a>
+        {/* =========================================================================
+            SECTION 02 — THE STORY
+           ========================================================================= */}
+        <section className="w-section w-animate-section">
+          <div className="w-container">
+            <div className="w-story-grid">
+              <div>
+                <div className="w-story-num">01</div>
+                <span className="w-label">THE STORY</span>
+                <h2 className="w-heading-serif">
+                  More than an <em>invitation.</em>
+                </h2>
+                <div className="w-body-editorial">
+                  <p style={{ marginBottom: "1.5rem" }}>
+                    The goal was to create a personalized wedding website that could serve as both a digital invitation and a central place for guests to find everything they needed before the celebration.
+                  </p>
+                  <p>
+                    The experience needed to communicate the couple’s personality while keeping practical information easy to find.
+                  </p>
+                </div>
+              </div>
+
+              <div className="w-story-frame">
+                <img
+                  src="/cc-wedding-mockup.jpg"
+                  alt="Charlon & Chilzia Wedding Digital Platform overview"
+                />
+              </div>
             </div>
           </div>
-        </header>
+        </section>
 
-        {/* BRUTAL AUTOPSY CONTAINER (Visible when Autopsy Mode is Active) */}
-        {caseMode === "autopsy" && (
-          <section className="autopsy-container">
-            <span className="autopsy-stamp">CONFIDENTIAL DEBRIEF</span>
-            <div className="clean-section__head">
-              <h2 className="clean-section__title" style={{ color: "#ea580c" }}>
-                Post-Mortem: What Failed Before It Worked
+        {/* =========================================================================
+            SECTION 03 — FROM WEDDING THEME TO DIGITAL EXPERIENCE
+           ========================================================================= */}
+        <section className="w-section w-animate-section">
+          <div className="w-container">
+            <div style={{ textAlign: "center", maxWidth: "780px", margin: "0 auto 3rem" }}>
+              <span className="w-label">CREATIVE DIRECTION</span>
+              <h2 className="w-heading-serif">
+                From Wedding Theme to <em>Digital Experience</em>
               </h2>
-              <p className="clean-section__subtitle">
-                The sanitized case study ignores the 4 crashes, mobile thermal throttles, and guest confusion logs. Here is the forensic reality.
+              <p className="w-body-editorial">
+                Translating physical stationery textures, coastal evening tones, and personal typography into a cohesive digital atmosphere.
               </p>
             </div>
 
-            <div className="autopsy-card-grid">
-              <div className="autopsy-card">
-                <span className="autopsy-card__tag">💀 FATAL BOTTLENECK #1</span>
-                <h3 className="autopsy-card__title">Uncompressed MP4 Canvas Loop on 3G</h3>
-                <p className="autopsy-card__content">
-                  Initial prototype streamed high-bitrate video directly into WebGL canvas. On mobile LTE in rural venues, memory spiked to 480MB causing Safari WebProcess jetsam crashes.
-                </p>
-                <div className="autopsy-card__fix">
-                  <strong>Fix:</strong> Extracted keyframe sprite buffers with client-side chroma keying, reducing data payload from 32MB to 1.4MB with zero dropped frames.
+            {/* Organic Moodboard Collage */}
+            <div className="w-moodboard-collage">
+              
+              {/* Color Swatches */}
+              <div className="w-mood-swatches">
+                <span className="w-label">CURATED ATTIRE PALETTE</span>
+                <div className="w-swatch-list">
+                  {colorPalette.map((swatch) => (
+                    <div key={swatch.hex} className="w-swatch-item">
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
+                        <span
+                          className="w-swatch-color-pill"
+                          style={{ backgroundColor: swatch.hex }}
+                        />
+                        <div>
+                          <strong style={{ fontSize: "0.92rem", display: "block", color: "var(--ink)" }}>{swatch.name}</strong>
+                          <span style={{ fontSize: "0.78rem", color: "var(--muted)" }}>{swatch.tone}</span>
+                        </div>
+                      </div>
+                      <code style={{ fontFamily: "monospace", fontSize: "0.78rem", color: "var(--w-gold)", fontWeight: 700 }}>
+                        {swatch.hex}
+                      </code>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="autopsy-card">
-                <span className="autopsy-card__tag">💀 ATTACK VECTOR #2</span>
-                <h3 className="autopsy-card__title">Unrestricted Public RSVP Form Flooding</h3>
-                <p className="autopsy-card__content">
-                  When the wedding URL leaked on social media, bots and random acquaintances submitted 42 spam RSVPs within 3 hours, corrupting the guest table arrangements.
-                </p>
-                <div className="autopsy-card__fix">
-                  <strong>Fix:</strong> Implemented a personalized cryptographic passcode gate that verifies invitation batches before opening Formspree submission channels.
+              {/* Large Scale Typography Card */}
+              <div className="w-mood-type-card">
+                <span className="w-label">TYPOGRAPHY SAMPLES</span>
+                <div style={{ marginTop: "1rem" }}>
+                  <div style={{ fontFamily: "var(--w-font-serif)", fontSize: "clamp(2.5rem, 5vw, 4.2rem)", fontStyle: "italic", lineHeight: 1.05, color: "var(--ink)", marginBottom: "1rem" }}>
+                    Charlon & Chilzia
+                  </div>
+                  <div style={{ fontFamily: "var(--w-font-sans)", fontSize: "0.86rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--w-gold)", marginBottom: "1.75rem" }}>
+                    Together with their families · Save the Date
+                  </div>
+                  <div style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.4rem", color: "var(--muted)", fontStyle: "italic" }}>
+                    “Two lives, one shared horizon across the Pacific.”
+                  </div>
+                </div>
+
+                <div style={{ marginTop: "2.5rem", borderTop: "1px solid var(--line)", paddingTop: "1.5rem" }}>
+                  <span className="w-label">VISUAL DIRECTION</span>
+                  <div className="w-direction-tags">
+                    <span className="w-direction-tag">Elegant</span>
+                    <span className="w-direction-tag">Romantic</span>
+                    <span className="w-direction-tag">Personal</span>
+                    <span className="w-direction-tag">Modern</span>
+                    <span className="w-direction-tag">Soft</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="autopsy-card">
-                <span className="autopsy-card__tag">💀 UX FAILURE #3</span>
-                <h3 className="autopsy-card__title">Invisible Attire Color Swatches</h3>
-                <p className="autopsy-card__content">
-                  Older guests complained they couldn't match fabrics from static hex codes. 14 guests bought incorrect navy blue suits instead of Deep Teal.
-                </p>
-                <div className="autopsy-card__fix">
-                  <strong>Fix:</strong> Built 1-click clipboard hex copiers with companion HSL fabric tone identifiers and physical material lighting previews.
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+            SECTION 04 — DESIGNING THE FIRST IMPRESSION
+           ========================================================================= */}
+        <section className="w-section w-animate-section">
+          <div className="w-container--wide">
+            <div style={{ maxWidth: "800px", margin: "0 auto 3.5rem", textAlign: "center" }}>
+              <span className="w-label">IMMEDIACY & EMOTION</span>
+              <h2 className="w-heading-serif">
+                Designing the <em>First Impression</em>
+              </h2>
+              <p className="w-body-editorial">
+                The opening section needed to immediately communicate the couple, date, and celebration while keeping the primary RSVP action visible without disrupting the emotional tone of the page.
+              </p>
+            </div>
+
+            {/* Massive Hero Screenshot */}
+            <div className="w-hero-showcase">
+              <div className="w-showcase-screen">
+                <video
+                  src="/ccwedding.mp4"
+                  poster="/cc-wedding-mockup.jpg"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                />
+              </div>
+
+              {/* Callout Pins */}
+              <div className="w-callout-pins">
+                <div className="w-callout-pin">
+                  <span className="w-callout-pin__tag">01 · Wedding Date</span>
+                  <span className="w-callout-pin__desc">Prominently anchored above the fold with subtle calendar integration.</span>
+                </div>
+                <div className="w-callout-pin">
+                  <span className="w-callout-pin__tag">02 · Couple Names</span>
+                  <span className="w-callout-pin__desc">Handcrafted editorial serif heading communicating romantic elegance.</span>
+                </div>
+                <div className="w-callout-pin">
+                  <span className="w-callout-pin__tag">03 · Primary RSVP Action</span>
+                  <span className="w-callout-pin__desc">Unobtrusive sticky CTA allowing guests to respond at any point in their read.</span>
+                </div>
+                <div className="w-callout-pin">
+                  <span className="w-callout-pin__tag">04 · Visual Hierarchy</span>
+                  <span className="w-callout-pin__desc">Breathing whitespace guiding attention gently from emotion to logistics.</span>
+                </div>
+                <div className="w-callout-pin">
+                  <span className="w-callout-pin__tag">05 · Wedding Identity</span>
+                  <span className="w-callout-pin__desc">Custom monogram seal bridging digital interactions with physical keepsakes.</span>
                 </div>
               </div>
             </div>
-          </section>
-        )}
-
-        {/* Media Frame */}
-        <section className="clean-media-frame">
-          <div className="clean-media-tabs">
-            <button
-              type="button"
-              className={`clean-media-tab${activeTab === "video" ? " is-active" : ""}`}
-              onClick={() => setActiveTab("video")}
-            >
-              Video Walkthrough
-            </button>
-            <button
-              type="button"
-              className={`clean-media-tab${activeTab === "mobile" ? " is-active" : ""}`}
-              onClick={() => setActiveTab("mobile")}
-            >
-              Mobile View
-            </button>
-            <button
-              type="button"
-              className={`clean-media-tab${activeTab === "desktop" ? " is-active" : ""}`}
-              onClick={() => setActiveTab("desktop")}
-            >
-              Desktop View
-            </button>
-          </div>
-
-          <div className="clean-media-stage">
-            {activeTab === "video" && (
-              <video
-                src="/ccwedding.mp4"
-                poster="/cc-wedding-mockup.jpg"
-                controls
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="clean-media-element"
-              />
-            )}
-            {activeTab === "mobile" && (
-              <img
-                src="/cc-wedding-mobile.jpg"
-                alt="CC Wedding Mobile Experience"
-                className="clean-media-element"
-              />
-            )}
-            {activeTab === "desktop" && (
-              <img
-                src="/cc-wedding-mockup.jpg"
-                alt="CC Wedding Desktop Mockup"
-                className="clean-media-element"
-              />
-            )}
           </div>
         </section>
 
-        {/* Stats Grid */}
-        <section className="clean-stats-grid">
-          <div className="clean-stat">
-            <span className="clean-stat__num">94%</span>
-            <span className="clean-stat__label">RSVP Completion</span>
-          </div>
-          <div className="clean-stat">
-            <span className="clean-stat__num">&lt; 2m</span>
-            <span className="clean-stat__label">Response Time</span>
-          </div>
-          <div className="clean-stat">
-            <span className="clean-stat__num">60 FPS</span>
-            <span className="clean-stat__label">Canvas Rendering</span>
-          </div>
-          <div className="clean-stat">
-            <span className="clean-stat__num">99/100</span>
-            <span className="clean-stat__label">Mobile Lighthouse</span>
-          </div>
-        </section>
+        {/* =========================================================================
+            SECTION 05 — THE WEBSITE AS A STORY
+           ========================================================================= */}
+        <section className="w-section w-animate-section">
+          <div className="w-container">
+            <div style={{ maxWidth: "780px", marginBottom: "3rem" }}>
+              <span className="w-label">NARRATIVE ARCHITECTURE</span>
+              <h2 className="w-heading-serif">
+                The Website as a <em>Story</em>
+              </h2>
+              <p className="w-body-editorial">
+                Rather than treating the website like a fragmented utility, information unfolds as one continuous, harmonious scroll.
+              </p>
+            </div>
 
-        {/* SET PIECE 1: Interactive Boarding Pass & Guest Network */}
-        <section className="clean-section">
-          <div className="clean-section__head">
-            <h2 className="clean-section__title">Interactive Guest Boarding Pass & Flight Network</h2>
-            <p className="clean-section__subtitle">
-              Interactive travel dispatch mapping guests flying in from international hubs to the destination venue in the Philippines.
-            </p>
-          </div>
-
-          <div className="boarding-pass-wrap">
-            <div className="boarding-pass-card">
-              <div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-                  <span style={{ fontFamily: "monospace", fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.1em", color: "var(--accent-bright)" }}>
-                    BOARDING PASS · CC-2026-VIP
-                  </span>
-                  <span style={{ fontSize: "0.75rem", color: "var(--muted)" }}>GATE 04 · SEAT 01A</span>
+            <div className="w-story-scroll">
+              
+              {/* Sticky Timeline / Chapter Index */}
+              <div className="w-story-timeline-nav">
+                <div className="w-timeline-node">
+                  <span className="w-timeline-node__num">I</span>
+                  <span>Welcome & Monogram</span>
                 </div>
-
-                <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem" }}>
-                  <div>
-                    <div style={{ fontSize: "2.2rem", fontWeight: 900, color: "var(--ink)", lineHeight: 1 }}>{selectedOrigin}</div>
-                    <div style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "0.2rem" }}>Guest Origin</div>
-                  </div>
-                  <div style={{ fontSize: "1.2rem", color: "var(--accent-bright)", fontWeight: 700 }}>✈ ➔</div>
-                  <div>
-                    <div style={{ fontSize: "2.2rem", fontWeight: 900, color: "var(--ink)", lineHeight: 1 }}>DVO</div>
-                    <div style={{ fontSize: "0.75rem", color: "var(--muted)", marginTop: "0.2rem" }}>Destination (Davao)</div>
-                  </div>
+                <div className="w-timeline-node">
+                  <span className="w-timeline-node__num">II</span>
+                  <span>Our Story & Odyssey</span>
                 </div>
-
-                <div className="guest-airport-chips">
-                  {["NRT (Tokyo)", "SFO (San Francisco)", "LHR (London)", "SYD (Sydney)", "MNL (Manila)", "CEB (Cebu)"].map((code) => {
-                    const tag = code.slice(0, 3);
-                    return (
-                      <button
-                        key={tag}
-                        type="button"
-                        className={`airport-chip${selectedOrigin === tag ? " is-active" : ""}`}
-                        onClick={() => setSelectedOrigin(tag)}
-                      >
-                        {code}
-                      </button>
-                    );
-                  })}
+                <div className="w-timeline-node">
+                  <span className="w-timeline-node__num">III</span>
+                  <span>Wedding Details & Date</span>
+                </div>
+                <div className="w-timeline-node">
+                  <span className="w-timeline-node__num">IV</span>
+                  <span>Day-of Schedule</span>
+                </div>
+                <div className="w-timeline-node">
+                  <span className="w-timeline-node__num">V</span>
+                  <span>Attire & Dress Code</span>
+                </div>
+                <div className="w-timeline-node">
+                  <span className="w-timeline-node__num">VI</span>
+                  <span>Venue & Flight Guides</span>
+                </div>
+                <div className="w-timeline-node">
+                  <span className="w-timeline-node__num">VII</span>
+                  <span>Interactive RSVP Gate</span>
+                </div>
+                <div className="w-timeline-node">
+                  <span className="w-timeline-node__num">VIII</span>
+                  <span>Travel FAQs</span>
+                </div>
+                <div className="w-timeline-node">
+                  <span className="w-timeline-node__num">IX</span>
+                  <span>Confirmation & Love Notes</span>
                 </div>
               </div>
 
-              <div className="boarding-pass-stub">
+              {/* Continuous Visual Scroll Feed */}
+              <div className="w-story-feed">
+                <div className="w-feed-card">
+                  <span className="w-label">CHAPTER 01 · WELCOME & OUR STORY</span>
+                  <div style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.8rem", color: "var(--ink)" }}>
+                    Setting the emotional tone through memory & anticipation
+                  </div>
+                  <p style={{ color: "var(--muted)", fontSize: "0.98rem" }}>
+                    The journey opens with high-resolution memories from Tokyo and San Francisco, bridging the couple's international background with the upcoming celebration in the Philippines.
+                  </p>
+                </div>
+
+                <div className="w-feed-card">
+                  <span className="w-label">CHAPTER 02 · CELEBRATION DETAILS & ATTIRE</span>
+                  <div style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.8rem", color: "var(--ink)" }}>
+                    Eliminating guest uncertainty before packing begins
+                  </div>
+                  <p style={{ color: "var(--muted)", fontSize: "0.98rem" }}>
+                    From formal evening wear color swatches to venue climate suggestions, every detail was carefully paced to ensure family members and distant travelers felt prepared.
+                  </p>
+                </div>
+
+                <div className="w-feed-card">
+                  <span className="w-label">CHAPTER 03 · VENUE, TRAVEL & FAQS</span>
+                  <div style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.8rem", color: "var(--ink)" }}>
+                    Clear logistics without clinical complexity
+                  </div>
+                  <p style={{ color: "var(--muted)", fontSize: "0.98rem" }}>
+                    Integrated flight map routes, airport recommendations, and accordion-style FAQs minimized direct inquiries to the couple during busy wedding preparation weeks.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+            SECTION 06 — THE GUEST JOURNEY
+           ========================================================================= */}
+        <section className="w-section w-animate-section" style={{ background: "var(--w-champagne)" }}>
+          <div className="w-container">
+            <div style={{ textAlign: "center", maxWidth: "800px", margin: "0 auto" }}>
+              <span className="w-label">GUEST EXPERIENCE FLOW</span>
+              <h2 className="w-heading-serif">
+                A Seamless <em>Guest Journey</em>
+              </h2>
+            </div>
+
+            {/* Sentence-Like Progression */}
+            <div className="w-journey-sentence">
+              <span className="w-journey-step">Receive invitation</span>
+              <span className="w-journey-arrow">→</span>
+              <span className="w-journey-step">Explore the celebration</span>
+              <span className="w-journey-arrow">→</span>
+              <span className="w-journey-step">Check wedding details</span>
+              <span className="w-journey-arrow">→</span>
+              <span className="w-journey-step">Confirm attendance</span>
+              <span className="w-journey-arrow">→</span>
+              <span className="w-journey-step">Receive RSVP confirmation</span>
+            </div>
+
+            <div style={{ maxWidth: "720px", margin: "2rem auto 0", textAlign: "center" }}>
+              <p className="w-body-editorial">
+                Most guests would interact with the invitation from their phones, so the experience was designed to make essential information easy to find without requiring guests to search through long pages.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+            SECTION 07 — THE RSVP EXPERIENCE
+           ========================================================================= */}
+        <section className="w-section w-animate-section">
+          <div className="w-container">
+            <div style={{ maxWidth: "820px", margin: "0 auto 3rem", textAlign: "center" }}>
+              <span className="w-label">CORE INTERACTION</span>
+              <h2 className="w-heading-serif">
+                The RSVP <em>Experience</em>
+              </h2>
+              <p className="w-body-editorial">
+                Paced with grace, personal validation, and instantaneous confirmation feedback.
+              </p>
+            </div>
+
+            {/* 6 Steps arranged in an editorial stage */}
+            <div className="w-rsvp-diagonal-stage">
+              <div className="w-rsvp-step-card">
                 <div>
-                  <span style={{ fontSize: "0.7rem", color: "var(--muted)", textTransform: "uppercase" }}>GUEST PROTOCOL</span>
-                  <div style={{ fontSize: "0.86rem", fontWeight: 700, color: "var(--ink)", marginTop: "0.2rem" }}>
-                    Chroma-Keyed RSVP Active
-                  </div>
+                  <div className="w-rsvp-step-card__num">01</div>
+                  <h3 style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.4rem", margin: "0.75rem 0 0.5rem" }}>
+                    Guest Identification
+                  </h3>
+                  <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                    Passcode-gated invitation access ensuring personalized responses.
+                  </p>
                 </div>
-                <div style={{ fontFamily: "monospace", fontSize: "0.72rem", background: "rgba(0,0,0,0.06)", padding: "0.5rem", borderRadius: "6px" }}>
-                  PASSCODE: <strong>CC-WED-2026</strong>
+                <span style={{ fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--w-gold)", fontWeight: 700 }}>
+                  Short Form Sections
+                </span>
+              </div>
+
+              <div className="w-rsvp-step-card">
+                <div>
+                  <div className="w-rsvp-step-card__num">02</div>
+                  <h3 style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.4rem", margin: "0.75rem 0 0.5rem" }}>
+                    Attendance Response
+                  </h3>
+                  <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                    1-tap joyful acceptance or warm decline with immediate feedback.
+                  </p>
+                </div>
+                <span style={{ fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--w-gold)", fontWeight: 700 }}>
+                  Clear Required Fields
+                </span>
+              </div>
+
+              <div className="w-rsvp-step-card">
+                <div>
+                  <div className="w-rsvp-step-card__num">03</div>
+                  <h3 style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.4rem", margin: "0.75rem 0 0.5rem" }}>
+                    Guest Details
+                  </h3>
+                  <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                    Dietary requirements, companion names, and origin travel points.
+                  </p>
+                </div>
+                <span style={{ fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--w-gold)", fontWeight: 700 }}>
+                  Large Mobile Inputs
+                </span>
+              </div>
+
+              <div className="w-rsvp-step-card">
+                <div>
+                  <div className="w-rsvp-step-card__num">04</div>
+                  <h3 style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.4rem", margin: "0.75rem 0 0.5rem" }}>
+                    Additional Info
+                  </h3>
+                  <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                    Personal wishes and song requests for the reception dance floor.
+                  </p>
+                </div>
+                <span style={{ fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--w-gold)", fontWeight: 700 }}>
+                  Visible Progress
+                </span>
+              </div>
+
+              <div className="w-rsvp-step-card">
+                <div>
+                  <div className="w-rsvp-step-card__num">05</div>
+                  <h3 style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.4rem", margin: "0.75rem 0 0.5rem" }}>
+                    Review
+                  </h3>
+                  <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                    Clean summary card for guests to confirm before final transmission.
+                  </p>
+                </div>
+                <span style={{ fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--w-gold)", fontWeight: 700 }}>
+                  Reduced Cognitive Load
+                </span>
+              </div>
+
+              <div className="w-rsvp-step-card">
+                <div>
+                  <div className="w-rsvp-step-card__num">06</div>
+                  <h3 style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.4rem", margin: "0.75rem 0 0.5rem" }}>
+                    Confirmation
+                  </h3>
+                  <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                    Celebratory animated feedback with calendar download integration.
+                  </p>
+                </div>
+                <span style={{ fontSize: "0.75rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--w-gold)", fontWeight: 700 }}>
+                  Simple Confirmation
+                </span>
+              </div>
+            </div>
+
+            {/* Design Statement Quote */}
+            <div className="w-rsvp-quote-banner">
+              <blockquote className="w-rsvp-quote">
+                “The RSVP should feel like part of the invitation—not like filling out an administrative form.”
+              </blockquote>
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+            SECTION 08 — MOBILE FIRST
+           ========================================================================= */}
+        <section className="w-section w-animate-section">
+          <div className="w-container--wide">
+            <div style={{ maxWidth: "800px", margin: "0 auto 3rem", textAlign: "center" }}>
+              <span className="w-label">RESPONSIVE CRAFT</span>
+              <h2 className="w-heading-serif">
+                Mobile First by <em>Design</em>
+              </h2>
+              <p className="w-body-editorial">
+                Because wedding invitations are often shared through messaging apps and social media, mobile usability was treated as a primary design requirement rather than an afterthought.
+              </p>
+            </div>
+
+            {/* Staggered Phone Showcases */}
+            <div className="w-mobile-stagger-grid">
+              <div className="w-mobile-mock-card w-mobile-mock-card--offset-1">
+                <img src="/cc-wedding-mobile.jpg" alt="CC Wedding Mobile Cover View" />
+                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--paper)" }}>
+                  <strong style={{ fontSize: "0.9rem", color: "var(--ink)" }}>Home & Welcome</strong>
+                </div>
+              </div>
+
+              <div className="w-mobile-mock-card w-mobile-mock-card--offset-2">
+                <img src="/cc-wedding-mobile.jpg" alt="CC Wedding Mobile Schedule View" />
+                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--paper)" }}>
+                  <strong style={{ fontSize: "0.9rem", color: "var(--ink)" }}>Wedding Details</strong>
+                </div>
+              </div>
+
+              <div className="w-mobile-mock-card w-mobile-mock-card--offset-3">
+                <img src="/cc-wedding-mobile.jpg" alt="CC Wedding Mobile Schedule View" />
+                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--paper)" }}>
+                  <strong style={{ fontSize: "0.9rem", color: "var(--ink)" }}>Schedule & Timeline</strong>
+                </div>
+              </div>
+
+              <div className="w-mobile-mock-card w-mobile-mock-card--offset-4">
+                <img src="/cc-wedding-mobile.jpg" alt="CC Wedding Mobile RSVP View" />
+                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--paper)" }}>
+                  <strong style={{ fontSize: "0.9rem", color: "var(--ink)" }}>Instant RSVP</strong>
                 </div>
               </div>
             </div>
-          </div>
 
-          <WeddingFlightMap />
-        </section>
-
-        {/* SET PIECE 2: Live 60 FPS Chroma-Key Keyer Sandbox */}
-        <section className="clean-section">
-          <div className="clean-section__head">
-            <h2 className="clean-section__title">Live Chroma-Key Video Keyer Sandbox</h2>
-            <p className="clean-section__subtitle">
-              Test the real-time canvas isolation engine. Adjust tolerance, color matching, and edge softness to inspect client-side video performance.
-            </p>
-          </div>
-
-          <div className="chroma-sandbox">
-            <div className="chroma-sandbox__toolbar">
-              <div className="chroma-slider-group">
-                <label htmlFor="chroma-color">
-                  <span>Target Key Color</span>
-                  <code>{keyColor}</code>
-                </label>
-                <input
-                  id="chroma-color"
-                  type="color"
-                  value={keyColor}
-                  onChange={(e) => setKeyColor(e.target.value)}
-                  style={{ width: "100%", height: "36px", border: "none", borderRadius: "6px", cursor: "pointer", background: "transparent" }}
-                />
-              </div>
-
-              <div className="chroma-slider-group">
-                <label htmlFor="chroma-thresh">
-                  <span>Threshold Tolerance</span>
-                  <code>{threshold}%</code>
-                </label>
-                <input
-                  id="chroma-thresh"
-                  type="range"
-                  min="5"
-                  max="90"
-                  value={threshold}
-                  onChange={(e) => setThreshold(Number(e.target.value))}
-                />
-              </div>
-
-              <div className="chroma-slider-group">
-                <label htmlFor="chroma-smooth">
-                  <span>Edge Softness / Spill</span>
-                  <code>{smoothness}%</code>
-                </label>
-                <input
-                  id="chroma-smooth"
-                  type="range"
-                  min="0"
-                  max="50"
-                  value={smoothness}
-                  onChange={(e) => setSmoothness(Number(e.target.value))}
-                />
-              </div>
-            </div>
-
-            <div className="clean-canvas-box clean-canvas-box--checker">
-              <canvas
-                ref={canvasRef}
-                width={640}
-                height={260}
-                className="clean-canvas-element"
-              />
-              <div className="clean-canvas-fps">
-                ● LIVE CANVAS · {fpsVal} FPS · WEBGL ACCELERATED
-              </div>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "2rem", marginTop: "2rem", color: "var(--muted)", fontSize: "0.92rem" }}>
+              <span>• Readable typography</span>
+              <span>• Large tap areas</span>
+              <span>• Clear navigation</span>
+              <span>• Quick RSVP access</span>
+              <span>• Responsive imagery</span>
+              <span>• Minimal clutter</span>
             </div>
           </div>
         </section>
 
-        {/* Design System Swatches */}
-        <section className="clean-section">
-          <div className="clean-section__head">
-            <h2 className="clean-section__title">Attire Palette & Swatches</h2>
-            <p className="clean-section__subtitle">
-              Color tokens mapped across formal eveningwear, invitations, and stationery textures.
-            </p>
-          </div>
-
-          <div className="clean-swatches-grid">
-            {swatches.map((swatch) => (
-              <button
-                type="button"
-                key={swatch.hex}
-                className="clean-swatch-card"
-                onClick={() => copyHex(swatch.hex)}
-                title="Click to copy Hex"
-              >
-                <span
-                  className="clean-swatch-chip"
-                  style={{ backgroundColor: swatch.hex }}
-                />
-                <div className="clean-swatch-info">
-                  <strong>{swatch.name}</strong>
-                  <code>{swatch.hex}</code>
-                </div>
-              </button>
-            ))}
-          </div>
-          {copiedHex && (
-            <p className="clean-copy-notice">Copied {copiedHex}</p>
-          )}
-        </section>
-
-        {/* Code Section */}
-        <section className="clean-section">
-          <div className="clean-section__head">
-            <h2 className="clean-section__title">Passcode & RSVP Submission Pipeline</h2>
-          </div>
-
-          <div className="clean-code-box">
-            <div className="clean-code-box__header">
-              <span>RSVPHandler.ts</span>
-              <button type="button" onClick={copyCode} className="clean-copy-btn">
-                {codeCopied ? "Copied" : "Copy"}
-              </button>
+        {/* =========================================================================
+            SECTION 09 — SMALL DETAILS, BIG DIFFERENCE
+           ========================================================================= */}
+        <section className="w-section w-animate-section">
+          <div className="w-container">
+            <div style={{ textAlign: "center", maxWidth: "780px", margin: "0 auto 3rem" }}>
+              <span className="w-label">MICRO-CRAFT</span>
+              <h2 className="w-heading-serif">
+                Details that shape the <em>experience</em>
+              </h2>
             </div>
-            <pre className="clean-code-box__pre">
-              <code>{rsvpPipelineSnippet}</code>
-            </pre>
+
+            <div className="w-details-masonry">
+              <div className="w-detail-chip">
+                <span className="w-label">INTERACTION</span>
+                <div className="w-detail-chip__title">Chroma-Key Hover State</div>
+                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                  Delicate video background isolation responding organically to mouse movement.
+                </p>
+              </div>
+
+              <div className="w-detail-chip">
+                <span className="w-label">AFFORDANCE</span>
+                <div className="w-detail-chip__title">Gold Foil RSVP Button</div>
+                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                  Tactile pill buttons with ambient glow imitating physical letterpress stamping.
+                </p>
+              </div>
+
+              <div className="w-detail-chip">
+                <span className="w-label">TEXTURE</span>
+                <div className="w-detail-chip__title">Decorative Botanical Dividers</div>
+                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                  Custom line flourishes that visually bridge separate event chapters.
+                </p>
+              </div>
+
+              <div className="w-detail-chip">
+                <span className="w-label">LOGISTICS</span>
+                <div className="w-detail-chip__title">Venue & Wayfinding Cards</div>
+                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                  1-tap Google Maps integration and localized transport tips for out-of-town guests.
+                </p>
+              </div>
+
+              <div className="w-detail-chip">
+                <span className="w-label">TYPOGRAPHY</span>
+                <div className="w-detail-chip__title">Date & Countdown Treatment</div>
+                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                  Elegant numerals reflecting the passage of days leading to the celebration.
+                </p>
+              </div>
+
+              <div className="w-detail-chip">
+                <span className="w-label">FEEDBACK</span>
+                <div className="w-detail-chip__title">Personalized Confirmation</div>
+                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                  Dynamic congratulatory receipt generated with guest names and custom details.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Footer Navigation */}
-        <footer className="clean-footer-nav">
-          <a href="/#work" className="editorial-btn editorial-btn--ghost">
-            <span>← Latest Work</span>
-          </a>
-          <a href="/works/lgu-water" className="editorial-btn editorial-btn--primary">
-            <span>Next: LGU Water District →</span>
-          </a>
-        </footer>
+        {/* =========================================================================
+            SECTION 10 — DESIGNING FOR DIFFERENT GUESTS
+           ========================================================================= */}
+        <section className="w-section w-animate-section" style={{ background: "var(--w-champagne)" }}>
+          <div className="w-container">
+            <div style={{ maxWidth: "800px", marginBottom: "3.5rem" }}>
+              <span className="w-label">INCLUSIVE EMPATHY</span>
+              <h2 className="w-heading-serif">
+                Designing for <em>Different Guests</em>
+              </h2>
+              <p className="w-body-editorial">
+                Ensuring clarity across generations, technical confidence levels, and devices.
+              </p>
+            </div>
+
+            <div className="w-guest-columns">
+              <div className="w-guest-col">
+                <h3>Family Members</h3>
+                <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.7 }}>
+                  Needed straightforward access to venue details, schedules, and important reminders without navigational friction.
+                </p>
+              </div>
+
+              <div className="w-guest-col">
+                <h3>Friends & Peers</h3>
+                <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.7 }}>
+                  Needed a convenient way to review event information on the go, check attire palettes, and RSVP quickly from group chats.
+                </p>
+              </div>
+
+              <div className="w-guest-col">
+                <h3>Mobile Guests</h3>
+                <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.7 }}>
+                  Needed the entire experience to work comfortably on smaller screens with generous tap targets and zero pinching.
+                </p>
+              </div>
+            </div>
+
+            <div style={{ marginTop: "3rem", padding: "1.25rem 1.75rem", borderRadius: "12px", border: "1px solid var(--line)", background: "var(--paper)", fontSize: "0.86rem", color: "var(--muted)" }}>
+              ♿ <strong>Accessibility Note:</strong> High-contrast color ratios, readable minimum 16px body type, and screen-reader accessible form labels were maintained across all viewports.
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+            SECTION 11 — FINAL EXPERIENCE
+           ========================================================================= */}
+        <section className="w-section w-animate-section">
+          <div className="w-container--wide">
+            <div style={{ maxWidth: "800px", margin: "0 auto 3rem", textAlign: "center" }}>
+              <span className="w-label">THE OUTCOME</span>
+              <h2 className="w-heading-serif">
+                The Final <em>Experience</em>
+              </h2>
+              <p className="w-body-editorial">
+                The final experience brought the couple’s wedding identity and practical guest information into one cohesive digital invitation that could be accessed from any device.
+              </p>
+            </div>
+
+            <div className="w-final-stage">
+              <div className="w-final-desktop">
+                <img
+                  src="/cc-wedding-mockup.jpg"
+                  alt="Final CC Wedding digital platform showcase"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* =========================================================================
+            CLOSING — REFLECTION
+           ========================================================================= */}
+        <section className="w-section">
+          <div className="w-container--narrow">
+            <div className="w-closing-wrap">
+              <span className="w-label">DESIGN REFLECTION</span>
+              
+              <h2 className="w-heading-serif" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}>
+                Designing for an <em>emotional moment</em>
+              </h2>
+
+              <div className="w-body-editorial" style={{ textAlign: "center", margin: "2rem auto" }}>
+                <p style={{ marginBottom: "1.5rem" }}>
+                  This project gave me the opportunity to approach web design from a different perspective. The interface was not only meant to function well—it also needed to communicate personality, anticipation, and celebration.
+                </p>
+                <p>
+                  It strengthened my ability to translate a client’s visual direction into a responsive digital experience while keeping usability at the center of the design.
+                </p>
+              </div>
+
+              <div style={{ marginTop: "2rem" }}>
+                <a
+                  href="https://www.ccwedding.page/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="editorial-btn editorial-btn--primary"
+                  style={{ padding: "0.85rem 2rem", fontSize: "0.95rem" }}
+                >
+                  <span>Visit Live Experience · ccwedding.page ↗</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Subtle Footer Navigation */}
+            <footer className="w-footer-nav">
+              <span style={{ fontSize: "0.82rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)" }}>
+                Private Client Case Study · 2025—2026
+              </span>
+              <a href="/works/lgu-water" className="editorial-btn editorial-btn--ghost">
+                <span>Next Project: LGU Water District →</span>
+              </a>
+            </footer>
+          </div>
+        </section>
 
       </main>
       <Footer />

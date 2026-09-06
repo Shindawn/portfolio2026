@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import AboutPage from "./AboutPage";
+import AribaBatoCaseStudy from "./AribaBatoCaseStudy";
 import CCWeddingCaseStudy from "./CCWeddingCaseStudy";
 import HRPayrollCaseStudy from "./HRPayrollCaseStudy";
 import LGUWaterCaseStudy from "./LGUWaterCaseStudy";
@@ -18,6 +19,14 @@ if (pathname === "/work" || pathname === "/works") {
 const Page =
   pathname === "/about"
     ? AboutPage
+    : pathname === "/works/ariba-bato" ||
+      pathname === "/work/ariba-bato" ||
+      pathname === "/case-study/ariba-bato" ||
+      pathname === "/case-studies/ariba-bato" ||
+      pathname === "/works/ariba" ||
+      pathname === "/work/ariba" ||
+      pathname === "/case-study/ariba"
+    ? AribaBatoCaseStudy
     : pathname === "/works/cc-wedding" ||
       pathname === "/work/cc-wedding" ||
       pathname === "/case-study/cc-wedding" ||

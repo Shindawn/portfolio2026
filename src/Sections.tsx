@@ -295,6 +295,8 @@ export function LatestWork() {
             ? "/works/lgu-water"
             : name.toLowerCase().includes("payroll")
             ? "/works/hr-payroll"
+            : name.toLowerCase().includes("ariba")
+            ? "/works/ariba-bato"
             : "#contact";
         return (
           <a

@@ -40,6 +40,24 @@ const pipelineProjects: PipelineProject[] = [
     liveUrl: "https://www.ccwedding.page/",
   },
   {
+    id: "ariba-bato",
+    title: "ARIBA BATO: Augmented Reality Cultural Exploration Platform",
+    category: "Augmented Reality & Gamified Mobile Experience",
+    role: "Lead UI/UX Architect & Mobile Developer",
+    timeline: "2025 — 2026",
+    progress: 100,
+    status: "Case Study Published · Active Cultural Project",
+    description:
+      "A gamified mobile application bringing Catanduanes cultural heritage to life through interactive storytelling, location-based augmented reality camera reticles, treasure hunt quests, and collectible achievement badges.",
+    stack: ["React Native", "TypeScript", "Three.js / WebGL", "AR Core", "Figma", "Tailwind CSS"],
+    highlights: [
+      "75.43 SUS usability score (Good) evaluated across 65 participants",
+      "87.28% GUESS-18 game user experience satisfaction rating",
+      "Interactive 3D AR anchors on Batalay Shrine & St. John the Baptist Parish",
+    ],
+    caseStudyUrl: "/works/ariba-bato",
+  },
+  {
     id: "water-district",
     title: "LGU Water District Management & Billing Enterprise",
     category: "Full-Stack Enterprise FinTech & GovTech",
@@ -63,8 +81,8 @@ const pipelineProjects: PipelineProject[] = [
     category: "Financial & Human Capital Suite",
     role: "Full-Stack Software Engineer",
     timeline: "2024 — 2025",
-    progress: 88,
-    status: "Finalizing Security & Performance Benchmarks",
+    progress: 100,
+    status: "Case Study Published · Enterprise System",
     description:
       "Consolidated financial and HR platform handling loan amortizations, payroll disbursement routines, government contribution schedules, and automated biometric timecard synchronizations.",
     stack: ["PHP", "PostgreSQL", "React", "TypeScript", "Docker", "JWT Auth"],
@@ -73,6 +91,7 @@ const pipelineProjects: PipelineProject[] = [
       "Precision rounding algorithms ensuring zero discrepancy in lending ledgers",
       "Role-based access security for sensitive personnel salary datasets",
     ],
+    caseStudyUrl: "/works/hr-payroll",
   },
   {
     id: "portfolio-3d",
