@@ -180,8 +180,8 @@ export default function CCWeddingCaseStudy() {
                           style={{ backgroundColor: swatch.hex }}
                         />
                         <div>
-                          <strong style={{ fontSize: "0.92rem", display: "block", color: "var(--ink)" }}>{swatch.name}</strong>
-                          <span style={{ fontSize: "0.78rem", color: "var(--muted)" }}>{swatch.tone}</span>
+                          <strong style={{ fontSize: "0.92rem", display: "block", color: "var(--w-text)" }}>{swatch.name}</strong>
+                          <span style={{ fontSize: "0.78rem", color: "var(--w-text-muted)" }}>{swatch.tone}</span>
                         </div>
                       </div>
                       <code style={{ fontFamily: "monospace", fontSize: "0.78rem", color: "var(--w-gold)", fontWeight: 700 }}>
@@ -196,18 +196,18 @@ export default function CCWeddingCaseStudy() {
               <div className="w-mood-type-card">
                 <span className="w-label">TYPOGRAPHY SAMPLES</span>
                 <div style={{ marginTop: "1rem" }}>
-                  <div style={{ fontFamily: "var(--w-font-serif)", fontSize: "clamp(2.5rem, 5vw, 4.2rem)", fontStyle: "italic", lineHeight: 1.05, color: "var(--ink)", marginBottom: "1rem" }}>
+                  <div style={{ fontFamily: "var(--w-font-serif)", fontSize: "clamp(2.5rem, 5vw, 4.2rem)", fontStyle: "italic", lineHeight: 1.05, color: "var(--w-text)", marginBottom: "1rem" }}>
                     Charlon & Chilzia
                   </div>
                   <div style={{ fontFamily: "var(--w-font-sans)", fontSize: "0.86rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "var(--w-gold)", marginBottom: "1.75rem" }}>
                     Together with their families · Save the Date
                   </div>
-                  <div style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.4rem", color: "var(--muted)", fontStyle: "italic" }}>
+                  <div style={{ fontFamily: "var(--w-font-serif)", fontSize: "1.4rem", color: "var(--w-text-muted)", fontStyle: "italic" }}>
                     “Two lives, one shared horizon across the Pacific.”
                   </div>
                 </div>
 
-                <div style={{ marginTop: "2.5rem", borderTop: "1px solid var(--line)", paddingTop: "1.5rem" }}>
+                <div style={{ marginTop: "2.5rem", borderTop: "1px solid var(--w-border)", paddingTop: "1.5rem" }}>
                   <span className="w-label">VISUAL DIRECTION</span>
                   <div className="w-direction-tags">
                     <span className="w-direction-tag">Elegant</span>
@@ -541,34 +541,34 @@ export default function CCWeddingCaseStudy() {
             <div className="w-mobile-stagger-grid">
               <div className="w-mobile-mock-card w-mobile-mock-card--offset-1">
                 <img src="/cc-wedding-mobile.jpg" alt="CC Wedding Mobile Cover View" />
-                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--paper)" }}>
-                  <strong style={{ fontSize: "0.9rem", color: "var(--ink)" }}>Home & Welcome</strong>
+                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--w-surface-card)" }}>
+                  <strong style={{ fontSize: "0.9rem", color: "var(--w-text)" }}>Home & Welcome</strong>
                 </div>
               </div>
 
               <div className="w-mobile-mock-card w-mobile-mock-card--offset-2">
                 <img src="/cc-wedding-mobile.jpg" alt="CC Wedding Mobile Schedule View" />
-                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--paper)" }}>
-                  <strong style={{ fontSize: "0.9rem", color: "var(--ink)" }}>Wedding Details</strong>
+                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--w-surface-card)" }}>
+                  <strong style={{ fontSize: "0.9rem", color: "var(--w-text)" }}>Wedding Details</strong>
                 </div>
               </div>
 
               <div className="w-mobile-mock-card w-mobile-mock-card--offset-3">
                 <img src="/cc-wedding-mobile.jpg" alt="CC Wedding Mobile Schedule View" />
-                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--paper)" }}>
-                  <strong style={{ fontSize: "0.9rem", color: "var(--ink)" }}>Schedule & Timeline</strong>
+                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--w-surface-card)" }}>
+                  <strong style={{ fontSize: "0.9rem", color: "var(--w-text)" }}>Schedule & Timeline</strong>
                 </div>
               </div>
 
               <div className="w-mobile-mock-card w-mobile-mock-card--offset-4">
                 <img src="/cc-wedding-mobile.jpg" alt="CC Wedding Mobile RSVP View" />
-                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--paper)" }}>
-                  <strong style={{ fontSize: "0.9rem", color: "var(--ink)" }}>Instant RSVP</strong>
+                <div style={{ padding: "1.25rem", textAlign: "center", background: "var(--w-surface-card)" }}>
+                  <strong style={{ fontSize: "0.9rem", color: "var(--w-text)" }}>Instant RSVP</strong>
                 </div>
               </div>
             </div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "2rem", marginTop: "2rem", color: "var(--muted)", fontSize: "0.92rem" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "2rem", marginTop: "2rem", color: "var(--w-text-muted)", fontSize: "0.92rem" }}>
               <span>• Readable typography</span>
               <span>• Large tap areas</span>
               <span>• Clear navigation</span>
@@ -595,7 +595,7 @@ export default function CCWeddingCaseStudy() {
               <div className="w-detail-chip">
                 <span className="w-label">INTERACTION</span>
                 <div className="w-detail-chip__title">Chroma-Key Hover State</div>
-                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                <p style={{ fontSize: "0.88rem", color: "var(--w-text-muted)" }}>
                   Delicate video background isolation responding organically to mouse movement.
                 </p>
               </div>
@@ -603,7 +603,7 @@ export default function CCWeddingCaseStudy() {
               <div className="w-detail-chip">
                 <span className="w-label">AFFORDANCE</span>
                 <div className="w-detail-chip__title">Gold Foil RSVP Button</div>
-                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                <p style={{ fontSize: "0.88rem", color: "var(--w-text-muted)" }}>
                   Tactile pill buttons with ambient glow imitating physical letterpress stamping.
                 </p>
               </div>
@@ -611,7 +611,7 @@ export default function CCWeddingCaseStudy() {
               <div className="w-detail-chip">
                 <span className="w-label">TEXTURE</span>
                 <div className="w-detail-chip__title">Decorative Botanical Dividers</div>
-                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                <p style={{ fontSize: "0.88rem", color: "var(--w-text-muted)" }}>
                   Custom line flourishes that visually bridge separate event chapters.
                 </p>
               </div>
@@ -619,7 +619,7 @@ export default function CCWeddingCaseStudy() {
               <div className="w-detail-chip">
                 <span className="w-label">LOGISTICS</span>
                 <div className="w-detail-chip__title">Venue & Wayfinding Cards</div>
-                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                <p style={{ fontSize: "0.88rem", color: "var(--w-text-muted)" }}>
                   1-tap Google Maps integration and localized transport tips for out-of-town guests.
                 </p>
               </div>
@@ -627,7 +627,7 @@ export default function CCWeddingCaseStudy() {
               <div className="w-detail-chip">
                 <span className="w-label">TYPOGRAPHY</span>
                 <div className="w-detail-chip__title">Date & Countdown Treatment</div>
-                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                <p style={{ fontSize: "0.88rem", color: "var(--w-text-muted)" }}>
                   Elegant numerals reflecting the passage of days leading to the celebration.
                 </p>
               </div>
@@ -635,7 +635,7 @@ export default function CCWeddingCaseStudy() {
               <div className="w-detail-chip">
                 <span className="w-label">FEEDBACK</span>
                 <div className="w-detail-chip__title">Personalized Confirmation</div>
-                <p style={{ fontSize: "0.88rem", color: "var(--muted)" }}>
+                <p style={{ fontSize: "0.88rem", color: "var(--w-text-muted)" }}>
                   Dynamic congratulatory receipt generated with guest names and custom details.
                 </p>
               </div>
@@ -661,27 +661,27 @@ export default function CCWeddingCaseStudy() {
             <div className="w-guest-columns">
               <div className="w-guest-col">
                 <h3>Family Members</h3>
-                <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.7 }}>
+                <p style={{ fontSize: "0.95rem", color: "var(--w-text-muted)", lineHeight: 1.7 }}>
                   Needed straightforward access to venue details, schedules, and important reminders without navigational friction.
                 </p>
               </div>
 
               <div className="w-guest-col">
                 <h3>Friends & Peers</h3>
-                <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.7 }}>
+                <p style={{ fontSize: "0.95rem", color: "var(--w-text-muted)", lineHeight: 1.7 }}>
                   Needed a convenient way to review event information on the go, check attire palettes, and RSVP quickly from group chats.
                 </p>
               </div>
 
               <div className="w-guest-col">
                 <h3>Mobile Guests</h3>
-                <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.7 }}>
+                <p style={{ fontSize: "0.95rem", color: "var(--w-text-muted)", lineHeight: 1.7 }}>
                   Needed the entire experience to work comfortably on smaller screens with generous tap targets and zero pinching.
                 </p>
               </div>
             </div>
 
-            <div style={{ marginTop: "3rem", padding: "1.25rem 1.75rem", borderRadius: "12px", border: "1px solid var(--line)", background: "var(--paper)", fontSize: "0.86rem", color: "var(--muted)" }}>
+            <div style={{ marginTop: "3rem", padding: "1.25rem 1.75rem", borderRadius: "12px", border: "1px solid var(--w-border)", background: "var(--w-surface-card)", fontSize: "0.86rem", color: "var(--w-text-muted)" }}>
               ♿ <strong>Accessibility Note:</strong> High-contrast color ratios, readable minimum 16px body type, and screen-reader accessible form labels were maintained across all viewports.
             </div>
           </div>
@@ -749,7 +749,7 @@ export default function CCWeddingCaseStudy() {
 
             {/* Subtle Footer Navigation */}
             <footer className="w-footer-nav">
-              <span style={{ fontSize: "0.82rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--muted)" }}>
+              <span style={{ fontSize: "0.82rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--w-text-muted)" }}>
                 Private Client Case Study · 2025—2026
               </span>
               <a href="/works/lgu-water" className="editorial-btn editorial-btn--ghost">
