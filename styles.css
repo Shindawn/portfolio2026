@@ -2555,17 +2555,21 @@ a {
   }
 
   .curved-marquee {
-    margin-top: 1rem;
+    margin-top: 1.25rem;
     margin-bottom: 0.5rem;
   }
 
+  .curved-marquee__ribbon {
+    stroke-width: 220px;
+  }
+
   .curved-marquee__svg {
-    height: clamp(170px, 42vw, 250px);
+    height: clamp(180px, 45vw, 250px);
   }
 
   .curved-marquee__text {
-    font-size: 82px;
-    letter-spacing: -0.025em;
+    font-size: 140px;
+    letter-spacing: -0.01em;
   }
 
   .hero-3d-card {
