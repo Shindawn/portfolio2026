@@ -4657,16 +4657,16 @@ a {
 }
 
 /* Navigation Controls below the Book */
-/* Floating Maximize Action Pill on Journey Book */
-.book3d-floating-max-btn {
+/* Floating Landscape Action Button on Journey Book */
+.book3d-floating-landscape-btn {
   position: absolute;
-  top: -16px;
-  right: clamp(14px, 5vw, 42px);
+  top: -14px;
+  right: clamp(12px, 4vw, 36px);
   z-index: 30;
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.55rem 1.05rem 0.55rem 0.9rem;
+  padding: 0.45rem 0.95rem 0.45rem 0.85rem;
   background: color-mix(in srgb, var(--paper) 88%, transparent);
   color: var(--ink);
   border: 1px solid var(--line);
@@ -4682,27 +4682,27 @@ a {
   transition: all 260ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.book3d-floating-max-btn:hover {
-  transform: translateY(-3px) scale(1.04);
+.book3d-floating-landscape-btn:hover {
+  transform: translateY(-2px) scale(1.04);
   border-color: var(--accent-bright);
-  box-shadow: 0 14px 34px rgba(34, 150, 110, 0.22);
+  box-shadow: 0 14px 34px rgba(34, 150, 110, 0.25);
   color: var(--accent);
 }
 
-:root[data-theme="dark"] .book3d-floating-max-btn {
-  background: rgba(14, 26, 20, 0.88);
+:root[data-theme="dark"] .book3d-floating-landscape-btn {
+  background: rgba(14, 26, 20, 0.9);
   border-color: rgba(34, 150, 110, 0.35);
   color: #e8f0eb;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
 }
 
-:root[data-theme="dark"] .book3d-floating-max-btn:hover {
+:root[data-theme="dark"] .book3d-floating-landscape-btn:hover {
   border-color: var(--accent-bright);
   color: var(--accent-bright);
   box-shadow: 0 14px 36px rgba(34, 150, 110, 0.32);
 }
 
-.book3d-floating-max-btn__icon {
+.book3d-floating-landscape-btn__icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4710,30 +4710,108 @@ a {
   transition: transform 260ms ease;
 }
 
-:root[data-theme="dark"] .book3d-floating-max-btn__icon {
+:root[data-theme="dark"] .book3d-floating-landscape-btn__icon {
   color: var(--accent-bright);
 }
 
-.book3d-floating-max-btn:hover .book3d-floating-max-btn__icon {
-  transform: scale(1.15) rotate(5deg);
+.book3d-floating-landscape-btn:hover .book3d-floating-landscape-btn__icon {
+  transform: rotate(15deg) scale(1.15);
 }
 
-.book3d-floating-max-btn__badge {
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.15rem 0.45rem;
+/* Bottom Pagination & Navigation Controls */
+.book3d-bottom-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  z-index: 10;
+  width: 100%;
+  max-width: 600px;
+}
+
+.book3d-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.95rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 15%, transparent);
-  color: var(--accent);
-  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 85%, transparent);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 550;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
 }
 
-:root[data-theme="dark"] .book3d-floating-max-btn__badge {
-  background: rgba(34, 150, 110, 0.2);
-  color: var(--accent-bright);
+.book3d-nav-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: var(--ink);
+  background: var(--paper);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.book3d-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+:root[data-theme="dark"] .book3d-nav-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #d8e5de;
+}
+
+:root[data-theme="dark"] .book3d-nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.book3d-nav-btn--landscape {
+  background: color-mix(in srgb, var(--accent) 12%, var(--paper));
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.book3d-nav-btn--landscape:hover {
+  background: var(--accent);
+  color: #ffffff !important;
+  border-color: var(--accent);
+}
+
+:root[data-theme="dark"] .book3d-nav-btn--landscape {
+  background: rgba(34, 150, 110, 0.16);
   border-color: rgba(34, 150, 110, 0.4);
+  color: var(--accent-bright);
+}
+
+:root[data-theme="dark"] .book3d-nav-btn--landscape:hover {
+  background: var(--accent-bright);
+  color: #0b1410 !important;
+}
+
+.book3d-step-indicator {
+  font-size: 0.78rem;
+  font-family: monospace;
+  color: var(--muted);
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--paper) 60%, transparent);
+  border: 1px solid var(--line);
+  user-select: none;
+}
+
+:root[data-theme="dark"] .book3d-step-indicator {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 /* Front Cover Header Row & Maximize Shortcut */
@@ -4807,34 +4885,6 @@ a {
   border-color: var(--accent-bright);
 }
 
-/* Bottom Controls Maximize Pill */
-.book3d-btn--maximize-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: color-mix(in srgb, var(--accent) 12%, var(--paper));
-  border-color: rgba(34, 150, 110, 0.35);
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.book3d-btn--maximize-pill:hover {
-  background: var(--accent-bright);
-  color: #0c1410 !important;
-  border-color: var(--accent-bright);
-}
-
-:root[data-theme="dark"] .book3d-btn--maximize-pill {
-  background: rgba(34, 150, 110, 0.16);
-  border-color: rgba(34, 150, 110, 0.45);
-  color: var(--accent-bright);
-}
-
-:root[data-theme="dark"] .book3d-btn--maximize-pill:hover {
-  background: var(--accent-bright);
-  color: #0c1410 !important;
-}
-
 .book3d-cover__desc--back {
   margin: 0;
   font-size: 0.88rem;
@@ -4847,7 +4897,7 @@ a {
 }
 
 /* ==========================================================================
-   MAXIMIZED FLOATING MAP EFFECT ("Floating Ganon" Physics & Cartography)
+   MAXIMIZED LANDSCAPE READER MODAL
    ========================================================================== */
 
 @keyframes fadeInOverlay {
@@ -4861,20 +4911,19 @@ a {
   }
 }
 
-/* Floating Levitation Animation ("Floating Ganon" Physics) */
+/* Floating Levitation Animation */
 @keyframes bookFloat {
   0% {
     transform: perspective(1800px) translateY(0px) rotateX(1.8deg);
   }
   50% {
-    transform: perspective(1800px) translateY(-16px) rotateX(0.5deg);
+    transform: perspective(1800px) translateY(-14px) rotateX(0.5deg);
   }
   100% {
     transform: perspective(1800px) translateY(0px) rotateX(1.8deg);
   }
 }
 
-/* Floor Shadow scales inversely with float height */
 @keyframes bookShadowFloat {
   0% {
     transform: translate(-50%, 0) scale(1);
@@ -4900,7 +4949,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(1rem, 3vw, 2.5rem);
+  padding: clamp(0.75rem, 2.5vw, 2rem);
   overflow-y: auto;
   overflow-x: hidden;
   animation: fadeInOverlay 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -4909,9 +4958,9 @@ a {
 .book3d-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.16);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(8, 14, 11, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   z-index: 1;
   pointer-events: none;
 }
@@ -4926,7 +4975,7 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
   margin: auto;
 }
 
@@ -4936,24 +4985,81 @@ a {
   max-width: 1060px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 1rem;
   padding: 0 0.5rem;
+  flex-wrap: wrap;
+}
+
+.book3d-maximized-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
 }
 
 .book3d-maximized-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-bright);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(34, 150, 110, 0.2);
+  border: 1px solid rgba(34, 150, 110, 0.4);
 }
 
-:root[data-theme="dark"] .book3d-maximized-badge {
-  color: var(--accent-bright);
+.book3d-rotate-tip {
+  font-size: 0.76rem;
+  color: #a0b2a8;
+  letter-spacing: 0.01em;
+}
+
+.book3d-maximized-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.book3d-modal-nav-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.book3d-modal-nav-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #ffffff;
+  transform: scale(1.08);
+}
+
+.book3d-modal-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.book3d-modal-step-badge {
+  font-size: 0.76rem;
+  font-family: monospace;
+  color: #c5d4cc;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Close / Minimize Button */
@@ -4961,13 +5067,13 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 0.9rem;
   border-radius: 999px;
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--paper) 80%, transparent);
-  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
   font-family: inherit;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 180ms ease;
@@ -4976,8 +5082,8 @@ a {
 
 .book3d-modal-close-btn:hover {
   border-color: #e55353;
-  color: #e55353;
-  background: rgba(229, 83, 83, 0.12);
+  color: #ff6b6b;
+  background: rgba(229, 83, 83, 0.2);
   transform: scale(1.03);
 }
 
@@ -4989,18 +5095,14 @@ a {
 
 .book3d-esc-key {
   font-size: 0.65rem;
-  padding: 0.15rem 0.4rem;
+  padding: 0.12rem 0.35rem;
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   font-family: monospace;
 }
 
-:root[data-theme="dark"] .book3d-esc-key {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Floating Book Shell with continuous levitation */
+/* Floating Book Shell */
 .book3d-floating-book-shell {
   position: relative;
   width: 100%;
@@ -5014,7 +5116,7 @@ a {
 /* Floor Shadow underneath the floating book */
 .book3d-modal-shadow {
   position: absolute;
-  bottom: -32px;
+  bottom: -28px;
   left: 50%;
   width: 420px;
   height: 44px;
@@ -5032,15 +5134,15 @@ a {
 
 /* Maximized 3D Stage Dimensions */
 .book3d-stage--maximized {
-  width: clamp(380px, 42vw, 480px);
-  height: clamp(540px, 68vh, 680px);
+  width: clamp(340px, 38vw, 460px);
+  height: clamp(480px, 64vh, 640px);
   position: relative;
   z-index: 2;
   transition: width 550ms cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .book3d-maximized-container--open .book3d-stage--maximized {
-  width: clamp(820px, 86vw, 1080px);
+  width: clamp(780px, 84vw, 1040px);
 }
 
 .book3d-spread--maximized {
@@ -5050,60 +5152,47 @@ a {
 
 /* Spacious, High-Res Page Content for Maximized Book */
 .book3d-page--maximized {
-  padding: clamp(2.2rem, 3.5vw, 3.4rem);
+  padding: clamp(2rem, 3.2vw, 3.2rem);
 }
 
 .book3d-page--maximized .book3d-page__title {
-  font-size: clamp(1.5rem, 2.2vw, 2.1rem);
+  font-size: clamp(1.4rem, 2vw, 2rem);
   letter-spacing: -0.03em;
   margin-bottom: 0.3rem;
 }
 
 .book3d-page--maximized .book3d-page__subtitle {
-  font-size: 1.05rem;
+  font-size: 1rem;
 }
 
 .book3d-page--maximized .book3d-page__desc {
-  font-size: 1.02rem;
-  line-height: 1.65;
+  font-size: 0.98rem;
+  line-height: 1.6;
 }
 
 .book3d-page--maximized .book3d-page__quote {
-  font-size: clamp(1.5rem, 2vw, 1.95rem);
+  font-size: clamp(1.4rem, 1.8vw, 1.85rem);
   line-height: 1.4;
-  margin: 1.2rem 0;
+  margin: 1.1rem 0;
 }
 
 .book3d-page--maximized .book3d-page__image-wrap {
-  height: clamp(210px, 25vh, 270px);
+  height: clamp(190px, 24vh, 250px);
   border-radius: 14px;
 }
 
 .book3d-page--maximized .book3d-cert-item {
-  font-size: 0.95rem;
-  line-height: 1.45;
+  font-size: 0.92rem;
+  line-height: 1.4;
 }
 
 .book3d-page--maximized .book3d-page__stat-value {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
 }
 
 .book3d-page--maximized .book3d-page__pill {
-  font-size: 0.82rem;
-  padding: 0.35rem 0.75rem;
-}
-
-/* Maximized Controls */
-.book3d-controls--maximized {
-  margin-top: 0.5rem;
-  position: relative;
-  z-index: 10;
-}
-
-.book3d-btn--lg {
-  padding: 0.65rem 1.45rem;
-  font-size: 0.94rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 0.35rem 0.7rem;
 }
 
 /* Responsive Rules for Mobile/Tablet */
@@ -5111,6 +5200,7 @@ a {
   .book3d-maximized-container--open .book3d-stage--maximized {
     width: 95vw;
     height: auto;
+    min-height: 480px;
   }
 
   .book3d-stage--maximized {
@@ -5123,7 +5213,81 @@ a {
   }
 
   .book3d-page--maximized {
-    padding: 1.5rem;
+    padding: 1.35rem 1.15rem;
+  }
+
+  .book3d-page--maximized .book3d-page__title {
+    font-size: 1.3rem;
+  }
+
+  .book3d-page--maximized .book3d-page__desc {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .book3d-wrapper--open .book3d-stage {
+    width: 94vw;
+    min-height: 440px;
+  }
+
+  .book3d-page {
+    padding: 1.15rem 0.85rem;
+  }
+
+  .book3d-page__title {
+    font-size: 1.15rem;
+  }
+
+  .book3d-page__desc {
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .book3d-page__stat-item {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .book3d-page__stat-label {
+    font-size: 0.65rem;
+  }
+
+  .book3d-page__stat-value {
+    font-size: 0.88rem;
+  }
+
+  .book3d-badge-cute-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .book3d-badges-grid-cute {
+    gap: 0.4rem;
+  }
+
+  .book3d-floating-landscape-btn {
+    top: -12px;
+    right: 8px;
+    font-size: 0.74rem;
+    padding: 0.35rem 0.75rem;
+  }
+}
+
+/* Mobile Landscape Viewport optimization */
+@media (orientation: landscape) and (max-height: 520px) {
+  .book3d-maximized-container--open .book3d-stage--maximized {
+    width: 90vw;
+    height: 78vh;
+    min-height: unset;
+  }
+
+  .book3d-page--maximized {
+    padding: 1rem 1.25rem;
+    overflow-y: auto;
+  }
+
+  .book3d-rotate-tip {
+    display: none;
   }
 }
 

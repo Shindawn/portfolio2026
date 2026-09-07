@@ -850,16 +850,89 @@ export default function Book3D() {
           aria-hidden="true"
         />
 
+        {/* Floating Landscape Action Button on Book Stage */}
+        <button
+          type="button"
+          className="book3d-floating-landscape-btn"
+          onClick={() => setIsMaximized(true)}
+          title="Open in Landscape Mode"
+          aria-label="Open in Landscape Mode"
+        >
+          <span className="book3d-floating-landscape-btn__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+              <path d="M21 3v5h-5" />
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+              <path d="M3 21v-5h5" />
+              <rect x="7" y="7" width="10" height="10" rx="2" />
+            </svg>
+          </span>
+          <span className="book3d-floating-landscape-btn__label">Landscape Mode</span>
+        </button>
+
         {renderBookStage(false)}
+
+        {/* Bottom Navigation & Landscape Controller */}
+        <div className="book3d-bottom-controls" role="group" aria-label="Book page navigation">
+          <button
+            type="button"
+            className="book3d-nav-btn book3d-nav-btn--prev"
+            onClick={handlePrev}
+            disabled={currentStep === 0}
+            aria-label="Previous page"
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            <span>Prev</span>
+          </button>
+
+          <span className="book3d-step-indicator">
+            {currentStep === 0
+              ? "Front Cover"
+              : isBackCover
+              ? "Back Cover"
+              : `Spread ${currentStep} of ${spreads.length}`}
+          </span>
+
+          <button
+            type="button"
+            className="book3d-nav-btn book3d-nav-btn--next"
+            onClick={handleNext}
+            aria-label={isBackCover ? "Restart from cover" : "Next page"}
+          >
+            <span>{isBackCover ? "Restart ↺" : "Next"}</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            className="book3d-nav-btn book3d-nav-btn--landscape"
+            onClick={() => setIsMaximized(true)}
+            title="Open in Landscape Mode"
+            aria-label="Open in Landscape Mode"
+          >
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+              <path d="M21 3v5h-5" />
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+              <path d="M3 21v-5h5" />
+              <rect x="7" y="7" width="10" height="10" rx="2" />
+            </svg>
+            <span>Landscape</span>
+          </button>
+        </div>
       </div>
 
-      {/* Maximized Overlay */}
+      {/* Maximized / Landscape Overlay */}
       {isMaximized && (
         <div
           className="book3d-modal-overlay"
           role="dialog"
           aria-modal="true"
-          aria-label="Maximized Journey Book"
+          aria-label="Maximized Landscape Journey Book"
           onClick={() => setIsMaximized(false)}
         >
           <div className="book3d-modal-backdrop" aria-hidden="true" />
@@ -871,30 +944,73 @@ export default function Book3D() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="book3d-maximized-header">
-              <button
-                type="button"
-                className="book3d-modal-close-btn"
-                onClick={() => setIsMaximized(false)}
-                aria-label="Minimize Book (Esc)"
-                title="Minimize Book (Esc)"
-              >
-                <span className="book3d-modal-close-btn__text">Minimize</span>
-                <span className="book3d-modal-close-btn__icon">
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="14"
-                    height="14"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7" />
+              <div className="book3d-maximized-title-wrap">
+                <span className="book3d-maximized-badge">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+                    <path d="M21 3v5h-5" />
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+                    <path d="M3 21v-5h5" />
+                    <rect x="7" y="7" width="10" height="10" rx="2" />
                   </svg>
+                  <span>Landscape Reader</span>
                 </span>
-                <kbd className="book3d-esc-key">ESC</kbd>
-              </button>
+                <span className="book3d-rotate-tip">
+                  📱 Rotate phone to landscape for optimal full-spread view
+                </span>
+              </div>
+
+              <div className="book3d-maximized-actions">
+                <button
+                  type="button"
+                  className="book3d-modal-nav-btn"
+                  onClick={handlePrev}
+                  disabled={currentStep === 0}
+                  aria-label="Previous page"
+                >
+                  ←
+                </button>
+                <span className="book3d-modal-step-badge">
+                  {currentStep === 0
+                    ? "Cover"
+                    : isBackCover
+                    ? "Back"
+                    : `${currentStep} / ${spreads.length}`}
+                </span>
+                <button
+                  type="button"
+                  className="book3d-modal-nav-btn"
+                  onClick={handleNext}
+                  aria-label="Next page"
+                >
+                  →
+                </button>
+
+                <button
+                  type="button"
+                  className="book3d-modal-close-btn"
+                  onClick={() => setIsMaximized(false)}
+                  aria-label="Minimize Book (Esc)"
+                  title="Minimize Book (Esc)"
+                >
+                  <span className="book3d-modal-close-btn__text">Exit</span>
+                  <span className="book3d-modal-close-btn__icon">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="14"
+                      height="14"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7" />
+                    </svg>
+                  </span>
+                  <kbd className="book3d-esc-key">ESC</kbd>
+                </button>
+              </div>
             </div>
 
             <div className="book3d-floating-book-shell">

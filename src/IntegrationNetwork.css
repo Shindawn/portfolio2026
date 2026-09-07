@@ -574,10 +574,22 @@
 }
 
 .network-node:hover .network-node__tooltip,
-.network-node--hovered .network-node__tooltip {
+.network-node--hovered .network-node__tooltip,
+.network-node--active .network-node__tooltip {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
+}
+
+.network-hub--active .network-hub__core {
+  transform: scale(1.12);
+  border-color: var(--hub-color, #007acc);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 22px var(--hub-color, rgba(0, 122, 204, 0.45));
+}
+
+:root[data-theme="dark"] .network-hub--active .network-hub__core {
+  background: #112638;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.6), 0 0 24px var(--hub-color, rgba(0, 122, 204, 0.6));
 }
 
 .network-node__tooltip strong {
@@ -598,8 +610,154 @@
   margin-top: 1px;
 }
 
-@media (max-width: 640px) {
-  .integration-network__canvas {
-    aspect-ratio: 900 / 520;
+/* Dedicated Mobile Active Tool Card */
+.integration-network__mobile-card {
+  display: none;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem 1.15rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  animation: networkCardSlideUp 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+:root[data-theme="dark"] .integration-network__mobile-card {
+  background: rgba(14, 24, 19, 0.95);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes networkCardSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
+.integration-network__mobile-card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.integration-network__mobile-card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--cream) 80%, var(--paper));
+  border: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+:root[data-theme="dark"] .integration-network__mobile-card-icon {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.integration-network__mobile-card-meta {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.integration-network__mobile-card-title {
+  font-family: "Instrument Serif", "Times New Roman", Georgia, serif;
+  font-style: italic;
+  font-size: 1.22rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.integration-network__mobile-card-cat {
+  font-size: 0.74rem;
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+
+:root[data-theme="dark"] .integration-network__mobile-card-cat {
+  color: var(--accent-bright);
+}
+
+.integration-network__mobile-card-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 180ms ease;
+}
+
+.integration-network__mobile-card-close:hover {
+  background: color-mix(in srgb, var(--cream) 80%, transparent);
+  color: var(--ink);
+}
+
+.integration-network__mobile-card-desc {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* Mobile interactive hint */
+.integration-network__mobile-hint {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  opacity: 0.8;
+  letter-spacing: 0.01em;
+}
+
+.integration-network__mobile-hint-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse-dot 1.6s infinite ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .integration-network__mobile-card {
+    display: block;
+  }
+
+  .integration-network__mobile-hint {
+    display: inline-flex;
+  }
+
+  .integration-network__canvas {
+    aspect-ratio: 900 / 520;
+    touch-action: pan-y;
+  }
+}
+

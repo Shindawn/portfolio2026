@@ -391,6 +391,7 @@ const categoryKeys: NetworkCategoryKey[] = ["dev", "n8n", "wordpress"];
 
 export default function IntegrationNetwork() {
   const [activeCategory, setActiveCategory] = useState<NetworkCategoryKey>("dev");
+  const [selectedNode, setSelectedNode] = useState<IntegrationNode | null>(null);
   const [hoveredNode, setHoveredNode] = useState<IntegrationNode | null>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
   const hubRef = useRef<HTMLDivElement>(null);
@@ -398,8 +399,11 @@ export default function IntegrationNetwork() {
   const currentCategory = networkCategories[activeCategory];
   const currentIndex = categoryKeys.indexOf(activeCategory);
 
+  const activeNode = hoveredNode || selectedNode;
+
   const handleCategoryChange = (key: NetworkCategoryKey) => {
     setActiveCategory(key);
+    setSelectedNode(null);
     setHoveredNode(null);
   };
 
@@ -494,10 +498,13 @@ export default function IntegrationNetwork() {
       ease: "power2.out",
       duration: 0.65,
     });
+    setHoveredNode(null);
   };
 
   const hubLeftPercent = (currentCategory.hubX / 900) * 100;
   const hubTopPercent = (currentCategory.hubY / 460) * 100;
+
+  const isHubActive = activeNode?.id === `hub-${currentCategory.id}`;
 
   return (
     <section className="integration-network" id="integrations" aria-label="Interactive Integration Network">
@@ -508,12 +515,12 @@ export default function IntegrationNetwork() {
           <div className="integration-network__top-bar">
             {/* Active status tooltip pill / Live Tagline */}
             <div className="integration-network__status-bar" aria-live="polite">
-              {hoveredNode ? (
+              {activeNode ? (
                 <span className="integration-network__badge is-active">
                   <span className="integration-network__badge-dot" />
-                  <strong>{hoveredNode.name}</strong>
+                  <strong>{activeNode.name}</strong>
                   <span className="integration-network__badge-divider" aria-hidden="true">—</span>
-                  <span>{hoveredNode.status}</span>
+                  <span>{activeNode.status}</span>
                 </span>
               ) : (
                 <span className="integration-network__badge">
@@ -565,6 +572,10 @@ export default function IntegrationNetwork() {
             ref={canvasRef}
             onPointerMove={handlePointerMove}
             onPointerLeave={handlePointerLeave}
+            onClick={() => {
+              // Clicking empty canvas resets selected node
+              setSelectedNode(null);
+            }}
           >
             <svg
               className="integration-network__svg"
@@ -603,9 +614,9 @@ export default function IntegrationNetwork() {
 
               {/* Connector Lines & Animated Moving Photons */}
               {currentCategory.nodes.map((node) => {
-                const isHovered = hoveredNode?.id === node.id;
+                const isActive = activeNode?.id === node.id;
                 return (
-                  <g key={node.id} className={`network-connector ${isHovered ? "is-active" : ""}`}>
+                  <g key={node.id} className={`network-connector ${isActive ? "is-active" : ""}`}>
                     {/* Primary Path */}
                     <path d={node.path} className="network-path-base" />
                     <circle r="2.6" className="network-particle">
@@ -642,27 +653,40 @@ export default function IntegrationNetwork() {
 
             {/* Dynamic Center Hub Badge */}
             <div
-              className="network-hub"
+              className={`network-hub ${isHubActive ? "network-hub--active" : ""}`}
               ref={hubRef}
               title={currentCategory.hubTooltip}
-              onClick={() => {
-                setHoveredNode((prev) =>
-                  prev?.id === `hub-${currentCategory.id}`
-                    ? null
-                    : {
-                        id: `hub-${currentCategory.id}`,
-                        name: currentCategory.hubName,
-                        category: "Core Environment",
-                        x: currentCategory.hubX,
-                        y: currentCategory.hubY,
-                        path: "",
-                        speed: 0,
-                        delay: 0,
-                        icon: currentCategory.hubIcon,
-                        status: currentCategory.hubTooltip,
-                      }
-                );
+              onClick={(e) => {
+                e.stopPropagation();
+                const hubNode: IntegrationNode = {
+                  id: `hub-${currentCategory.id}`,
+                  name: currentCategory.hubName,
+                  category: "Core Environment",
+                  x: currentCategory.hubX,
+                  y: currentCategory.hubY,
+                  path: "",
+                  speed: 0,
+                  delay: 0,
+                  icon: currentCategory.hubIcon,
+                  status: currentCategory.hubTooltip,
+                };
+                setSelectedNode((prev) => (prev?.id === hubNode.id ? null : hubNode));
               }}
+              onMouseEnter={() => {
+                setHoveredNode({
+                  id: `hub-${currentCategory.id}`,
+                  name: currentCategory.hubName,
+                  category: "Core Environment",
+                  x: currentCategory.hubX,
+                  y: currentCategory.hubY,
+                  path: "",
+                  speed: 0,
+                  delay: 0,
+                  icon: currentCategory.hubIcon,
+                  status: currentCategory.hubTooltip,
+                });
+              }}
+              onMouseLeave={() => setHoveredNode(null)}
               style={{
                 left: `${hubLeftPercent}%`,
                 top: `${hubTopPercent}%`,
@@ -683,23 +707,25 @@ export default function IntegrationNetwork() {
             {currentCategory.nodes.map((node) => {
               const leftPercent = (node.x / 900) * 100;
               const topPercent = (node.y / 460) * 100;
-              const isHovered = hoveredNode?.id === node.id;
+              const isActive = activeNode?.id === node.id;
 
               return (
                 <button
                   key={node.id}
                   type="button"
-                  className={`network-node ${isHovered ? "network-node--hovered" : ""}`}
+                  className={`network-node ${isActive ? "network-node--hovered network-node--active" : ""}`}
                   style={{ left: `${leftPercent}%`, top: `${topPercent}%` }}
                   onMouseEnter={() => setHoveredNode(node)}
                   onMouseLeave={() => setHoveredNode(null)}
-                  onFocus={() => setHoveredNode(node)}
-                  onBlur={() => setHoveredNode(null)}
-                  onClick={() => setHoveredNode((prev) => (prev?.id === node.id ? null : node))}
+                  onFocus={() => setSelectedNode(node)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedNode((prev) => (prev?.id === node.id ? null : node));
+                  }}
                   aria-label={`${node.name} (${node.category})`}
                 >
                   <span className="network-node__icon">{node.icon}</span>
-                  <span className="network-node__tooltip" aria-hidden={!isHovered}>
+                  <span className="network-node__tooltip" aria-hidden={!isActive}>
                     <strong>{node.name}</strong>
                     <small>{node.category}</small>
                   </span>
@@ -707,8 +733,50 @@ export default function IntegrationNetwork() {
               );
             })}
           </div>
+
+          {/* Dedicated Mobile Tool Card / Live Inspector for Phone users */}
+          {activeNode && (
+            <div
+              className="integration-network__mobile-card"
+              role="region"
+              aria-label="Active Tool Details"
+            >
+              <div className="integration-network__mobile-card-top">
+                <div className="integration-network__mobile-card-icon" style={{ color: currentCategory.hubColor }}>
+                  {activeNode.icon}
+                </div>
+                <div className="integration-network__mobile-card-meta">
+                  <span className="integration-network__mobile-card-title">{activeNode.name}</span>
+                  <span className="integration-network__mobile-card-cat">{activeNode.category}</span>
+                </div>
+                <button
+                  type="button"
+                  className="integration-network__mobile-card-close"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedNode(null);
+                    setHoveredNode(null);
+                  }}
+                  aria-label="Close details"
+                  title="Close details"
+                >
+                  ✕
+                </button>
+              </div>
+              <p className="integration-network__mobile-card-desc">{activeNode.status}</p>
+            </div>
+          )}
+
+          {/* Mobile Tap Guide */}
+          {!activeNode && (
+            <div className="integration-network__mobile-hint" aria-hidden="true">
+              <span className="integration-network__mobile-hint-dot" />
+              <span>Tap any logo to view tool details &amp; workflow</span>
+            </div>
+          )}
         </div>
       </div>
     </section>
   );
 }
+
