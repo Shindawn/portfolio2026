@@ -386,7 +386,7 @@ export default function AboutPage() {
                   <div className="blitz-stats">
                     <span className="blitz-score">{score} pts</span>
                     {highScore > 0 && (
-                      <span className="snake-length-badge" title="Highest score achieved">
+                      <span className="snake-length-badge snake-best-score" title="Highest score achieved">
                         🏆 Best: {highScore.toLocaleString()}
                       </span>
                     )}
@@ -404,13 +404,16 @@ export default function AboutPage() {
                 </>
               ) : (
                 <>
-                  <p className="about-experience__label">Game Over</p>
+                  <div className="about-matrix__title-group">
+                    <p className="about-experience__label">Tech Stack Matrix</p>
+                  </div>
                   <button
                     type="button"
-                    className="blitz-start-btn"
-                    onClick={startSnakeGame}
+                    className="blitz-exit-btn"
+                    onClick={exitSnakeGame}
+                    title="Exit Snake"
                   >
-                    Play Again ↺
+                    ✕ Exit
                   </button>
                 </>
               )}

@@ -3689,7 +3689,7 @@ a {
 
 .about-experience__item strong {
   font-size: 0.98rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--ink);
 }
 
@@ -4242,6 +4242,71 @@ a {
   .about-experience__item strong {
     flex: 1;
     margin-right: auto;
+    font-weight: 400;
+  }
+
+  .snake-best-score {
+    display: none !important;
+  }
+
+  /* Compact Game Over scorecard for mobile to prevent overflow */
+  .blitz-overlay {
+    padding: 0.5rem 0.65rem;
+  }
+
+  .blitz-card {
+    gap: 0.2rem;
+    max-width: 100%;
+  }
+
+  .blitz-eyebrow {
+    font-size: 0.62rem;
+  }
+
+  .blitz-score-big {
+    font-size: 1.75rem;
+    margin: 0;
+  }
+
+  .blitz-score-big small {
+    font-size: 0.76rem;
+  }
+
+  .blitz-rank {
+    font-size: 0.7rem;
+    padding: 0.12rem 0.5rem;
+  }
+
+  .blitz-breakdown {
+    gap: 1rem;
+    margin: 0.2rem 0 0.35rem;
+    padding: 0.2rem 0.7rem;
+  }
+
+  .blitz-stat-label {
+    font-size: 0.56rem;
+  }
+
+  .blitz-stat-value {
+    font-size: 0.74rem;
+  }
+
+  .blitz-stat-divider {
+    height: 1rem;
+  }
+
+  .blitz-actions {
+    gap: 0.4rem;
+  }
+
+  .blitz-btn-replay {
+    padding: 0.35rem 0.8rem;
+    font-size: 0.72rem;
+  }
+
+  .blitz-btn-close {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.72rem;
   }
 }
 
@@ -5412,15 +5477,31 @@ a {
 
 /* Responsive Rules for Mobile/Tablet */
 @media (max-width: 860px) {
+  .book3d-modal-overlay {
+    padding: 0.4rem 0.5rem;
+    overflow: hidden;
+  }
+
+  .book3d-maximized-container {
+    gap: 0.4rem;
+    max-height: 98dvh;
+  }
+
+  .book3d-maximized-header {
+    padding: 0 0.25rem;
+    gap: 0.35rem;
+  }
+
   .book3d-maximized-container--open .book3d-stage--maximized {
     width: 95vw;
-    height: auto;
-    min-height: 480px;
+    height: clamp(260px, 60vh, 380px);
+    min-height: unset;
   }
 
   .book3d-stage--maximized {
     width: 90vw;
-    height: auto;
+    height: clamp(260px, 60vh, 380px);
+    min-height: unset;
   }
 
   .book3d-modal-shadow {
@@ -5428,15 +5509,51 @@ a {
   }
 
   .book3d-page--maximized {
-    padding: 1.35rem 1.15rem;
+    padding: 0.85rem 0.75rem;
+    overflow: hidden;
   }
 
   .book3d-page--maximized .book3d-page__title {
-    font-size: 1.3rem;
+    font-size: 1.05rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .book3d-page--maximized .book3d-page__subtitle {
+    font-size: 0.76rem;
   }
 
   .book3d-page--maximized .book3d-page__desc {
-    font-size: 0.88rem;
+    font-size: 0.72rem;
+    line-height: 1.3;
+  }
+
+  .book3d-page--maximized .book3d-page__quote {
+    font-size: 0.95rem;
+    margin: 0.35rem 0;
+    line-height: 1.25;
+  }
+
+  .book3d-page--maximized .book3d-page__image-wrap {
+    height: clamp(70px, 12vh, 105px);
+    border-radius: 8px;
+  }
+
+  .book3d-page--maximized .book3d-cert-item {
+    font-size: 0.72rem;
+    line-height: 1.2;
+  }
+
+  .book3d-page--maximized .book3d-page__stat-value {
+    font-size: 0.82rem;
+  }
+
+  .book3d-page--maximized .book3d-page__stat-label {
+    font-size: 0.6rem;
+  }
+
+  .book3d-page--maximized .book3d-page__pill {
+    font-size: 0.68rem;
+    padding: 0.2rem 0.45rem;
   }
 
   .book3d-bottom-controls {
@@ -5497,16 +5614,35 @@ a {
 }
 
 /* Mobile Landscape Viewport optimization */
-@media (orientation: landscape) and (max-height: 520px) {
+@media (orientation: landscape) and (max-height: 600px) {
+  .book3d-modal-overlay {
+    padding: 0.25rem 0.5rem;
+    overflow: hidden;
+  }
+
+  .book3d-maximized-container {
+    gap: 0.25rem;
+    height: 98dvh;
+    max-height: 98dvh;
+  }
+
   .book3d-maximized-container--open .book3d-stage--maximized {
-    width: 90vw;
-    height: 78vh;
+    width: 92vw;
+    height: 76dvh;
+    max-height: 340px;
+    min-height: unset;
+  }
+
+  .book3d-stage--maximized {
+    width: 88vw;
+    height: 76dvh;
+    max-height: 340px;
     min-height: unset;
   }
 
   .book3d-page--maximized {
-    padding: 1rem 1.25rem;
-    overflow-y: auto;
+    padding: 0.65rem 0.85rem;
+    overflow: hidden;
   }
 
   .book3d-rotate-tip {
