@@ -85,9 +85,9 @@ export function Navigation() {
     <>
       <nav className={`nav shell${isMenuOpen ? " is-menu-open" : ""}`} aria-label="Main navigation">
         <div className="nav-start">
-          <a className="brand" href="/" aria-label="Lescy Gdawn, home" onClick={closeMenu}>
+          <a className="brand" href="/" aria-label="Lescy Gdawn Caadlawon, home" onClick={closeMenu}>
             <span className="brand__full">Lescy Gdawn</span>
-            <span className="brand__mobile">LG</span>
+            <span className="brand__mobile">LGC</span>
           </a>
         </div>
 

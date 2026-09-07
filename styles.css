@@ -2493,24 +2493,49 @@ a {
 
   .about-experience__grid {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
-    margin-top: 3rem;
+    gap: 2.2rem;
+    margin-top: 2rem;
+  }
+
+  .about-experience__column--career .about-experience__list {
+    height: auto;
+    gap: 0.55rem;
   }
 
   .about-experience__item {
-    grid-template-columns: 1.75rem 1fr;
-    grid-template-areas: "mark name" "mark detail";
-    padding: 0.65rem 1rem;
-    min-height: 3.2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+    padding: 0.75rem 1rem;
+    min-height: auto;
+    height: auto;
   }
 
-  .about-experience__index,
-  .about-experience__mark,
-  .about-experience__logo { grid-area: mark; }
-  .about-experience__item strong { grid-area: name; }
-  .about-experience__item > span:last-child {
-    grid-area: detail;
+  .about-experience__index {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .about-experience__item strong {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.25;
+    flex: 1;
+    margin: 0;
     text-align: left;
+  }
+
+  .about-experience__item > span:last-child {
+    font-size: 0.8rem;
+    color: var(--muted);
+    white-space: nowrap;
+    text-align: right;
+    flex-shrink: 0;
+    margin: 0;
   }
 
   .about-experience__item--stack {
@@ -2588,27 +2613,36 @@ a {
     margin-top: 0.85rem;
   }
 
-  .curved-marquee {
-    margin-top: 1.25rem;
-    margin-bottom: 0.5rem;
+  .hero-3d-carousel {
+    padding: 0.25rem 0 1.25rem;
   }
 
-  .curved-marquee__ribbon {
-    stroke-width: 220px;
-  }
-
-  .curved-marquee__svg {
-    height: clamp(180px, 45vw, 250px);
-  }
-
-  .curved-marquee__text {
-    font-size: 140px;
-    letter-spacing: -0.01em;
+  .hero-3d-carousel__stage {
+    height: clamp(190px, 48vw, 220px);
   }
 
   .hero-3d-card {
-    width: clamp(180px, 48vw, 220px);
-    height: clamp(250px, 68vw, 310px);
+    width: clamp(130px, 35vw, 155px);
+    height: clamp(180px, 48vw, 215px);
+    border-radius: 1rem;
+  }
+
+  .curved-marquee {
+    margin-top: 0.4rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .curved-marquee__ribbon {
+    stroke-width: 130px;
+  }
+
+  .curved-marquee__svg {
+    height: clamp(80px, 20vw, 110px);
+  }
+
+  .curved-marquee__text {
+    font-size: 85px;
+    letter-spacing: -0.01em;
   }
 
   .hero-stage__actions {
@@ -3891,6 +3925,12 @@ a {
 }
 
 /* Snake Grid Gameplay Styling */
+.about-matrix-grid--snake {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 .about-matrix-grid--snake .about-matrix-cell {
   opacity: 0.35;
   transition: opacity 120ms ease, background 120ms ease, border-color 120ms ease, transform 120ms ease;
@@ -3982,6 +4022,7 @@ a {
   gap: 0.35rem;
   margin-top: 0.85rem;
   user-select: none;
+  -webkit-user-select: none;
   animation: matrix-fade-in 200ms ease;
 }
 
@@ -3992,17 +4033,21 @@ a {
 }
 
 .snake-btn {
-  width: 2.3rem;
-  height: 2.1rem;
+  width: 2.8rem;
+  height: 2.5rem;
   border-radius: 0.5rem;
   border: 1px solid var(--line);
   background: color-mix(in srgb, var(--paper) 80%, transparent);
   color: var(--ink);
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
   transition: all 120ms ease;
   backdrop-filter: blur(8px);
 }
@@ -4184,8 +4229,19 @@ a {
   }
 
   .about-experience__item {
-    min-height: 3.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 3.2rem;
+    height: auto;
+    padding-inline: clamp(0.85rem, 3vw, 1.25rem);
     padding-block: 0.75rem;
+  }
+
+  .about-experience__item strong {
+    flex: 1;
+    margin-right: auto;
   }
 }
 
@@ -5382,6 +5438,10 @@ a {
   .book3d-page--maximized .book3d-page__desc {
     font-size: 0.88rem;
   }
+
+  .book3d-bottom-controls {
+    display: none !important;
+  }
 }
 
 @media (max-width: 640px) {
@@ -5429,6 +5489,10 @@ a {
     right: 8px;
     font-size: 0.74rem;
     padding: 0.35rem 0.75rem;
+  }
+
+  .book3d-bottom-controls {
+    display: none !important;
   }
 }
 

@@ -271,6 +271,61 @@ export default function AboutPage() {
     ["--tilt-x", "--tilt-y"].forEach((property) => stackRef.current?.style.setProperty(property, "0deg"));
   };
 
+  // Touch & Pointer swipe steering for mobile
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (gameState !== "playing") return;
+    const touch = e.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (gameState !== "playing" || !touchStartRef.current) return;
+    const touch = e.touches[0];
+    const dx = touch.clientX - touchStartRef.current.x;
+    const dy = touch.clientY - touchStartRef.current.y;
+    const threshold = 14;
+
+    if (Math.abs(dx) > threshold || Math.abs(dy) > threshold) {
+      if (Math.abs(dx) > Math.abs(dy)) {
+        changeDirection(dx > 0 ? 1 : -1, 0);
+      } else {
+        changeDirection(0, dy > 0 ? 1 : -1);
+      }
+      touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+    }
+  };
+
+  const handleTouchEnd = () => {
+    touchStartRef.current = null;
+  };
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (gameState !== "playing") return;
+    touchStartRef.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (gameState !== "playing" || !touchStartRef.current) return;
+    const dx = e.clientX - touchStartRef.current.x;
+    const dy = e.clientY - touchStartRef.current.y;
+    const threshold = 14;
+
+    if (Math.abs(dx) > threshold || Math.abs(dy) > threshold) {
+      if (Math.abs(dx) > Math.abs(dy)) {
+        changeDirection(dx > 0 ? 1 : -1, 0);
+      } else {
+        changeDirection(0, dy > 0 ? 1 : -1);
+      }
+      touchStartRef.current = { x: e.clientX, y: e.clientY };
+    }
+  };
+
+  const handlePointerUp = () => {
+    touchStartRef.current = null;
+  };
+
   return (
     <main className="about-page">
       <Navigation />
@@ -365,6 +420,13 @@ export default function AboutPage() {
               className={`about-matrix-grid ${gameState === "playing" ? "about-matrix-grid--snake" : ""}`}
               role="region"
               aria-label="Interactive Tech Stack Matrix"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
             >
               {/* Active Playing Grid */}
               {gridCells.map((cell, idx) => {
@@ -459,12 +521,16 @@ export default function AboutPage() {
               )}
             </div>
 
-            {/* Mobile / Clickable Directional D-Pad when Snake is Active */}
+            {/* Mobile / Touch Directional D-Pad when Snake is Active */}
             {gameState === "playing" && (
-              <div className="snake-controls" aria-label="Snake Controls">
+              <div className="snake-controls" aria-label="Snake Touch Controls">
                 <button
                   type="button"
                   className="snake-btn snake-btn--up"
+                  onPointerDown={(e) => {
+                    e.preventDefault();
+                    changeDirection(0, -1);
+                  }}
                   onClick={() => changeDirection(0, -1)}
                   aria-label="Up"
                 >
@@ -474,6 +540,10 @@ export default function AboutPage() {
                   <button
                     type="button"
                     className="snake-btn snake-btn--left"
+                    onPointerDown={(e) => {
+                      e.preventDefault();
+                      changeDirection(-1, 0);
+                    }}
                     onClick={() => changeDirection(-1, 0)}
                     aria-label="Left"
                   >
@@ -482,6 +552,10 @@ export default function AboutPage() {
                   <button
                     type="button"
                     className="snake-btn snake-btn--down"
+                    onPointerDown={(e) => {
+                      e.preventDefault();
+                      changeDirection(0, 1);
+                    }}
                     onClick={() => changeDirection(0, 1)}
                     aria-label="Down"
                   >
@@ -490,6 +564,10 @@ export default function AboutPage() {
                   <button
                     type="button"
                     className="snake-btn snake-btn--right"
+                    onPointerDown={(e) => {
+                      e.preventDefault();
+                      changeDirection(1, 0);
+                    }}
                     onClick={() => changeDirection(1, 0)}
                     aria-label="Right"
                   >

@@ -513,20 +513,11 @@ export default function IntegrationNetwork() {
           
           {/* Top Control Bar with Status on Left and Stepper on Top-Right */}
           <div className="integration-network__top-bar">
-            {/* Active status tooltip pill / Live Tagline */}
+            {/* Category Tagline Pill */}
             <div className="integration-network__status-bar" aria-live="polite">
-              {activeNode ? (
-                <span className="integration-network__badge is-active">
-                  <span className="integration-network__badge-dot" />
-                  <strong>{activeNode.name}</strong>
-                  <span className="integration-network__badge-divider" aria-hidden="true">—</span>
-                  <span>{activeNode.status}</span>
-                </span>
-              ) : (
-                <span className="integration-network__badge">
-                  <span>{currentCategory.tagline}</span>
-                </span>
-              )}
+              <span className="integration-network__badge">
+                <span>{currentCategory.tagline}</span>
+              </span>
             </div>
 
             {/* Stepper Selector placed at Right Top */}
