@@ -4944,13 +4944,13 @@ a {
 }
 
 /* Navigation Controls below the Book */
-/* Floating Landscape Action Button on Journey Book */
+/* Floating Landscape Action Button on Journey Book (Mobile only) */
 .book3d-floating-landscape-btn {
   position: absolute;
   top: -14px;
   right: clamp(12px, 4vw, 36px);
   z-index: 30;
-  display: inline-flex;
+  display: none;
   align-items: center;
   gap: 0.55rem;
   padding: 0.45rem 0.95rem 0.45rem 0.85rem;
@@ -5062,6 +5062,7 @@ a {
 }
 
 .book3d-nav-btn--landscape {
+  display: none !important;
   background: color-mix(in srgb, var(--accent) 12%, var(--paper));
   border-color: color-mix(in srgb, var(--accent) 35%, transparent);
   color: var(--accent);
@@ -5279,7 +5280,7 @@ a {
 }
 
 .book3d-maximized-title-wrap {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 0.85rem;
   flex-wrap: wrap;
@@ -5578,6 +5579,14 @@ a {
 
   .book3d-bottom-controls {
     display: none !important;
+  }
+
+  .book3d-floating-landscape-btn {
+    display: inline-flex !important;
+  }
+
+  .book3d-maximized-title-wrap {
+    display: flex !important;
   }
 }
 
