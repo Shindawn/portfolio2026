@@ -184,7 +184,7 @@ const cvHtml = `<!DOCTYPE html>
         <span class="entry-date-right">June 2026 – August 2026</span>
       </div>
       <div class="entry-header">
-        <span class="entry-sub-left">Full-Stack Developer</span>
+        <span class="entry-sub-left">Jr. Full Stack Developer</span>
         <span class="entry-loc-right">Remote, Philippines</span>
       </div>
       <div class="project-sub">

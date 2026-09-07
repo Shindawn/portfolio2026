@@ -5,7 +5,7 @@ import HangingIdCard from "./HangingIdCard";
 import HeroBeamLines from "./HeroBeamLines";
 
 const experience = [
-  ["01", "Full-Stack Developer", "Jun – Aug 2026"],
+  ["01", "Jr. Full Stack Dev", "Jun – Aug 2026"],
   ["02", "IT Support & Maintenance Intern", "Feb – May 2026"],
   ["03", "UI/UX Designer", "Feb 2025 – Feb 2026"],
   ["04", "Web Developer", "May 2023 – Nov 2025"],
