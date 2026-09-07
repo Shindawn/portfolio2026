@@ -301,6 +301,40 @@ a {
   margin-inline: auto;
 }
 
+.nav-overlay__top-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 clamp(1rem, 2.5vw, 2.2rem) 1.25rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: auto;
+}
+
+.nav-overlay__location {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+:root[data-theme="dark"] .nav-overlay__location {
+  color: var(--accent-bright);
+}
+
+.nav-overlay__clock {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-overlay__clock .nav-clock {
+  display: inline-flex !important;
+  font-size: 0.84rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
 .nav-overlay__list {
   list-style: none;
   margin: auto 0;
@@ -3387,6 +3421,131 @@ a {
   background: linear-gradient(135deg, #d1b46a 0%, #fef08a 50%, #996515 100%);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 640px) {
+  .aurum-lanyard-stage {
+    padding-bottom: 0.75rem;
+    max-width: 300px;
+  }
+
+  .aurum-ribbon-strap {
+    height: 48px;
+    width: 28px;
+  }
+
+  .aurum-ribbon-pattern {
+    font-size: 0.46rem;
+    padding: 0.2rem 0;
+  }
+
+  .aurum-clasp-metal-band {
+    width: 30px;
+    height: 7px;
+  }
+
+  .aurum-clasp-swivel {
+    width: 11px;
+    height: 14px;
+  }
+
+  .aurum-clasp-ring {
+    width: 15px;
+    height: 22px;
+  }
+
+  .aurum-id-card {
+    width: 270px;
+    min-height: auto;
+    border-radius: 18px;
+    padding: 0.85rem 1.15rem 1rem;
+    margin-top: -8px;
+  }
+
+  .aurum-punch-hole {
+    width: 24px;
+    height: 7px;
+    margin: 0 auto 0.35rem;
+  }
+
+  .aurum-card-header {
+    margin-bottom: 0.2rem;
+  }
+
+  .aurum-card-tag,
+  .aurum-card-badge {
+    font-size: 0.58rem;
+  }
+
+  .aurum-card-hero {
+    margin: 0.4rem 0 0.5rem;
+  }
+
+  .aurum-card-avatar-wrap {
+    width: 82px;
+    height: 82px;
+    border-radius: 14px;
+    margin-bottom: 0.4rem;
+  }
+
+  .aurum-card-avatar {
+    border-radius: 12px;
+  }
+
+  .aurum-card-name {
+    font-size: 1.15rem;
+  }
+
+  .aurum-card-sub {
+    font-size: 0.6rem;
+    margin-top: 0.2rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .aurum-card-meta-grid {
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .aurum-meta-label {
+    font-size: 0.54rem;
+  }
+
+  .aurum-meta-val {
+    font-size: 0.78rem;
+  }
+
+  .aurum-card-email-row {
+    padding: 0.38rem 0.55rem;
+    border-radius: 0.55rem;
+  }
+
+  .aurum-email-val {
+    font-size: 0.72rem;
+  }
+
+  .aurum-card-footer {
+    margin-top: 0.5rem;
+    padding-top: 0.45rem;
+  }
+
+  .aurum-heart-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .aurum-footer-text strong {
+    font-size: 0.78rem;
+  }
+
+  .aurum-footer-text small {
+    font-size: 0.52rem;
+  }
+
+  .aurum-card-chip {
+    width: 24px;
+    height: 18px;
+  }
 }
 
 /* About Page - Experience & Interactive Tech Matrix Alignment */

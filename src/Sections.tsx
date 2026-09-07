@@ -119,6 +119,13 @@ export function Navigation() {
         aria-label="Site navigation menu"
       >
         <div className="nav-overlay__inner shell">
+          <div className="nav-overlay__top-meta">
+            <span className="nav-overlay__location">Manila, PH</span>
+            <div className="nav-overlay__clock">
+              <NavClock />
+            </div>
+          </div>
+
           <ul className="nav-overlay__list">
             <li className="nav-overlay__item">
               <a href="/" className="nav-overlay__link" onClick={closeMenu}>
