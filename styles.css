@@ -2442,6 +2442,10 @@ a {
   .testimonial--three { left: 35%; }
   .testimonial--four { left: 62%; }
   .testimonial--five { display: none; }
+
+  .footer__email {
+    font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+  }
 }
 
 @media (max-width: 650px) {
@@ -2853,7 +2857,10 @@ a {
   }
 
   .footer__email {
-    font-size: clamp(2.35rem, 11vw, 4rem);
+    font-size: clamp(1.15rem, 5.2vw, 2.1rem);
+    max-width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
   .footer__message br {
