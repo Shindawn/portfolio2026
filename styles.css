@@ -2444,7 +2444,7 @@ a {
   .testimonial--five { display: none; }
 
   .footer__email {
-    font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+    font-size: clamp(2.8rem, 6.8vw, 4.2rem);
   }
 }
 
@@ -2857,10 +2857,9 @@ a {
   }
 
   .footer__email {
-    font-size: clamp(1.15rem, 5.2vw, 2.1rem);
+    font-size: clamp(1.65rem, 8.4vw, 3.5rem);
     max-width: 100%;
     justify-content: center;
-    flex-wrap: wrap;
   }
 
   .footer__message br {
