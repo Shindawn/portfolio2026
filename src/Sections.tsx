@@ -21,6 +21,12 @@ const clientLogos: ClientLogo[] = [
     dark: "/logos/catsu.png",
   },
   {
+    id: "aits",
+    alt: "Association of Information and Technology Students (AITS - CatSU)",
+    light: "/logos/aits.png",
+    dark: "/logos/aits.png",
+  },
+  {
     id: "bato-tourism",
     alt: "Municipal Tourism Office - Bato, Catanduanes",
     light: "/logos/bato-tourism.png",
@@ -37,6 +43,12 @@ const clientLogos: ClientLogo[] = [
     alt: "CC Wedding & Bespoke Events",
     light: "/logos/cc-wedding.png",
     dark: "/logos/cc-wedding-dark.png",
+  },
+  {
+    id: "ai-glass",
+    alt: "A&I Glass & Aluminum Services",
+    light: "/logos/ai-glass.png",
+    dark: "/logos/ai-glass-dark.png",
   },
 ];
 

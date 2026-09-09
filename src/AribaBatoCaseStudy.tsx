@@ -529,18 +529,12 @@ export default function AribaBatoCaseStudy() {
             {/* AR Viewport Reticle Stage */}
             <div className="a-ar-viewport">
               <video
-                src="/aribabato.mp4"
-                poster="/ariba-bato-poster.jpg"
+                src="/prototype.mp4"
                 autoPlay
                 muted
                 loop
                 playsInline
               />
-              <div className="a-ar-reticle">
-                <div className="a-ar-reticle-label">
-                  ● AR ANCHOR: CORAL STONE BUTTRESS (EST. 1830)
-                </div>
-              </div>
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.5rem", marginTop: "2.5rem", textAlign: "center", color: "#d6d3d1", fontSize: "0.92rem" }}>

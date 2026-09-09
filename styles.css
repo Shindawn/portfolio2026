@@ -1460,6 +1460,13 @@ a {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 }
 
+.brand-logo-img--aits {
+  height: 48px;
+  width: 48px;
+  aspect-ratio: 1 / 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
 .brand-logo-img--bato-tourism {
   height: 48px;
   width: 48px;
@@ -1479,6 +1486,13 @@ a {
   width: auto;
   max-width: 110px;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
+}
+
+.brand-logo-img--ai-glass {
+  height: 40px;
+  width: auto;
+  max-width: 125px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
 }
 
 .brand-logo-img--dark {
