@@ -37,7 +37,7 @@ const items: CarouselItem[] = [
   {
     id: "03",
     title: "ARIBA BATO",
-    category: "Interactive AR App",
+    category: "UI/UX Mobile App",
     tag: "AR/3D",
     image: "/ariba-bato-poster.jpg",
     imageStyle: {
@@ -87,7 +87,7 @@ const items: CarouselItem[] = [
   {
     id: "07",
     title: "ARIBA BATO App",
-    category: "Interactive Mobile AR",
+    category: "UI/UX Mobile App",
     tag: "AR/UI",
     image: "/ariba-bato-app.png",
     imageStyle: {

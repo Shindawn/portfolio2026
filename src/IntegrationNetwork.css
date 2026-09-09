@@ -85,6 +85,14 @@
     line-height: 1.35;
     flex-wrap: wrap;
   }
+
+  .integration-network__badge--desktop {
+    display: none !important;
+  }
+
+  .integration-network__badge--mobile {
+    display: inline-flex !important;
+  }
 }
 
 :root[data-theme="dark"] .integration-network__stepper {
@@ -256,6 +264,14 @@
   box-shadow: none;
   animation: none;
   flex-shrink: 0;
+}
+
+.integration-network__badge--desktop {
+  display: inline-flex;
+}
+
+.integration-network__badge--mobile {
+  display: none !important;
 }
 
 /* Network Canvas */

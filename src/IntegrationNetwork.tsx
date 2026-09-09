@@ -513,11 +513,27 @@ export default function IntegrationNetwork() {
           
           {/* Top Control Bar with Status on Left and Stepper on Top-Right */}
           <div className="integration-network__top-bar">
-            {/* Category Tagline Pill */}
+            {/* Category Tagline Pill / Active Tool Description */}
             <div className="integration-network__status-bar" aria-live="polite">
-              <span className="integration-network__badge">
-                <span>{currentCategory.tagline}</span>
-              </span>
+              {activeNode ? (
+                <>
+                  {/* Laptop / Desktop: Displays tool name & description on hover or click */}
+                  <span className="integration-network__badge is-active integration-network__badge--desktop">
+                    <span className="integration-network__badge-dot" />
+                    <strong>{activeNode.name}</strong>
+                    <span className="integration-network__badge-divider" aria-hidden="true">—</span>
+                    <span>{activeNode.status}</span>
+                  </span>
+                  {/* Mobile: Preserves category tagline pill as is */}
+                  <span className="integration-network__badge integration-network__badge--mobile">
+                    <span>{currentCategory.tagline}</span>
+                  </span>
+                </>
+              ) : (
+                <span className="integration-network__badge">
+                  <span>{currentCategory.tagline}</span>
+                </span>
+              )}
             </div>
 
             {/* Stepper Selector placed at Right Top */}
