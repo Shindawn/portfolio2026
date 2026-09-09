@@ -3,7 +3,7 @@ import CurvedBanner from "./CurvedBanner";
 import Hero3DCarousel from "./Hero3DCarousel";
 import HeroBeamLines from "./HeroBeamLines";
 import ThemeToggle from "./ThemeToggle";
-import { useEffect, useState, type CSSProperties, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import { requestResumeAccess } from "./ResumeGateModal";
 
 interface ClientLogo {
@@ -216,10 +216,46 @@ export function Hero() {
   const [isFlipping, setIsFlipping] = useState(false);
   const [typedText, setTypedText] = useState("");
   const fullText = "2026 Portfolio";
+  const [isMessageOpen, setIsMessageOpen] = useState(false);
+  const [hasUnread, setHasUnread] = useState(true);
+  const messageCardRef = useRef<HTMLDivElement>(null);
+
+  const toggleMessage = () => {
+    setIsMessageOpen((prev) => {
+      const next = !prev;
+      if (next) {
+        setHasUnread(false);
+        setTypedText(fullText);
+      }
+      return next;
+    });
+  };
 
   useEffect(() => {
-    let currentIdx = 0;
-    let isDeleting = false;
+    if (!isMessageOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (messageCardRef.current && !messageCardRef.current.contains(e.target as Node)) {
+        setIsMessageOpen(false);
+      }
+    };
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsMessageOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isMessageOpen]);
+
+  useEffect(() => {
+    if (isMessageOpen) return;
+
+    let currentIdx = typedText ? typedText.length : 0;
+    let isDeleting = currentIdx >= fullText.length;
     let timer: number;
 
     const tick = () => {
@@ -248,7 +284,7 @@ export function Hero() {
 
     timer = window.setTimeout(tick, 100);
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [isMessageOpen]);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -268,18 +304,148 @@ export function Hero() {
       <HeroBeamLines />
       <section className="intro shell" id="about" aria-labelledby="hero-title">
         <div className="hero-stage">
-          <div className="hero-stage__eyebrow-pill">
-            <img
-              src="/favicon.svg"
-              alt="LGC Mascot"
-              className="hero-stage__eyebrow-mascot"
-              width="20"
-              height="20"
-            />
-            <span className="hero-stage__typing-text">
-              {typedText}
-              <span className="hero-stage__typing-cursor" aria-hidden="true">|</span>
-            </span>
+          <div className="hero-stage__eyebrow-wrapper" ref={messageCardRef}>
+            <button
+              type="button"
+              className={`hero-stage__eyebrow-pill${isMessageOpen ? " is-open" : ""}`}
+              onClick={toggleMessage}
+              aria-expanded={isMessageOpen}
+              aria-controls="hero-messenger-card"
+              aria-label="View portfolio development note"
+            >
+              <div className="hero-stage__mascot-wrap">
+                <img
+                  src="/favicon.svg"
+                  alt="LGC Mascot"
+                  className="hero-stage__eyebrow-mascot"
+                  width="20"
+                  height="20"
+                />
+                <span
+                  className={`hero-stage__msg-badge${hasUnread ? " is-unread" : ""}`}
+                  aria-label="New message notification"
+                >
+                  {hasUnread && <span className="hero-stage__msg-badge-ping" />}
+                  <svg
+                    viewBox="0 0 16 16"
+                    width="8"
+                    height="8"
+                    fill="currentColor"
+                    className="hero-stage__msg-badge-icon"
+                    aria-hidden="true"
+                  >
+                    <path d="M2 3a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6.414L3.707 13.707A1 1 0 0 1 2 13V3z" />
+                  </svg>
+                </span>
+              </div>
+              <span className="hero-stage__typing-text">
+                {typedText}
+                <span className="hero-stage__typing-cursor" aria-hidden="true">|</span>
+              </span>
+            </button>
+
+            {/* Messenger-Style Floating Popover Card */}
+            {isMessageOpen && (
+              <div
+                className="hero-messenger-card"
+                id="hero-messenger-card"
+                role="dialog"
+                aria-label="Portfolio Development Update"
+              >
+                <div className="hero-messenger-card__arrow" aria-hidden="true" />
+
+                {/* Header */}
+                <div className="hero-messenger-card__header">
+                  <div className="hero-messenger-card__user">
+                    <div className="hero-messenger-card__avatar-wrap">
+                      <img
+                        src="/favicon.svg"
+                        alt="Lescy Gdawn"
+                        className="hero-messenger-card__avatar"
+                        width="34"
+                        height="34"
+                      />
+                      <span className="hero-messenger-card__online-dot" title="Active now" />
+                    </div>
+                    <div className="hero-messenger-card__user-info">
+                      <div className="hero-messenger-card__name-row">
+                        <span className="hero-messenger-card__name">Lescy Gdawn</span>
+                        <svg
+                          className="hero-messenger-card__verified"
+                          viewBox="0 0 24 24"
+                          width="14"
+                          height="14"
+                          fill="#0084ff"
+                          aria-label="Verified creator"
+                        >
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                        </svg>
+                      </div>
+                      <span className="hero-messenger-card__status">Software & UI/UX · Active now</span>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="hero-messenger-card__close"
+                    onClick={() => setIsMessageOpen(false)}
+                    aria-label="Close message"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                {/* Body */}
+                <div className="hero-messenger-card__body">
+                  <div className="hero-messenger-card__date-pill">
+                    <span>Aug 30 – Sep 11, 2026</span>
+                  </div>
+
+                  <div className="hero-messenger-card__msg-row">
+                    <img
+                      src="/favicon.svg"
+                      alt=""
+                      className="hero-messenger-card__msg-avatar"
+                      width="24"
+                      height="24"
+                    />
+                    <div className="hero-messenger-card__msg-col">
+                      <div className="hero-messenger-card__bubble">
+                        <p className="hero-messenger-card__p">
+                          Hi! Lescy here. Welcome to my portfolio. 👋
+                        </p>
+                        <p className="hero-messenger-card__p">
+                          This entire showcase and its systems were designed and developed between <strong>August 30 – September 11, 2026</strong>.
+                        </p>
+                        <p className="hero-messenger-card__p hero-messenger-card__p--dim">
+                          Crafted with intentional UI/UX, React, GSAP animations, and custom production architectures. Feel free to explore! ✨
+                        </p>
+                      </div>
+                      <div className="hero-messenger-card__meta">
+                        <span>Sep 11, 2026 · Delivered</span>
+                        <span className="hero-messenger-card__checks" aria-hidden="true">✓✓</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="hero-messenger-card__footer-actions">
+                    <button
+                      type="button"
+                      className="hero-messenger-card__action-btn"
+                      onClick={() => setIsMessageOpen(false)}
+                    >
+                      <span>Got it 👍</span>
+                    </button>
+                    <a
+                      href="#work"
+                      className="hero-messenger-card__action-btn hero-messenger-card__action-btn--primary"
+                      onClick={() => setIsMessageOpen(false)}
+                    >
+                      <span>Explore Works →</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="hero-title-wrap hero-stage__title-wrap">

@@ -615,9 +615,7 @@ export default function IntegrationNetwork() {
               {currentCategory.layoutType === "tiered" && (
                 <>
                   {/* Tiered Architectural Matrix / Grid */}
-                  <line x1="180" y1="85" x2="720" y2="85" className="network-tier-rail" />
                   <line x1="100" y1="220" x2="800" y2="220" className="network-tier-rail" />
-                  <line x1="280" y1="365" x2="620" y2="365" className="network-tier-rail" />
                   <polygon points="450,55 770,220 450,395 130,220" className="network-diamond-matrix" />
                   <circle cx="450" cy="220" r="60" className="network-orbit network-orbit--inner" />
                 </>

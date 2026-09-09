@@ -390,7 +390,7 @@
 
 /* Tiered Architecture Grid (WordPress Broken Lines) */
 .network-tier-rail {
-  stroke: rgba(0, 115, 170, 0.38);
+  stroke: color-mix(in srgb, var(--accent) 42%, transparent);
   stroke-width: 1.25;
   stroke-dasharray: 5 6;
   opacity: 1;
@@ -398,18 +398,18 @@
 
 .network-diamond-matrix {
   fill: none;
-  stroke: rgba(0, 115, 170, 0.45);
+  stroke: color-mix(in srgb, var(--accent) 45%, transparent);
   stroke-width: 1.25;
   stroke-dasharray: 5 6;
   opacity: 1;
 }
 
 :root[data-theme="dark"] .network-tier-rail {
-  stroke: rgba(0, 115, 170, 0.22);
+  stroke: color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 :root[data-theme="dark"] .network-diamond-matrix {
-  stroke: rgba(0, 115, 170, 0.32);
+  stroke: color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 /* Base Connector Lines */
