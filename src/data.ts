@@ -25,5 +25,5 @@ export const faqs = [
   ["What’s included in your web development service?", "UI/UX, frontend, backend, API development, admin dashboards, authentication, deployment, and performance optimization."],
   ["Do you provide design or only development?", "Both. I can design from scratch or convert your Figma designs into fully functional builds."],
   ["Do you offer SEO optimization?", "Yes. Every CMS build includes fundamental on-page SEO, semantic HTML structure, and optimized assets for fast loading speeds."],
-  ["Do you offer maintenance?", "Yes — you can choose from monthly retainers or per-request updates depending on your needs."],
+  ["Do you offer maintenance?", "Yes! Every project includes dedicated post-launch support and bug fixes. For long-term care, I offer flexible monthly maintenance retainers or on-demand support for security updates, backups, performance optimization, and new feature rollouts."],
 ] as const;

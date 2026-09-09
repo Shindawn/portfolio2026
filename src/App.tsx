@@ -138,8 +138,9 @@ export default function App() {
 
       gsap.utils.toArray<HTMLElement>(".reveal-header").forEach((element) => {
         gsap.from(element.children, {
-          scrollTrigger: { trigger: element, start: "top 82%" },
+          scrollTrigger: { trigger: element, start: "top 82%", once: true },
           y: 42, opacity: 0, filter: "blur(10px)", duration: 0.9, stagger: 0.1, ease: "power3.out",
+          clearProps: "all",
         });
       });
 
@@ -155,7 +156,8 @@ export default function App() {
       reveals.forEach(([targets, trigger, vars]) => {
         gsap.from(targets, {
           ...vars, opacity: 0, ease: "power3.out",
-          scrollTrigger: { trigger, start: "top 82%" },
+          clearProps: "all",
+          scrollTrigger: { trigger, start: "top 82%", once: true },
         });
       });
     }, appRef);
