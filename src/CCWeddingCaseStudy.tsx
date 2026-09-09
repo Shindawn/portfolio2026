@@ -568,7 +568,7 @@ export default function CCWeddingCaseStudy() {
               </div>
             </div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "2rem", marginTop: "2rem", color: "var(--w-text-muted)", fontSize: "0.92rem" }}>
+            <div className="w-mobile-bullets-strip">
               <span>• Readable typography</span>
               <span>• Large tap areas</span>
               <span>• Clear navigation</span>
