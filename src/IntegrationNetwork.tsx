@@ -282,7 +282,7 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
     id: "wordpress",
     label: "WordPress",
     shortLabel: "WordPress",
-    tagline: "Tiered CMS Architecture & Performance Ecosystem",
+    tagline: "Web Systems & Digital Experiences",
     layoutType: "tiered",
     hubX: 450,
     hubY: 220,

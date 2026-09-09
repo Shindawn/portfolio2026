@@ -1269,46 +1269,122 @@ a {
 }
 
 .expertise__header p {
-  max-width: 42rem;
+  max-width: 44rem;
   margin: 1.6rem auto 0;
   color: var(--muted);
-  font-size: clamp(1rem, 1.35vw, 1.3rem);
-  line-height: 1.45;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.05rem, 1.35vw, 1.28rem);
+  line-height: 1.5;
+  letter-spacing: -0.025em;
 }
 
 .expertise__services {
-  margin: clamp(5rem, 12vh, 7.5rem) auto 0;
-  font-family: "Instrument Serif", Georgia, serif;
-  font-size: clamp(2.5rem, 5vw, 5rem);
-  font-style: italic;
-  font-weight: 400;
-  line-height: 1.14;
-  letter-spacing: -0.055em;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2vw, 2rem);
+  max-width: 68rem;
+  margin: clamp(3.5rem, 6.5vh, 5rem) auto 0;
+  text-align: left;
 }
 
 .expertise__service {
-  display: inline-block;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.6rem, 2.2vw, 2.25rem);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
   outline: none;
   cursor: default;
   transition:
-    color 280ms ease,
+    border-color 300ms ease,
+    background-color 300ms ease,
+    box-shadow 300ms ease,
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
     filter 380ms ease,
-    opacity 380ms ease,
-    transform 280ms ease;
+    opacity 380ms ease;
+}
+
+.expertise__service-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin-bottom: 0.85rem;
+}
+
+.expertise__service-num {
+  font-family: "BDO Grotesk Variable", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.expertise__service-sep {
+  font-family: "BDO Grotesk Variable", sans-serif;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+
+.expertise__service-action {
+  margin: 0;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(1.85rem, 2.6vw, 2.6rem);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: var(--text-primary);
+  transition: color 280ms ease;
+}
+
+.expertise__service-desc {
+  margin: 0;
+  font-family: "BDO Grotesk Variable", sans-serif;
+  font-size: clamp(0.92rem, 1.05vw, 1rem);
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: var(--text-secondary);
 }
 
 .expertise__services:has(.expertise__service:hover) .expertise__service:not(:hover),
 .expertise__services:has(.expertise__service:focus-visible) .expertise__service:not(:focus-visible) {
-  opacity: 0.3;
-  filter: blur(6px);
+  opacity: 0.4;
+  filter: blur(2px);
 }
 
 .expertise__service:hover,
 .expertise__service:focus-visible {
+  border-color: rgba(56, 183, 122, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="dark"] .expertise__service:hover,
+:root[data-theme="dark"] .expertise__service:focus-visible {
+  border-color: rgba(56, 183, 122, 0.45);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(56, 183, 122, 0.15);
+}
+
+.expertise__service:hover .expertise__service-action,
+.expertise__service:focus-visible .expertise__service-action {
   color: var(--accent);
-  filter: blur(0);
-  transform: translateY(-0.025em);
+}
+
+.expertise__service:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 860px) {
+  .expertise__services {
+    grid-template-columns: 1fr;
+    max-width: 32rem;
+    gap: 1.25rem;
+  }
 }
 
 .latest-work {

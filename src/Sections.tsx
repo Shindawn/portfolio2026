@@ -320,14 +320,53 @@ export function Hero() {
 }
 
 export function Expertise() {
-  return <section className="expertise" id="expertise" aria-labelledby="expertise-title"><div className="expertise__inner shell">
-    <header className="expertise__header reveal-header"><h2 id="expertise-title">( Expertise )</h2><p>A degree holder in Information Technology with hands-on experience building backend-driven web applications, REST APIs, and database systems — paired with a design background in UI/UX and visual design.</p></header>
-    <p className="expertise__services">
-      <span className="expertise__service" tabIndex={0}>Web-Software Development,</span><br />
-      <span className="expertise__service" tabIndex={0}>UI/UX Designer,</span>{" "}
-      <span className="expertise__service" tabIndex={0}>Graphic Designer.</span>
-    </p>
-  </div></section>;
+  const pillars = [
+    {
+      index: "01",
+      action: "BUILD",
+      description: "Web applications, REST APIs, backend systems, and databases.",
+    },
+    {
+      index: "02",
+      action: "DESIGN",
+      description: "UI/UX, responsive interfaces, prototypes, and design systems.",
+    },
+    {
+      index: "03",
+      action: "SHAPE",
+      description: "Visual design, branding, and digital experiences.",
+    },
+  ];
+
+  return (
+    <section className="expertise" id="expertise" aria-labelledby="expertise-title">
+      <div className="expertise__inner shell">
+        <header className="expertise__header reveal-header">
+          <h2 id="expertise-title">( Expertise )</h2>
+          <p>
+            I’m an Information Technology graduate who builds web applications from both sides of the screen — from backend systems, APIs, and databases to UI/UX and visual design.
+          </p>
+        </header>
+        <div className="expertise__services" role="list">
+          {pillars.map((pillar) => (
+            <div
+              key={pillar.index}
+              className="expertise__service"
+              role="listitem"
+              tabIndex={0}
+            >
+              <div className="expertise__service-header">
+                <span className="expertise__service-num">{pillar.index}</span>
+                <span className="expertise__service-sep" aria-hidden="true">—</span>
+                <h3 className="expertise__service-action">{pillar.action}</h3>
+              </div>
+              <p className="expertise__service-desc">{pillar.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export function LatestWork() {
