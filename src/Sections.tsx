@@ -707,8 +707,15 @@ export function Footer() {
   const [visitorCount, setVisitorCount] = useState<number | null>(null);
 
   useEffect(() => {
+    const isLocal =
+      typeof window !== "undefined" &&
+      (window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1" ||
+        window.location.hostname.endsWith(".local") ||
+        window.location.hostname.endsWith(".internal"));
+
     const hasVisitedSession = sessionStorage.getItem("lescy_visited_session");
-    const endpoint = hasVisitedSession
+    const endpoint = isLocal || hasVisitedSession
       ? "https://abacus.jasoncameron.dev/get/lescy-portfolio-2026/visits"
       : "https://abacus.jasoncameron.dev/hit/lescy-portfolio-2026/visits";
 
@@ -717,7 +724,9 @@ export function Footer() {
       .then((data) => {
         if (typeof data.value === "number") {
           setVisitorCount(data.value);
-          sessionStorage.setItem("lescy_visited_session", "true");
+          if (!isLocal) {
+            sessionStorage.setItem("lescy_visited_session", "true");
+          }
         }
       })
       .catch(() => {

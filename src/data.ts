@@ -21,9 +21,9 @@ export const testimonials = [
 ] as const;
 
 export const faqs = [
-  ["What services and tech stack do you specialize in?", "Full-stack web apps and REST APIs using Next.js, React, TypeScript, Node.js, and PHP/Laravel, backed by PostgreSQL, MySQL, and Figma UI/UX design."],
-  ["Can you handle end-to-end development to cloud deployment?", "Yes. I handle everything from database schema design and secure authentication (OAuth/JWT) to responsive frontend development and cloud deployment on Vercel."],
-  ["What kind of real-world systems have you shipped?", "Enterprise web systems including the LGU Water District Management System, HR & Payroll platforms, corporate websites, and interactive AR mobile app interfaces."],
-  ["What is your educational background and credentials?", "BS in Information Technology (Cum Laude, 1.4 GWA) from Catanduanes State University, with certifications from Oracle, Cisco, Google, and IBM."],
-  ["Where are you based and do you accept remote opportunities?", "I'm based in Mandaluyong, Philippines and available for remote, hybrid, or full-time roles worldwide."],
+  ["How long does it take to build a website?", "Landing pages take 2–4 weeks. Full web applications take 4–12 weeks depending on features, integrations, and revisions."],
+  ["What’s included in your web development service?", "UI/UX, frontend, backend, API development, admin dashboards, authentication, deployment, and performance optimization."],
+  ["Do you provide design or only development?", "Both. I can design from scratch or convert your Figma designs into fully functional builds."],
+  ["Do you offer SEO optimization?", "Yes. Every CMS build includes fundamental on-page SEO, semantic HTML structure, and optimized assets for fast loading speeds."],
+  ["Do you offer maintenance?", "Yes — you can choose from monthly retainers or per-request updates depending on your needs."],
 ] as const;
