@@ -111,16 +111,28 @@ export default function Hero3DCarousel() {
   const scrollRef = useRef(0);
   scrollRef.current = scrollX;
 
-  const cardWidth = 240;
-  const gap = 20;
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth <= 650 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 650);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const cardWidth = isMobile ? 152 : 240;
+  const gap = isMobile ? 14 : 20;
   const itemTotalWidth = cardWidth + gap;
   const totalWidth = items.length * itemTotalWidth;
+  const cylinderRadius = isMobile ? 260 : 460;
 
   // Auto-scroll loop with smooth momentum & inertia
   useEffect(() => {
     let animationId: number;
     let velocity = dragStartRef.current.velocity;
-    const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
     const driftSpeed = isMobile ? 1.4 : 0.85;
 
     const loop = () => {
@@ -138,7 +150,7 @@ export default function Hero3DCarousel() {
 
     animationId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(animationId);
-  }, [isDragging]);
+  }, [isDragging, isMobile]);
 
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -199,12 +211,12 @@ export default function Hero3DCarousel() {
             const centerOffset = ((index * itemTotalWidth - scrollX) % totalWidth + totalWidth) % totalWidth - totalWidth / 2;
             
             // 3D Cylinder calculation (matching Framer settings: perspective 500, rotation limit 90deg)
-            const normalizedX = centerOffset / 460;
+            const normalizedX = centerOffset / cylinderRadius;
             const clampedNorm = Math.max(-1.8, Math.min(1.8, normalizedX));
             
             // Rotation: cards angle inward along the cylinder arch
             const rotateY = clampedNorm * 34; // curve around 3D cylinder
-            const translateZ = -Math.abs(clampedNorm) * 55; // depth fallback
+            const translateZ = -Math.abs(clampedNorm) * (isMobile ? 35 : 55); // depth fallback
             const scale = Math.max(0.82, 1 - Math.abs(clampedNorm) * 0.1);
             const opacity = Math.max(0.35, 1 - Math.abs(clampedNorm) * 0.35);
 
