@@ -414,7 +414,7 @@ export function Hero() {
                           Hi! Lescy here. Welcome to my portfolio. 👋
                         </p>
                         <p className="hero-messenger-card__p">
-                          This entire showcase and its systems were designed and developed between <strong>August 30 – September 11, 2026</strong>.
+                          This portfolio was designed and developed from <strong>August 30 to September 11, 2026</strong>.
                         </p>
                         <p className="hero-messenger-card__p hero-messenger-card__p--dim">
                           Crafted with intentional UI/UX, React, GSAP animations, and custom production architectures. Feel free to explore! ✨
