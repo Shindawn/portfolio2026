@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Footer, Navigation } from "./Sections";
@@ -68,6 +68,19 @@ const iterationPairs = [
 
 export default function AribaBatoCaseStudy() {
   const pageRef = useRef<HTMLElement>(null);
+  const [activeLandmark, setActiveLandmark] = useState<"batalay" | "church" | null>(null);
+  const [landmarkPos, setLandmarkPos] = useState({ x: 0, y: 0, flip: false });
+  const [mobilePreviewOpen, setMobilePreviewOpen] = useState<"batalay" | "church" | null>(null);
+
+  const handleLandmarkMouseMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const isRightHalf = e.clientX > window.innerWidth * 0.58;
+    const clampedY = Math.max(140, Math.min(window.innerHeight - 140, e.clientY));
+    setLandmarkPos({
+      x: e.clientX,
+      y: clampedY,
+      flip: isRightHalf,
+    });
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -124,8 +137,8 @@ export default function AribaBatoCaseStudy() {
               {/* Left Column: Title & Heritage Concept */}
               <div className="a-hero__left">
                 <div className="a-kicker">
-                  <span className="a-kicker__icon">🧭</span>
-                  <span>AUGMENTED REALITY · CULTURAL EXPLORATION</span>
+                  <span className="a-kicker__dot" />
+                  <span>CULTURAL HERITAGE · MOBILE AR EXPERIENCE</span>
                 </div>
 
                 <h1 className="a-heading-lg" style={{ fontSize: "clamp(3.2rem, 7vw, 5.8rem)" }}>
@@ -140,21 +153,22 @@ export default function AribaBatoCaseStudy() {
                   A gamified mobile experience designed to encourage users to discover the cultural heritage of Bato, Catanduanes through interactive stories, challenges, quizzes, and augmented reality.
                 </p>
 
-                <div className="a-hero-meta-strip">
-                  <div className="a-hero-meta-chip">
-                    <span>📍 Capstone Project</span>
+                <div className="a-hero-meta-grid">
+                  <div className="a-hero-meta-item">
+                    <span>Role</span>
+                    <strong>Lead UI/UX Architect & Mobile Developer</strong>
                   </div>
-                  <div className="a-hero-meta-chip">
-                    <span>📱 UI/UX Design</span>
+                  <div className="a-hero-meta-item">
+                    <span>Category</span>
+                    <strong>UI/UX Mobile App</strong>
                   </div>
-                  <div className="a-hero-meta-chip">
-                    <span>⚡ Mobile Experience</span>
+                  <div className="a-hero-meta-item">
+                    <span>Platform</span>
+                    <strong>Mobile Application (iOS & Android)</strong>
                   </div>
-                  <div className="a-hero-meta-chip">
-                    <span>✨ Augmented Reality</span>
-                  </div>
-                  <div className="a-hero-meta-chip">
-                    <span>🏛️ Cultural Heritage & Tourism</span>
+                  <div className="a-hero-meta-item">
+                    <span>Scope & Context</span>
+                    <strong>Academic Capstone · Tourism & Heritage</strong>
                   </div>
                 </div>
 
@@ -211,24 +225,124 @@ export default function AribaBatoCaseStudy() {
 
             {/* Destination Landmark Markers */}
             <div className="a-landmarks-grid">
-              <div className="a-landmark-card">
-                <span className="a-landmark-pin">📍 DESTINATION MARKER 01</span>
+              <div
+                className="a-landmark-card a-landmark-card--interactive"
+                onPointerEnter={() => setActiveLandmark("batalay")}
+                onPointerLeave={() => setActiveLandmark(null)}
+                onPointerMove={handleLandmarkMouseMove}
+                onClick={() => setMobilePreviewOpen((prev) => (prev === "batalay" ? null : "batalay"))}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    setMobilePreviewOpen((prev) => (prev === "batalay" ? null : "batalay"));
+                  }
+                }}
+                aria-expanded={mobilePreviewOpen === "batalay"}
+                aria-label="Batalay Shrine details and landmark photo preview"
+              >
+                <div className="a-landmark-card__header">
+                  <span className="a-landmark-pin">📍 DESTINATION MARKER 01</span>
+                  <span className="a-landmark-hover-pill">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="12"
+                      height="12"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                      <circle cx="12" cy="13" r="4" />
+                    </svg>
+                    Hover to view photo
+                  </span>
+                </div>
                 <h3 style={{ fontFamily: "var(--a-serif)", fontSize: "2rem", margin: "0.2rem 0", color: "var(--ink)" }}>
                   Batalay Shrine
                 </h3>
                 <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.65 }}>
                   The historic cradle of Christianity in Catanduanes, marking the site where Augustinian friar Diego de Herrera was laid to rest in 1576. ARIBA BATO brings its historical significance alive through on-site augmented storytelling.
                 </p>
+
+                {/* Mobile tap-to-reveal preview */}
+                {mobilePreviewOpen === "batalay" && (
+                  <div className="a-landmark-mobile-preview" aria-label="Batalay Shrine landmark preview">
+                    <img
+                      src="/batalay-shrine.jpg"
+                      alt="Batalay Shrine in Bato, Catanduanes"
+                      className="a-landmark-mobile-preview__img"
+                      loading="lazy"
+                    />
+                    <div className="a-landmark-mobile-preview__caption">
+                      <strong>Batalay Shrine</strong>
+                      <span>Bato, Catanduanes · Cradle of Christianity in Catanduanes (1576)</span>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              <div className="a-landmark-card">
-                <span className="a-landmark-pin">📍 DESTINATION MARKER 02</span>
+              <div
+                className="a-landmark-card a-landmark-card--interactive"
+                onPointerEnter={() => setActiveLandmark("church")}
+                onPointerLeave={() => setActiveLandmark(null)}
+                onPointerMove={handleLandmarkMouseMove}
+                onClick={() => setMobilePreviewOpen((prev) => (prev === "church" ? null : "church"))}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    setMobilePreviewOpen((prev) => (prev === "church" ? null : "church"));
+                  }
+                }}
+                aria-expanded={mobilePreviewOpen === "church"}
+                aria-label="Saint John the Baptist Parish Church details and landmark photo preview"
+              >
+                <div className="a-landmark-card__header">
+                  <span className="a-landmark-pin">📍 DESTINATION MARKER 02</span>
+                  <span className="a-landmark-hover-pill">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="12"
+                      height="12"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                      <circle cx="12" cy="13" r="4" />
+                    </svg>
+                    Hover to view photo
+                  </span>
+                </div>
                 <h3 style={{ fontFamily: "var(--a-serif)", fontSize: "2rem", margin: "0.2rem 0", color: "var(--ink)" }}>
                   Saint John the Baptist Parish Church
                 </h3>
                 <p style={{ fontSize: "0.95rem", color: "var(--muted)", lineHeight: 1.65 }}>
                   A majestic coral stone church standing steadfast by the Bato River since the 1830s. The mobile application allows visitors to scan architectural details and discover the craftsmanship of 19th-century artisans.
                 </p>
+
+                {/* Mobile tap-to-reveal preview */}
+                {mobilePreviewOpen === "church" && (
+                  <div className="a-landmark-mobile-preview" aria-label="Church landmark preview">
+                    <img
+                      src="/bato-church.jpg"
+                      alt="Saint John the Baptist Parish Church in Bato, Catanduanes"
+                      className="a-landmark-mobile-preview__img"
+                      loading="lazy"
+                    />
+                    <div className="a-landmark-mobile-preview__caption">
+                      <strong>Saint John the Baptist Parish Church</strong>
+                      <span>Bato, Catanduanes · Coral stone architecture (est. 1830s)</span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -872,6 +986,36 @@ export default function AribaBatoCaseStudy() {
         </section>
 
       </main>
+
+      {/* Floating Cursor Image Hover for Landmarks (Batalay Shrine & Bato Church) */}
+      {activeLandmark && (
+        <div
+          className="a-church-floating-preview"
+          style={{
+            left: `${landmarkPos.x}px`,
+            top: `${landmarkPos.y}px`,
+            transform: `translate3d(${landmarkPos.flip ? "calc(-100% - 1.5rem)" : "1.5rem"}, -50%, 0)`,
+          }}
+          aria-hidden="true"
+        >
+          <div className="a-church-floating-preview__inner">
+            <img
+              src={activeLandmark === "batalay" ? "/batalay-shrine.jpg" : "/bato-church.jpg"}
+              alt={activeLandmark === "batalay" ? "Batalay Shrine, Bato, Catanduanes" : "Saint John the Baptist Parish Church, Bato, Catanduanes"}
+              className="a-church-floating-preview__img"
+            />
+            <div className="a-church-floating-preview__caption">
+              <strong>{activeLandmark === "batalay" ? "Batalay Shrine" : "Saint John the Baptist Parish Church"}</strong>
+              <span>
+                {activeLandmark === "batalay"
+                  ? "Historic cradle of Christianity in Catanduanes (est. 1576)"
+                  : "Historic coral stone architecture by the Bato River (est. 1830s)"}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </>
   );

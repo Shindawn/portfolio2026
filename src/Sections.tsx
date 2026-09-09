@@ -627,7 +627,7 @@ export function Footer() {
             <a href="https://www.facebook.com/lescygcaadlawon/" target="_blank" rel="noreferrer">Facebook</a>
             <a href="https://wa.me/639692467870" target="_blank" rel="noreferrer">WhatsApp</a>
           </nav>
-          <div className="footer__visitor-pill" title="Live weekly portfolio visits">
+          <div className="footer__visitor-pill" title="Live monthly portfolio visits">
             <div className="footer__visitor-icon-box">
               <svg
                 className="footer__visitor-eye"
@@ -650,7 +650,7 @@ export function Footer() {
               <strong className="footer__visitor-num">
                 {visitorCount !== null ? visitorCount.toLocaleString() : "—"}
               </strong>
-              <span className="footer__visitor-label">this week</span>
+              <span className="footer__visitor-label">this month</span>
             </div>
           </div>
         </div>
