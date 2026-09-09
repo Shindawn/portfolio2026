@@ -93,6 +93,12 @@ export function Navigation() {
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  const currentPath = typeof window !== "undefined" ? window.location.pathname.toLowerCase().replace(/\/$/, "") : "";
+  const currentHash = typeof window !== "undefined" ? window.location.hash : "";
+  const isAboutActive = currentPath === "/about";
+  const isWorkActive = currentHash === "#work" || currentPath === "/work" || currentPath === "/works";
+  const isHomeActive = !isAboutActive && !isWorkActive;
+
   return (
     <>
       <nav className={`nav shell${isMenuOpen ? " is-menu-open" : ""}`} aria-label="Main navigation">
@@ -140,19 +146,30 @@ export function Navigation() {
 
           <ul className="nav-overlay__list">
             <li className="nav-overlay__item">
-              <a href="/" className="nav-overlay__link" onClick={closeMenu}>
+              <a
+                href="/"
+                className={`nav-overlay__link${isHomeActive ? " is-active" : ""}`}
+                aria-current={isHomeActive ? "page" : undefined}
+                onClick={closeMenu}
+              >
                 <span>Home</span>
               </a>
             </li>
             <li className="nav-overlay__item">
-              <a href="/about" className="nav-overlay__link" onClick={closeMenu}>
+              <a
+                href="/about"
+                className={`nav-overlay__link${isAboutActive ? " is-active" : ""}`}
+                aria-current={isAboutActive ? "page" : undefined}
+                onClick={closeMenu}
+              >
                 <span>About</span>
               </a>
             </li>
             <li className="nav-overlay__item">
               <a
                 href="/#work"
-                className="nav-overlay__link"
+                className={`nav-overlay__link${isWorkActive ? " is-active" : ""}`}
+                aria-current={isWorkActive ? "page" : undefined}
                 onClick={(e) => {
                   closeMenu();
                   if (typeof window !== "undefined") {
