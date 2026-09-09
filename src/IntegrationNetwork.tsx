@@ -288,12 +288,16 @@ const networkCategories: Record<NetworkCategoryKey, NetworkCategory> = {
     hubY: 220,
     hubName: "WordPress Core",
     hubTooltip: "WordPress / Headless & Monolithic Architecture",
-    hubColor: "#21759b",
-    hubBgHover: "rgba(33, 117, 155, 0.15)",
+    hubColor: "#0073aa",
+    hubBgHover: "rgba(0, 115, 170, 0.15)",
     hubIcon: (
-      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
-        <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L7.84 4.887C9.09 4.316 10.5 4 12 4c.64 0 1.26.06 1.86.175L9.67 17.525l-2.27-6.2c-.37-.99-.54-1.59-.54-2.07 0-.73.44-1.15 1.07-1.15.11 0 .23.01.35.03L8.35 8c-1.34 0-2.3.93-2.3 2.19 0 .61.18 1.34.49 2.19l3.52 9.61c.62.14 1.27.21 1.94.21 1.43 0 2.77-.3 3.97-.84l-3.32-9.65 2.37-6.52c.28-.77.49-1.24.49-1.58 0-.6-.35-.95-.91-.95-.12 0-.25.01-.39.04l.07-.19c1.28 0 2.22.86 2.22 2.05 0 .58-.19 1.33-.51 2.21l-3.39 9.35 1.25 3.44c2.87-1.61 4.79-4.7 4.79-8.2 0-5.523-4.477-10-10-10zm0-2C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0z" />
-      </svg>
+      <img
+        src="/logos/wordpress.png"
+        alt="WordPress"
+        className="network-hub__logo-img"
+        width="42"
+        height="42"
+      />
     ),
     nodes: [
       {
@@ -511,32 +515,9 @@ export default function IntegrationNetwork() {
       <div className="integration-network__inner shell">
         <div className="integration-network__stage-wrap">
           
-          {/* Top Control Bar with Status on Left and Stepper on Top-Right */}
+          {/* Top Control Bar with Stepper on Left and Status Bar on Right */}
           <div className="integration-network__top-bar">
-            {/* Category Tagline Pill / Active Tool Description */}
-            <div className="integration-network__status-bar" aria-live="polite">
-              {activeNode ? (
-                <>
-                  {/* Laptop / Desktop: Displays tool name & description on hover or click */}
-                  <span className="integration-network__badge is-active integration-network__badge--desktop">
-                    <span className="integration-network__badge-dot" />
-                    <strong>{activeNode.name}</strong>
-                    <span className="integration-network__badge-divider" aria-hidden="true">—</span>
-                    <span>{activeNode.status}</span>
-                  </span>
-                  {/* Mobile: Preserves category tagline pill as is */}
-                  <span className="integration-network__badge integration-network__badge--mobile">
-                    <span>{currentCategory.tagline}</span>
-                  </span>
-                </>
-              ) : (
-                <span className="integration-network__badge">
-                  <span>{currentCategory.tagline}</span>
-                </span>
-              )}
-            </div>
-
-            {/* Stepper Selector placed at Right Top */}
+            {/* Stepper Selector placed at Left Top */}
             <div className="integration-network__stepper" role="group" aria-label="Ecosystem Category Selector">
               <button
                 type="button"
@@ -571,6 +552,29 @@ export default function IntegrationNetwork() {
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
               </button>
+            </div>
+
+            {/* Category Tagline Pill / Active Tool Description placed on Right */}
+            <div className="integration-network__status-bar" aria-live="polite">
+              {activeNode ? (
+                <>
+                  {/* Laptop / Desktop: Displays tool name & description on hover or click */}
+                  <span className="integration-network__badge is-active integration-network__badge--desktop">
+                    <span className="integration-network__badge-dot" />
+                    <strong>{activeNode.name}</strong>
+                    <span className="integration-network__badge-divider" aria-hidden="true">—</span>
+                    <span>{activeNode.status}</span>
+                  </span>
+                  {/* Mobile: Preserves category tagline pill as is */}
+                  <span className="integration-network__badge integration-network__badge--mobile">
+                    <span>{currentCategory.tagline}</span>
+                  </span>
+                </>
+              ) : (
+                <span className="integration-network__badge">
+                  <span>{currentCategory.tagline}</span>
+                </span>
+              )}
             </div>
           </div>
 

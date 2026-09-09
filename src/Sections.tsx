@@ -320,21 +320,23 @@ export function Hero() {
 }
 
 export function Expertise() {
+  const [activePillar, setActivePillar] = useState<number | null>(null);
+
   const pillars = [
     {
       index: "01",
-      action: "BUILD",
+      title: "Web & Software Development,",
       description: "Web applications, REST APIs, backend systems, and databases.",
     },
     {
       index: "02",
-      action: "DESIGN",
-      description: "UI/UX, responsive interfaces, prototypes, and design systems.",
+      title: "UI/UX Design,",
+      description: "User interfaces, responsive layouts, prototypes, and design systems.",
     },
     {
       index: "03",
-      action: "SHAPE",
-      description: "Visual design, branding, and digital experiences.",
+      title: "Visual Design.",
+      description: "Branding, graphic design, and digital experiences.",
     },
   ];
 
@@ -347,22 +349,75 @@ export function Expertise() {
             I’m an Information Technology graduate who builds web applications from both sides of the screen — from backend systems, APIs, and databases to UI/UX and visual design.
           </p>
         </header>
-        <div className="expertise__services" role="list">
-          {pillars.map((pillar) => (
-            <div
-              key={pillar.index}
-              className="expertise__service"
-              role="listitem"
-              tabIndex={0}
-            >
-              <div className="expertise__service-header">
-                <span className="expertise__service-num">{pillar.index}</span>
-                <span className="expertise__service-sep" aria-hidden="true">—</span>
-                <h3 className="expertise__service-action">{pillar.action}</h3>
-              </div>
-              <p className="expertise__service-desc">{pillar.description}</p>
-            </div>
-          ))}
+
+        <p
+          className="expertise__services"
+          onMouseLeave={() => setActivePillar(null)}
+        >
+          <span
+            className={`expertise__service ${activePillar === 0 ? "is-active" : ""}`}
+            tabIndex={0}
+            role="button"
+            aria-expanded={activePillar === 0}
+            onMouseEnter={() => setActivePillar(0)}
+            onFocus={() => setActivePillar(0)}
+            onClick={() => setActivePillar((prev) => (prev === 0 ? null : 0))}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setActivePillar((prev) => (prev === 0 ? null : 0));
+              }
+            }}
+          >
+            <sup className="expertise__tag">01</sup>Web & Software Development,
+          </span>
+          <br />
+          <span
+            className={`expertise__service ${activePillar === 1 ? "is-active" : ""}`}
+            tabIndex={0}
+            role="button"
+            aria-expanded={activePillar === 1}
+            onMouseEnter={() => setActivePillar(1)}
+            onFocus={() => setActivePillar(1)}
+            onClick={() => setActivePillar((prev) => (prev === 1 ? null : 1))}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setActivePillar((prev) => (prev === 1 ? null : 1));
+              }
+            }}
+          >
+            <sup className="expertise__tag">02</sup>UI/UX Design,
+          </span>{" "}
+          <span
+            className={`expertise__service ${activePillar === 2 ? "is-active" : ""}`}
+            tabIndex={0}
+            role="button"
+            aria-expanded={activePillar === 2}
+            onMouseEnter={() => setActivePillar(2)}
+            onFocus={() => setActivePillar(2)}
+            onClick={() => setActivePillar((prev) => (prev === 2 ? null : 2))}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setActivePillar((prev) => (prev === 2 ? null : 2));
+              }
+            }}
+          >
+            <sup className="expertise__tag">03</sup>Visual Design.
+          </span>
+        </p>
+
+        {/* Revealed description area */}
+        <div className="expertise__detail" aria-live="polite">
+          <p className={`expertise__desc ${activePillar !== null ? "is-visible" : ""}`}>
+            {activePillar !== null && (
+              <>
+                <span className="expertise__desc-idx">{pillars[activePillar].index} —</span>{" "}
+                <span className="expertise__desc-text">{pillars[activePillar].description}</span>
+              </>
+            )}
+          </p>
         </div>
       </div>
     </section>
