@@ -211,6 +211,33 @@ export function Navigation() {
 
 const rotatingWords = ["Cheaper", "Faster", "Great"] as const;
 
+function getManilaStatus() {
+  const manilaHour = parseInt(
+    new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Manila",
+      hour: "numeric",
+      hourCycle: "h23",
+    }).format(new Date()),
+    10
+  );
+
+  const isSleeping = manilaHour >= 0 && manilaHour < 7;
+  return {
+    isSleeping,
+    statusText: isSleeping ? "Sleeping..." : "Active now",
+    tooltip: isSleeping ? "Sleeping (12 AM – 7 AM PHT)" : "Active now (7 AM – 11 PM PHT)",
+  };
+}
+
+function getManilaDate() {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "Asia/Manila",
+  }).format(new Date());
+}
+
 export function Hero() {
   const [wordIndex, setWordIndex] = useState(0);
   const [isFlipping, setIsFlipping] = useState(false);
@@ -218,7 +245,17 @@ export function Hero() {
   const fullText = "2026 Portfolio";
   const [isMessageOpen, setIsMessageOpen] = useState(false);
   const [hasUnread, setHasUnread] = useState(true);
+  const [activeStatus, setActiveStatus] = useState(getManilaStatus);
+  const [currentDate, setCurrentDate] = useState(getManilaDate);
   const messageCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveStatus(getManilaStatus());
+      setCurrentDate(getManilaDate());
+    }, 60000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const toggleMessage = () => {
     setIsMessageOpen((prev) => {
@@ -365,7 +402,10 @@ export function Hero() {
                         width="34"
                         height="34"
                       />
-                      <span className="hero-messenger-card__online-dot" title="Active now" />
+                      <span
+                        className={`hero-messenger-card__online-dot${activeStatus.isSleeping ? " is-sleeping" : ""}`}
+                        title={activeStatus.tooltip}
+                      />
                     </div>
                     <div className="hero-messenger-card__user-info">
                       <div className="hero-messenger-card__name-row">
@@ -381,7 +421,9 @@ export function Hero() {
                           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                         </svg>
                       </div>
-                      <span className="hero-messenger-card__status">Software & UI/UX · Active now</span>
+                      <span className="hero-messenger-card__status">
+                        Software & UI/UX · {activeStatus.statusText}
+                      </span>
                     </div>
                   </div>
                   <button
@@ -397,7 +439,7 @@ export function Hero() {
                 {/* Body */}
                 <div className="hero-messenger-card__body">
                   <div className="hero-messenger-card__date-pill">
-                    <span>Aug 30 – Sep 11, 2026</span>
+                    <span>{currentDate}</span>
                   </div>
 
                   <div className="hero-messenger-card__msg-row">
@@ -414,14 +456,14 @@ export function Hero() {
                           Hi! Lescy here. Welcome to my portfolio. 👋
                         </p>
                         <p className="hero-messenger-card__p">
-                          This portfolio was designed and developed from <strong>August 30 to September 11, 2026</strong>.
+                          This website was designed with intentional UI/UX, built with React, and brought to life with GSAP animations and custom architectures.
                         </p>
                         <p className="hero-messenger-card__p hero-messenger-card__p--dim">
-                          Crafted with intentional UI/UX, React, GSAP animations, and custom production architectures. Feel free to explore! ✨
+                          Feel free to explore!
                         </p>
                       </div>
                       <div className="hero-messenger-card__meta">
-                        <span>Sep 11, 2026 · Delivered</span>
+                        <span>{currentDate} · Delivered</span>
                         <span className="hero-messenger-card__checks" aria-hidden="true">✓✓</span>
                       </div>
                     </div>

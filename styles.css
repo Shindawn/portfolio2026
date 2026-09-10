@@ -757,6 +757,24 @@ a {
   border-radius: 50%;
   background: #22c55e;
   border: 2px solid var(--surface);
+  transition: background 250ms ease, box-shadow 250ms ease;
+}
+
+.hero-messenger-card__online-dot.is-sleeping {
+  background: #818cf8;
+  box-shadow: 0 0 8px rgba(129, 140, 248, 0.6);
+  animation: sleeping-breathe 3s ease-in-out infinite;
+}
+
+@keyframes sleeping-breathe {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
 }
 
 .hero-messenger-card__user-info {
