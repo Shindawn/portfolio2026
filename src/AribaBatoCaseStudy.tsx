@@ -156,7 +156,7 @@ export default function AribaBatoCaseStudy() {
                 <div className="a-hero-meta-grid">
                   <div className="a-hero-meta-item">
                     <span>Role</span>
-                    <strong>Lead UI/UX Architect & Mobile Developer</strong>
+                    <strong>UI/UX Designer</strong>
                   </div>
                   <div className="a-hero-meta-item">
                     <span>Category</span>

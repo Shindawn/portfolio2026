@@ -43,7 +43,7 @@ const pipelineProjects: PipelineProject[] = [
     id: "ariba-bato",
     title: "ARIBA BATO: Augmented Reality Cultural Exploration Platform",
     category: "UI/UX Mobile App",
-    role: "Lead UI/UX Architect & Mobile Developer",
+    role: "UI/UX Designer",
     timeline: "2025 — 2026",
     progress: 100,
     status: "Case Study Published · Active Cultural Project",
