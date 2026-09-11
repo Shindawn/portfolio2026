@@ -929,7 +929,16 @@ export default function AribaBatoCaseStudy() {
             </div>
 
             <div style={{ borderRadius: "24px", overflow: "hidden", boxShadow: "0 35px 90px rgba(0,0,0,0.3)" }}>
-              <img src="/ariba-bato-poster.jpg" alt="ARIBA BATO Complete Experience Gallery" style={{ width: "100%", display: "block" }} />
+              <video
+                src="/compdemo.mp4"
+                poster="/ariba-bato-poster.jpg"
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+                style={{ width: "100%", display: "block" }}
+              />
             </div>
           </div>
         </section>
