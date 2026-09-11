@@ -53,7 +53,13 @@ const items: CarouselItem[] = [
     title: "Igel Solutions",
     category: "Corporate Platform",
     tag: "Engineering",
-    artIndex: 3,
+    image: "/igel-soon-deployed.jpg",
+    imageStyle: {
+      backgroundImage: "url('/igel-soon-deployed.jpg')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    },
     color: "#7c3aed",
   },
   {
