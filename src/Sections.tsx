@@ -649,7 +649,7 @@ export function LatestWork() {
             ? "/works/cc-wedding"
             : name.toLowerCase().includes("water district")
             ? "/works/lgu-water"
-            : name.toLowerCase().includes("payroll")
+            : name.toLowerCase().includes("payroll") || name.toLowerCase().includes("hris")
             ? "/works/hr-payroll"
             : name.toLowerCase().includes("ariba")
             ? "/works/ariba-bato"
